@@ -15,8 +15,7 @@ interface PageData {
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl =
-    process.env.NEXT_PUBLIC_SITE_URL || "https://wildwestslc.com";
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://wildwestslc.com";
 
   try {
     // Fetch all published pages from Supabase
@@ -51,7 +50,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       {
         url: `${baseUrl}/services/demolition`,
         lastModified: new Date(),
-        changeFrequency: "weekly", 
+        changeFrequency: "weekly",
         priority: 0.9,
       },
       {
@@ -105,14 +104,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     if (pages && pages.length > 0) {
       pages.forEach((page: PageData) => {
         // Determine if it's a city hub or city+service page
-        const isServicePage = page.service && page.service !== 'hub';
-        const pageUrl = isServicePage 
+        const isServicePage = page.service && page.service !== "hub";
+        const pageUrl = isServicePage
           ? `${baseUrl}/locations/${page.city}/${page.service}`
           : `${baseUrl}/locations/${page.city}`;
 
         // Smart priority based on city population and service type
         let priority = 0.7;
-        let changeFrequency: 
+        let changeFrequency:
           | "always"
           | "hourly"
           | "daily"
@@ -122,7 +121,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
           | "never" = "monthly";
 
         // Higher priority for major Utah cities
-        const majorCities = ['salt-lake-city', 'west-valley-city', 'west-jordan', 'sandy', 'orem'];
+        const majorCities = [
+          "salt-lake-city",
+          "west-valley-city",
+          "west-jordan",
+          "sandy",
+          "orem",
+        ];
         if (majorCities.includes(page.city)) {
           priority = isServicePage ? 0.8 : 0.75;
         } else {
@@ -157,13 +162,25 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 // Enhanced fallback sitemap with Utah locations in case of errors
 function getEnhancedBasicSitemap(baseUrl: string): MetadataRoute.Sitemap {
   const utahCities = [
-    'salt-lake-city', 'west-valley-city', 'west-jordan', 'sandy', 'orem',
-    'murray', 'taylorsville', 'draper', 'riverton', 'cottonwood-heights',
-    'bountiful', 'layton', 'ogden', 'pleasant-grove', 'roy'
+    "salt-lake-city",
+    "west-valley-city",
+    "west-jordan",
+    "sandy",
+    "orem",
+    "murray",
+    "taylorsville",
+    "draper",
+    "riverton",
+    "cottonwood-heights",
+    "bountiful",
+    "layton",
+    "ogden",
+    "pleasant-grove",
+    "roy",
   ];
 
-  const services = ['flooring', 'demolition', 'junk-removal'];
-  
+  const services = ["flooring", "demolition", "junk-removal"];
+
   const sitemapEntries: MetadataRoute.Sitemap = [
     {
       url: baseUrl,
@@ -184,14 +201,14 @@ function getEnhancedBasicSitemap(baseUrl: string): MetadataRoute.Sitemap {
       priority: 0.8,
     },
     // Main service pages
-    ...services.map(service => ({
+    ...services.map((service) => ({
       url: `${baseUrl}/services/${service}`,
       lastModified: new Date(),
       changeFrequency: "weekly" as const,
       priority: 0.9,
     })),
     // Major Utah city hubs
-    ...utahCities.slice(0, 8).map(city => ({
+    ...utahCities.slice(0, 8).map((city) => ({
       url: `${baseUrl}/locations/${city}`,
       lastModified: new Date(),
       changeFrequency: "monthly" as const,

@@ -445,16 +445,23 @@ export interface Database {
 }
 
 // Helper types for easier usage
-export type BlogCategory = Database["public"]["Tables"]["blog_categories"]["Row"];
-export type BlogCategoryInsert = Database["public"]["Tables"]["blog_categories"]["Insert"];
-export type BlogCategoryUpdate = Database["public"]["Tables"]["blog_categories"]["Update"];
+export type BlogCategory =
+  Database["public"]["Tables"]["blog_categories"]["Row"];
+export type BlogCategoryInsert =
+  Database["public"]["Tables"]["blog_categories"]["Insert"];
+export type BlogCategoryUpdate =
+  Database["public"]["Tables"]["blog_categories"]["Update"];
 
 export type BlogPost = Database["public"]["Tables"]["blog_posts"]["Row"];
-export type BlogPostInsert = Database["public"]["Tables"]["blog_posts"]["Insert"];
-export type BlogPostUpdate = Database["public"]["Tables"]["blog_posts"]["Update"];
+export type BlogPostInsert =
+  Database["public"]["Tables"]["blog_posts"]["Insert"];
+export type BlogPostUpdate =
+  Database["public"]["Tables"]["blog_posts"]["Update"];
 
-export type BlogPostAnalytics = Database["public"]["Tables"]["blog_post_analytics"]["Row"];
-export type BlogPostAnalyticsInsert = Database["public"]["Tables"]["blog_post_analytics"]["Insert"];
+export type BlogPostAnalytics =
+  Database["public"]["Tables"]["blog_post_analytics"]["Row"];
+export type BlogPostAnalyticsInsert =
+  Database["public"]["Tables"]["blog_post_analytics"]["Insert"];
 
 export type Page = Database["public"]["Tables"]["pages"]["Row"];
 export type PageInsert = Database["public"]["Tables"]["pages"]["Insert"];

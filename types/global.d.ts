@@ -44,7 +44,13 @@ interface FacebookPixelParams {
   source?: string;
   location?: string;
   contents?: FacebookPixelContent[];
-  [key: string]: string | number | boolean | undefined | string[] | FacebookPixelContent[];
+  [key: string]:
+    | string
+    | number
+    | boolean
+    | undefined
+    | string[]
+    | FacebookPixelContent[];
 }
 
 declare global {
@@ -52,10 +58,14 @@ declare global {
     gtag: (
       command: "event" | "config" | "js",
       targetId: string | Date,
-      params?: GtagEventParams | GtagConfigParams
+      params?: GtagEventParams | GtagConfigParams,
     ) => void;
     dataLayer: any[];
-    fbq: (command: string, eventName: string, params?: FacebookPixelParams) => void;
+    fbq: (
+      command: string,
+      eventName: string,
+      params?: FacebookPixelParams,
+    ) => void;
     _fbq?: any;
   }
 }

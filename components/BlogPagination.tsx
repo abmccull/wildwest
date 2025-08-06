@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
+import Link from "next/link";
 
 interface BlogPaginationProps {
   currentPage: number;
@@ -20,17 +20,17 @@ export default function BlogPagination({
 }: BlogPaginationProps) {
   const buildUrl = (page: number) => {
     const params = new URLSearchParams();
-    
+
     if (page > 1) {
-      params.set('page', page.toString());
+      params.set("page", page.toString());
     }
-    
+
     if (searchParams.category) {
-      params.set('category', searchParams.category);
+      params.set("category", searchParams.category);
     }
-    
+
     if (searchParams.search) {
-      params.set('search', searchParams.search);
+      params.set("search", searchParams.search);
     }
 
     const paramString = params.toString();
@@ -64,7 +64,7 @@ export default function BlogPagination({
     if (start > 1) {
       rangeWithDots.push(1);
       if (start > 2) {
-        rangeWithDots.push('...');
+        rangeWithDots.push("...");
       }
     }
 
@@ -74,7 +74,7 @@ export default function BlogPagination({
     // Add last page and dots if needed
     if (end < totalPages) {
       if (end < totalPages - 1) {
-        rangeWithDots.push('...');
+        rangeWithDots.push("...");
       }
       rangeWithDots.push(totalPages);
     }
@@ -87,7 +87,10 @@ export default function BlogPagination({
   if (totalPages <= 1) return null;
 
   return (
-    <nav className="flex items-center justify-center space-x-1" aria-label="Pagination">
+    <nav
+      className="flex items-center justify-center space-x-1"
+      aria-label="Pagination"
+    >
       {/* Previous Page */}
       {currentPage > 1 ? (
         <Link
@@ -120,18 +123,18 @@ export default function BlogPagination({
       {/* Page Numbers */}
       {visiblePages.map((page, index) => (
         <div key={index}>
-          {page === '...' ? (
+          {page === "..." ? (
             <span className="px-3 py-2 text-gray-500">...</span>
           ) : (
             <Link
               href={buildUrl(page as number)}
               className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
                 currentPage === page
-                  ? 'bg-red-600 text-white'
-                  : 'text-gray-500 hover:text-gray-700 hover:bg-gray-100'
+                  ? "bg-red-600 text-white"
+                  : "text-gray-500 hover:text-gray-700 hover:bg-gray-100"
               }`}
               aria-label={`Go to page ${page}`}
-              aria-current={currentPage === page ? 'page' : undefined}
+              aria-current={currentPage === page ? "page" : undefined}
             >
               {page}
             </Link>

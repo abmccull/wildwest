@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
+import { useState } from "react";
 
 interface SocialShareProps {
   url: string;
@@ -8,7 +8,11 @@ interface SocialShareProps {
   description: string;
 }
 
-export default function SocialShare({ url, title, description }: SocialShareProps) {
+export default function SocialShare({
+  url,
+  title,
+  description,
+}: SocialShareProps) {
   const [copied, setCopied] = useState(false);
 
   const encodedUrl = encodeURIComponent(url);
@@ -28,14 +32,14 @@ export default function SocialShare({ url, title, description }: SocialShareProp
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch (err) {
-      console.error('Failed to copy URL:', err);
+      console.error("Failed to copy URL:", err);
     }
   };
 
   return (
     <div className="flex items-center space-x-3">
       <span className="text-sm text-gray-600 font-medium">Share:</span>
-      
+
       {/* Twitter */}
       <a
         href={shareLinks.twitter}
@@ -93,7 +97,12 @@ export default function SocialShare({ url, title, description }: SocialShareProp
         className="text-gray-600 hover:text-gray-700 transition-colors relative"
         aria-label="Copy link"
       >
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg
+          className="w-5 h-5"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
           <path
             strokeLinecap="round"
             strokeLinejoin="round"

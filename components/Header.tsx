@@ -163,7 +163,11 @@ const Header: React.FC = () => {
 
           {/* CTA Button */}
           <div className="hidden md:flex items-center space-x-4">
-            <a href="/quote" className="btn-primary text-sm lg:text-base px-4 py-2 lg:px-6" onClick={closeMenus}>
+            <a
+              href="/quote"
+              className="btn-primary text-sm lg:text-base px-4 py-2 lg:px-6"
+              onClick={closeMenus}
+            >
               Get Free Quote
             </a>
             <a

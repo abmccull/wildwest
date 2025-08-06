@@ -43,8 +43,10 @@
   --color-prairie-tan: #e76f51;
   --color-sky-blue: #219ebc;
 
-  --shadow-western: 0 4px 6px -1px rgb(155 44 44 / 0.1), 0 2px 4px -1px rgb(155 44 44 / 0.06);
-  --shadow-construction: 0 10px 15px -3px rgb(38 70 83 / 0.1), 0 4px 6px -2px rgb(38 70 83 / 0.05);
+  --shadow-western:
+    0 4px 6px -1px rgb(155 44 44 / 0.1), 0 2px 4px -1px rgb(155 44 44 / 0.06);
+  --shadow-construction:
+    0 10px 15px -3px rgb(38 70 83 / 0.1), 0 4px 6px -2px rgb(38 70 83 / 0.05);
 }
 
 body {

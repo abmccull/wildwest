@@ -104,7 +104,7 @@ export function generateLocalBusinessSchema(
     ],
     areaServed: [
       "Salt Lake City, UT",
-      "West Valley City, UT", 
+      "West Valley City, UT",
       "West Jordan, UT",
       "Sandy, UT",
       "Orem, UT",
@@ -168,7 +168,7 @@ export function generateLocalBusinessSchema(
     ],
     sameAs: [
       "https://www.facebook.com/wildwestslc",
-      "https://www.instagram.com/wildwestslc", 
+      "https://www.instagram.com/wildwestslc",
       "https://www.linkedin.com/company/wildwestslc",
       "https://www.youtube.com/@wildwestslc",
     ],
@@ -202,19 +202,19 @@ export function generateServiceSchema(city: string, service: ServiceType) {
         "Tile Installation",
         "Carpet Installation",
         "Floor Refinishing",
-        "Subfloor Repair"
-      ]
+        "Subfloor Repair",
+      ],
     },
     demolition: {
-      category: "DemolitionService", 
+      category: "DemolitionService",
       offers: [
         "Interior Demolition",
-        "Exterior Demolition", 
+        "Exterior Demolition",
         "Kitchen Demolition",
         "Bathroom Demolition",
         "Concrete Removal",
-        "Debris Cleanup"
-      ]
+        "Debris Cleanup",
+      ],
     },
     junk_removal: {
       category: "WasteManagement",
@@ -222,11 +222,11 @@ export function generateServiceSchema(city: string, service: ServiceType) {
         "Construction Debris Removal",
         "Household Junk Removal",
         "Appliance Removal",
-        "Furniture Removal", 
+        "Furniture Removal",
         "Yard Waste Cleanup",
-        "Estate Cleanouts"
-      ]
-    }
+        "Estate Cleanouts",
+      ],
+    },
   };
 
   const details = serviceDetails[service];
@@ -268,7 +268,7 @@ export function generateServiceSchema(city: string, service: ServiceType) {
           "@type": "State",
           name: "Utah",
           containedInPlace: {
-            "@type": "Country", 
+            "@type": "Country",
             name: "United States",
           },
         },
@@ -314,7 +314,7 @@ export function generateServiceSchema(city: string, service: ServiceType) {
       description: `Professional ${serviceName.toLowerCase()} services in ${displayCity}`,
       priceRange: "$$",
       availability: "https://schema.org/InStock",
-      validFrom: new Date().toISOString().split('T')[0],
+      validFrom: new Date().toISOString().split("T")[0],
       eligibleRegion: {
         "@type": "Place",
         name: `${displayCity}, Utah`,
@@ -415,7 +415,8 @@ export function generateArticleSchema(
         height: "630",
       },
     }),
-    keywords: "construction, Utah, Salt Lake City, home improvement, contractors",
+    keywords:
+      "construction, Utah, Salt Lake City, home improvement, contractors",
     inLanguage: "en-US",
     isPartOf: {
       "@type": "Website",
@@ -452,8 +453,8 @@ export function generateFooterPageMetadata(
     openGraph: {
       title,
       description,
-      url: `https://wildwestslc.com/${pageName.toLowerCase().replace(/\s+/g, '-')}`,
-      siteName: "Wild West Construction", 
+      url: `https://wildwestslc.com/${pageName.toLowerCase().replace(/\s+/g, "-")}`,
+      siteName: "Wild West Construction",
       type: "website",
       locale: "en_US",
       images: [
@@ -472,7 +473,7 @@ export function generateFooterPageMetadata(
       images: ["/images/og-construction.jpg"],
     },
     alternates: {
-      canonical: `https://wildwestslc.com/${pageName.toLowerCase().replace(/\s+/g, '-')}`,
+      canonical: `https://wildwestslc.com/${pageName.toLowerCase().replace(/\s+/g, "-")}`,
     },
     robots: {
       index: true,
@@ -567,7 +568,7 @@ export function generateCityHubMetadata(
       "geo.region": "US-UT",
       "geo.placename": displayCity,
       "geo.position": "40.6669;-111.8904",
-      "ICBM": "40.6669, -111.8904",
+      ICBM: "40.6669, -111.8904",
     },
   };
 }
@@ -681,7 +682,7 @@ export function generateServiceMetadata(
       "geo.region": "US-UT",
       "geo.placename": displayCity,
       "geo.position": "40.6669;-111.8904",
-      "ICBM": "40.6669, -111.8904",
+      ICBM: "40.6669, -111.8904",
       "service-type": serviceName,
     },
   };

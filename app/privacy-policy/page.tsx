@@ -28,15 +28,18 @@ export default function PrivacyPolicyPage() {
   return (
     <>
       <Header />
-      
+
       <main className="min-h-screen bg-white">
         {/* Hero Section */}
         <section className="bg-gradient-to-r from-blue-900 to-blue-700 text-white py-16">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">Privacy Policy</h1>
+            <h1 className="text-4xl md:text-5xl font-bold mb-6">
+              Privacy Policy
+            </h1>
             <p className="text-xl text-blue-100">
-              Your privacy is important to us. This policy explains how Wild West Construction 
-              collects, uses, and protects your personal information.
+              Your privacy is important to us. This policy explains how Wild
+              West Construction collects, uses, and protects your personal
+              information.
             </p>
           </div>
         </section>
@@ -56,20 +59,28 @@ export default function PrivacyPolicyPage() {
 
               <div className="space-y-8">
                 <section>
-                  <h2 className="text-2xl font-bold text-gray-900 mb-4">1. Information We Collect</h2>
-                  
-                  <h3 className="text-xl font-semibold text-gray-800 mb-3">Personal Information</h3>
+                  <h2 className="text-2xl font-bold text-gray-900 mb-4">
+                    1. Information We Collect
+                  </h2>
+
+                  <h3 className="text-xl font-semibold text-gray-800 mb-3">
+                    Personal Information
+                  </h3>
                   <p className="text-gray-700 mb-4">
                     When you contact us or request services, we may collect:
                   </p>
                   <ul className="list-disc pl-6 space-y-2 text-gray-700 mb-6">
-                    <li>Name and contact information (phone, email, address)</li>
+                    <li>
+                      Name and contact information (phone, email, address)
+                    </li>
                     <li>Project details and service requirements</li>
                     <li>Communication preferences</li>
                     <li>Payment and billing information</li>
                   </ul>
 
-                  <h3 className="text-xl font-semibold text-gray-800 mb-3">Automatically Collected Information</h3>
+                  <h3 className="text-xl font-semibold text-gray-800 mb-3">
+                    Automatically Collected Information
+                  </h3>
                   <ul className="list-disc pl-6 space-y-2 text-gray-700">
                     <li>IP address and device information</li>
                     <li>Browser type and version</li>
@@ -79,35 +90,66 @@ export default function PrivacyPolicyPage() {
                 </section>
 
                 <section>
-                  <h2 className="text-2xl font-bold text-gray-900 mb-4">2. How We Use Your Information</h2>
-                  <p className="text-gray-700 mb-4">We use your information to:</p>
-                  <ul className="list-disc pl-6 space-y-2 text-gray-700">
-                    <li>Provide construction services and respond to inquiries</li>
-                    <li>Schedule appointments and communicate about projects</li>
-                    <li>Process payments and maintain business records</li>
-                    <li>Improve our services and website experience</li>
-                    <li>Send service updates and promotional communications (with consent)</li>
-                    <li>Comply with legal obligations and protect our business</li>
-                  </ul>
-                </section>
-
-                <section>
-                  <h2 className="text-2xl font-bold text-gray-900 mb-4">3. Information Sharing</h2>
+                  <h2 className="text-2xl font-bold text-gray-900 mb-4">
+                    2. How We Use Your Information
+                  </h2>
                   <p className="text-gray-700 mb-4">
-                    We do not sell or rent your personal information. We may share information with:
+                    We use your information to:
                   </p>
                   <ul className="list-disc pl-6 space-y-2 text-gray-700">
-                    <li><strong>Service Providers:</strong> Third-party contractors and suppliers who assist with projects</li>
-                    <li><strong>Business Partners:</strong> Trusted partners who help us provide services</li>
-                    <li><strong>Legal Requirements:</strong> When required by law or to protect our rights</li>
-                    <li><strong>Business Transfers:</strong> In connection with a merger, acquisition, or sale</li>
+                    <li>
+                      Provide construction services and respond to inquiries
+                    </li>
+                    <li>
+                      Schedule appointments and communicate about projects
+                    </li>
+                    <li>Process payments and maintain business records</li>
+                    <li>Improve our services and website experience</li>
+                    <li>
+                      Send service updates and promotional communications (with
+                      consent)
+                    </li>
+                    <li>
+                      Comply with legal obligations and protect our business
+                    </li>
                   </ul>
                 </section>
 
                 <section>
-                  <h2 className="text-2xl font-bold text-gray-900 mb-4">4. Data Security</h2>
+                  <h2 className="text-2xl font-bold text-gray-900 mb-4">
+                    3. Information Sharing
+                  </h2>
                   <p className="text-gray-700 mb-4">
-                    We implement appropriate security measures to protect your information:
+                    We do not sell or rent your personal information. We may
+                    share information with:
+                  </p>
+                  <ul className="list-disc pl-6 space-y-2 text-gray-700">
+                    <li>
+                      <strong>Service Providers:</strong> Third-party
+                      contractors and suppliers who assist with projects
+                    </li>
+                    <li>
+                      <strong>Business Partners:</strong> Trusted partners who
+                      help us provide services
+                    </li>
+                    <li>
+                      <strong>Legal Requirements:</strong> When required by law
+                      or to protect our rights
+                    </li>
+                    <li>
+                      <strong>Business Transfers:</strong> In connection with a
+                      merger, acquisition, or sale
+                    </li>
+                  </ul>
+                </section>
+
+                <section>
+                  <h2 className="text-2xl font-bold text-gray-900 mb-4">
+                    4. Data Security
+                  </h2>
+                  <p className="text-gray-700 mb-4">
+                    We implement appropriate security measures to protect your
+                    information:
                   </p>
                   <ul className="list-disc pl-6 space-y-2 text-gray-700">
                     <li>SSL encryption for data transmission</li>
@@ -118,7 +160,9 @@ export default function PrivacyPolicyPage() {
                 </section>
 
                 <section>
-                  <h2 className="text-2xl font-bold text-gray-900 mb-4">5. Cookies and Tracking</h2>
+                  <h2 className="text-2xl font-bold text-gray-900 mb-4">
+                    5. Cookies and Tracking
+                  </h2>
                   <p className="text-gray-700 mb-4">
                     Our website uses cookies and similar technologies to:
                   </p>
@@ -129,14 +173,19 @@ export default function PrivacyPolicyPage() {
                     <li>Improve website functionality and user experience</li>
                   </ul>
                   <p className="text-gray-700">
-                    You can control cookies through your browser settings, though some features may not work properly if disabled.
+                    You can control cookies through your browser settings,
+                    though some features may not work properly if disabled.
                   </p>
                 </section>
 
                 <section>
-                  <h2 className="text-2xl font-bold text-gray-900 mb-4">6. Your Rights</h2>
-                  
-                  <h3 className="text-xl font-semibold text-gray-800 mb-3">General Rights</h3>
+                  <h2 className="text-2xl font-bold text-gray-900 mb-4">
+                    6. Your Rights
+                  </h2>
+
+                  <h3 className="text-xl font-semibold text-gray-800 mb-3">
+                    General Rights
+                  </h3>
                   <ul className="list-disc pl-6 space-y-2 text-gray-700 mb-4">
                     <li>Access, update, or delete your personal information</li>
                     <li>Opt-out of marketing communications</li>
@@ -144,17 +193,29 @@ export default function PrivacyPolicyPage() {
                     <li>Lodge complaints with supervisory authorities</li>
                   </ul>
 
-                  <h3 className="text-xl font-semibold text-gray-800 mb-3">California Residents (CCPA)</h3>
-                  <p className="text-gray-700 mb-2">California residents have additional rights:</p>
+                  <h3 className="text-xl font-semibold text-gray-800 mb-3">
+                    California Residents (CCPA)
+                  </h3>
+                  <p className="text-gray-700 mb-2">
+                    California residents have additional rights:
+                  </p>
                   <ul className="list-disc pl-6 space-y-2 text-gray-700 mb-4">
-                    <li>Right to know what personal information is collected</li>
+                    <li>
+                      Right to know what personal information is collected
+                    </li>
                     <li>Right to delete personal information</li>
                     <li>Right to opt-out of sale of personal information</li>
-                    <li>Right to non-discrimination for exercising privacy rights</li>
+                    <li>
+                      Right to non-discrimination for exercising privacy rights
+                    </li>
                   </ul>
 
-                  <h3 className="text-xl font-semibold text-gray-800 mb-3">European Residents (GDPR)</h3>
-                  <p className="text-gray-700 mb-2">EU residents have additional rights:</p>
+                  <h3 className="text-xl font-semibold text-gray-800 mb-3">
+                    European Residents (GDPR)
+                  </h3>
+                  <p className="text-gray-700 mb-2">
+                    EU residents have additional rights:
+                  </p>
                   <ul className="list-disc pl-6 space-y-2 text-gray-700">
                     <li>Right to rectification and erasure</li>
                     <li>Right to restrict processing</li>
@@ -164,53 +225,87 @@ export default function PrivacyPolicyPage() {
                 </section>
 
                 <section>
-                  <h2 className="text-2xl font-bold text-gray-900 mb-4">7. Data Retention</h2>
+                  <h2 className="text-2xl font-bold text-gray-900 mb-4">
+                    7. Data Retention
+                  </h2>
                   <p className="text-gray-700">
-                    We retain personal information for as long as necessary to provide services, 
-                    comply with legal obligations, resolve disputes, and enforce our agreements. 
-                    Specific retention periods vary based on the type of information and applicable laws.
+                    We retain personal information for as long as necessary to
+                    provide services, comply with legal obligations, resolve
+                    disputes, and enforce our agreements. Specific retention
+                    periods vary based on the type of information and applicable
+                    laws.
                   </p>
                 </section>
 
                 <section>
-                  <h2 className="text-2xl font-bold text-gray-900 mb-4">8. Children's Privacy</h2>
+                  <h2 className="text-2xl font-bold text-gray-900 mb-4">
+                    8. Children&apos;s Privacy
+                  </h2>
                   <p className="text-gray-700">
-                    Our services are not directed to children under 18. We do not knowingly 
-                    collect personal information from children under 18. If we become aware 
-                    of such collection, we will delete the information promptly.
+                    Our services are not directed to children under 18. We do
+                    not knowingly collect personal information from children
+                    under 18. If we become aware of such collection, we will
+                    delete the information promptly.
                   </p>
                 </section>
 
                 <section>
-                  <h2 className="text-2xl font-bold text-gray-900 mb-4">9. Third-Party Links</h2>
+                  <h2 className="text-2xl font-bold text-gray-900 mb-4">
+                    9. Third-Party Links
+                  </h2>
                   <p className="text-gray-700">
-                    Our website may contain links to third-party websites. We are not responsible 
-                    for the privacy practices of these sites. We encourage you to review their 
-                    privacy policies before providing any information.
+                    Our website may contain links to third-party websites. We
+                    are not responsible for the privacy practices of these
+                    sites. We encourage you to review their privacy policies
+                    before providing any information.
                   </p>
                 </section>
 
                 <section>
-                  <h2 className="text-2xl font-bold text-gray-900 mb-4">10. Changes to This Policy</h2>
+                  <h2 className="text-2xl font-bold text-gray-900 mb-4">
+                    10. Changes to This Policy
+                  </h2>
                   <p className="text-gray-700">
-                    We may update this privacy policy periodically. We will notify you of 
-                    significant changes by posting the new policy on our website and updating 
-                    the "Last Updated" date. Continued use of our services constitutes acceptance 
+                    We may update this privacy policy periodically. We will
+                    notify you of significant changes by posting the new policy
+                    on our website and updating the &quot;Last Updated&quot;
+                    date. Continued use of our services constitutes acceptance
                     of any changes.
                   </p>
                 </section>
 
                 <section>
-                  <h2 className="text-2xl font-bold text-gray-900 mb-4">11. Contact Us</h2>
+                  <h2 className="text-2xl font-bold text-gray-900 mb-4">
+                    11. Contact Us
+                  </h2>
                   <p className="text-gray-700 mb-4">
-                    If you have questions about this privacy policy or want to exercise your rights, contact us:
+                    If you have questions about this privacy policy or want to
+                    exercise your rights, contact us:
                   </p>
                   <div className="bg-gray-50 p-6 rounded-lg">
                     <div className="space-y-2 text-gray-700">
-                      <p><strong>Wild West Construction</strong></p>
+                      <p>
+                        <strong>Wild West Construction</strong>
+                      </p>
                       <p>4097 S 420 W, Murray, UT 84123</p>
-                      <p>Phone: <a href="tel:+1-801-691-4065" className="text-blue-600 hover:text-blue-700">(801) 691-4065</a></p>
-                      <p>Email: <a href="mailto:privacy@wildwestslc.com" className="text-blue-600 hover:text-blue-700">privacy@wildwestslc.com</a></p>
+                      <p>
+                        Phone:{" "}
+                        <a
+                          href="tel:+1-801-691-4065"
+                          className="text-blue-600 hover:text-blue-700"
+                        >
+                          (801) 691-4065
+                        </a>
+                      </p>
+                      <p>
+                        Email:{" "}
+                        <a
+                          href="mailto:privacy@wildwestslc.com"
+                          className="text-blue-600 hover:text-blue-700"
+                        >
+                          privacy@wildwestslc.com
+                        </a>
+                      </p>
                     </div>
                   </div>
                 </section>
@@ -226,7 +321,8 @@ export default function PrivacyPolicyPage() {
               Questions About Our Privacy Practices?
             </h2>
             <p className="text-lg text-gray-600 mb-6">
-              We're committed to protecting your privacy and answering any questions you may have.
+              We&apos;re committed to protecting your privacy and answering any
+              questions you may have.
             </p>
             <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
               <a

@@ -22,7 +22,7 @@ export default function FAQAccordion({ faqs }: FAQAccordionProps) {
   return (
     <div className="space-y-4">
       {faqs.map((faq) => (
-        <div 
+        <div
           key={faq.id}
           className="bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden"
         >
@@ -52,13 +52,11 @@ export default function FAQAccordion({ faqs }: FAQAccordionProps) {
               </svg>
             </div>
           </button>
-          
+
           {openFAQ === faq.id && (
             <div className="px-6 pb-4">
               <div className="border-t border-gray-200 pt-4">
-                <p className="text-gray-700 leading-relaxed">
-                  {faq.answer}
-                </p>
+                <p className="text-gray-700 leading-relaxed">{faq.answer}</p>
               </div>
             </div>
           )}
