@@ -1,42 +1,5 @@
 import type { NextConfig } from "next";
 
-// Validate critical environment variables at build time
-const requiredEnvVars = [
-  'NEXT_PUBLIC_SUPABASE_URL',
-  'NEXT_PUBLIC_SUPABASE_ANON_KEY',
-];
-
-// Check if we're in Vercel or CI environment
-const isVercel = process.env.VERCEL === '1';
-const isCI = process.env.CI === 'true';
-
-// Check for required environment variables
-const missingEnvVars = requiredEnvVars.filter(
-  (envVar) => !process.env[envVar]
-);
-
-const malformedEnvVars = requiredEnvVars.filter(
-  (envVar) => process.env[envVar]?.includes('\n') || process.env[envVar]?.includes('\r')
-);
-
-if (missingEnvVars.length > 0 && process.env.NODE_ENV === 'production') {
-  const message = `Missing required environment variables: ${missingEnvVars.join(', ')}`;
-  console.warn('⚠️  ' + message);
-  
-  if (isVercel || isCI) {
-    console.warn('⚠️  Please check your Vercel environment settings');
-    // Don't fail the build in Vercel, just warn
-  } else {
-    console.error('❌ ' + message);
-    console.error('❌ Please check your .env.production file');
-  }
-}
-
-if (malformedEnvVars.length > 0) {
-  console.error('❌ Environment variables contain newline characters:', malformedEnvVars);
-  console.error('❌ Please remove any line breaks from these variables');
-}
-
 const nextConfig: NextConfig = {
   // Performance optimizations
   experimental: {

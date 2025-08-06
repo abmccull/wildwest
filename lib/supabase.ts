@@ -1,44 +1,16 @@
 import { createClient } from "@supabase/supabase-js";
 import { Database, Lead, Page } from "@/types/database";
 
-// Validate and clean environment variables
-function cleanEnvVar(value: string | undefined): string | undefined {
-  if (!value) return undefined;
-  
-  // Clean the value
-  let cleaned = value.trim().replace(/[\n\r]+/g, '');
-  
-  // Handle case where the value includes the variable name (e.g., "VARNAME=value")
-  // This can happen with certain environment loading mechanisms
-  if (cleaned.includes('=')) {
-    const parts = cleaned.split('=');
-    // If it looks like VARNAME=value, take everything after the first =
-    if (parts.length >= 2 && parts[0].match(/^[A-Z_]+$/)) {
-      cleaned = parts.slice(1).join('=');
-    }
-  }
-  
-  return cleaned;
-}
 
 // Create Supabase client for client-side operations
 function createSupabaseClient() {
-  const supabaseUrl = cleanEnvVar(process.env.NEXT_PUBLIC_SUPABASE_URL);
-  const supabaseAnonKey = cleanEnvVar(process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
   
   if (!supabaseUrl || !supabaseAnonKey) {
     // Return a dummy client that will throw errors when used
     // This prevents build-time failures
     console.warn("Supabase environment variables not configured");
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    return null as any;
-  }
-  
-  // Validate URL format
-  try {
-    new URL(supabaseUrl);
-  } catch (error) {
-    console.error("Invalid NEXT_PUBLIC_SUPABASE_URL format:", supabaseUrl);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return null as any;
   }
@@ -68,20 +40,13 @@ export const supabase = createSupabaseClient();
 
 // Create Supabase admin client for server-side operations (with service role key)
 export const createServerSupabaseClient = () => {
-  const supabaseUrl = cleanEnvVar(process.env.NEXT_PUBLIC_SUPABASE_URL);
-  const supabaseServiceKey = cleanEnvVar(process.env.SUPABASE_SERVICE_ROLE_KEY);
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
   
   if (!supabaseUrl || !supabaseServiceKey) {
     throw new Error(
       "Missing Supabase environment variables for server-side operations",
     );
-  }
-  
-  // Validate URL format
-  try {
-    new URL(supabaseUrl);
-  } catch (error) {
-    throw new Error(`Invalid NEXT_PUBLIC_SUPABASE_URL format: ${supabaseUrl}`);
   }
 
   return createClient<Database>(

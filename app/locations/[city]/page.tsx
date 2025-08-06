@@ -400,6 +400,57 @@ export default async function CityHubPage({ params }: CityHubPageProps) {
           </div>
         </section>
 
+        {/* Nearby Cities We Serve */}
+        <section className="py-16 bg-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold text-blue-900 mb-4">
+                Nearby Cities We Serve
+              </h2>
+              <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+                Wild West Construction proudly serves {displayCity} and the surrounding communities with professional construction services.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {getServiceAreaCities(city).slice(0, 8).map((serviceCity, index) => (
+                <div key={index} className="bg-white border border-gray-200 rounded-lg shadow-construction hover:shadow-xl transition-shadow duration-300 p-6 text-center group">
+                  <div className="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-red-600 transition-colors duration-300">
+                    <svg className="w-6 h-6 text-red-600 group-hover:text-white transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                  </div>
+                  <h3 className="text-lg font-bold text-gray-900 mb-2 group-hover:text-red-600 transition-colors duration-300">
+                    {serviceCity}
+                  </h3>
+                  <p className="text-gray-600 text-sm mb-4">
+                    Professional construction services
+                  </p>
+                  <Link
+                    href={`/locations/${getServiceAreaCitySlug(serviceCity)}`}
+                    className="inline-block px-4 py-2 bg-red-600 text-white text-sm font-semibold rounded-lg hover:bg-red-700 transition-colors duration-200"
+                  >
+                    View Services
+                  </Link>
+                </div>
+              ))}
+            </div>
+
+            <div className="text-center mt-12">
+              <p className="text-gray-600 mb-4">
+                Don't see your city? We serve the entire Salt Lake area!
+              </p>
+              <a
+                href="tel:+1-801-691-4065"
+                className="inline-block px-8 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors duration-200"
+              >
+                Call (801) 691-4065 for Your Area
+              </a>
+            </div>
+          </div>
+        </section>
+
         {/* Call to Action */}
         <section className="py-16 bg-gradient-to-r from-red-600 to-red-700 text-white">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -511,6 +562,29 @@ function getServiceAreaCities(city: string): string[] {
   return (
     serviceAreas[city] || ["Salt Lake County", "Utah County", "Davis County"]
   );
+}
+
+function getServiceAreaCitySlug(cityName: string): string {
+  // Convert city display names to URL-friendly slugs
+  const citySlugMap: Record<string, string> = {
+    "Salt Lake City": "salt-lake-city",
+    "West Valley City": "west-valley-city",
+    "West Jordan": "west-jordan",
+    "Sandy": "sandy",
+    "Murray": "murray",
+    "Taylorsville": "taylorsville",
+    "Draper": "draper",
+    "Riverton": "riverton",
+    "Bountiful": "bountiful",
+    "Cottonwood Heights": "cottonwood-heights",
+    "Layton": "layton",
+    "Ogden": "ogden",
+    "Orem": "orem",
+    "Pleasant Grove": "pleasant-grove",
+    "Roy": "roy",
+  };
+
+  return citySlugMap[cityName] || cityName.toLowerCase().replace(/\s+/g, "-");
 }
 
 // Enable ISR with 1 hour revalidation

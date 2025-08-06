@@ -28,13 +28,12 @@ const company: FooterLink[] = [
   { label: "Gallery", href: "/gallery" },
   { label: "Testimonials", href: "/testimonials" },
   { label: "Blog", href: "/blog" },
+  { label: "FAQ", href: "/faq" },
 ];
 
 const legal: FooterLink[] = [
-  { label: "Privacy Policy", href: "/privacy" },
+  { label: "Privacy Policy", href: "/privacy-policy" },
   { label: "Terms of Service", href: "/terms" },
-  { label: "License Information", href: "/license" },
-  { label: "Insurance", href: "/insurance" },
 ];
 
 const Footer: React.FC = () => {

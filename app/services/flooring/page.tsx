@@ -45,6 +45,28 @@ export default function FlooringServices() {
       <Header />
 
       <main>
+        {/* Breadcrumb Navigation */}
+        <nav className="bg-gray-50 py-3">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex items-center space-x-2 text-sm">
+              <Link
+                href="/"
+                className="text-blue-600 hover:text-red-600 transition-colors"
+              >
+                Home
+              </Link>
+              <span className="text-gray-500">/</span>
+              <Link
+                href="/services"
+                className="text-blue-600 hover:text-red-600 transition-colors"
+              >
+                Services
+              </Link>
+              <span className="text-gray-500">/</span>
+              <span className="text-gray-800">Flooring Services</span>
+            </div>
+          </div>
+        </nav>
         {/* Hero Section */}
         <section className="bg-gradient-to-br from-green-700 via-green-600 to-green-500 text-white py-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -848,6 +870,132 @@ export default function FlooringServices() {
           </div>
         </section>
 
+        {/* Related Services Section */}
+        <section className="py-16 bg-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-12">
+              <h2 className="text-4xl font-bold text-gray-900 mb-4">
+                Explore Our Other Expert Services
+              </h2>
+              <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+                Complete your project with our comprehensive construction and maintenance services.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+              {/* Demolition Services */}
+              <div className="bg-white rounded-lg shadow-construction border border-gray-200 hover:shadow-xl hover:border-red-600/20 transition-all duration-300 group overflow-hidden">
+                <div className="p-6">
+                  <div className="flex items-start space-x-4 mb-4">
+                    <div className="flex-shrink-0 p-3 rounded-lg bg-red-100 text-red-700 group-hover:scale-110 transition-transform duration-300">
+                      <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                      </svg>
+                    </div>
+                    <div className="flex-grow">
+                      <h3 className="text-xl font-bold text-red-700 group-hover:text-red-600 transition-colors duration-300">
+                        Professional Demolition Services
+                      </h3>
+                    </div>
+                  </div>
+                  
+                  <p className="text-gray-600 mb-4 leading-relaxed">
+                    Safe and efficient demolition for interior remodeling, structural teardown, and complete building removal.
+                  </p>
+                  
+                  <div className="mb-6">
+                    <ul className="space-y-2">
+                      <li className="flex items-start space-x-2 text-sm">
+                        <svg className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                        <span className="text-gray-700">Interior & exterior demolition</span>
+                      </li>
+                      <li className="flex items-start space-x-2 text-sm">
+                        <svg className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                        <span className="text-gray-700">Selective wall & structure removal</span>
+                      </li>
+                      <li className="flex items-start space-x-2 text-sm">
+                        <svg className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                        <span className="text-gray-700">Complete debris removal</span>
+                      </li>
+                    </ul>
+                  </div>
+                  
+                  <div className="space-y-3">
+                    <Link
+                      href="/services/demolition"
+                      className="block w-full text-center font-semibold py-3 px-4 rounded-lg bg-white border-2 border-red-600 text-red-600 hover:bg-red-600 hover:text-white transition-all duration-300 transform group-hover:scale-105"
+                    >
+                      View Demolition Services
+                    </Link>
+                  </div>
+                </div>
+                <div className="h-1 bg-gradient-to-r from-red-700 via-red-500 to-orange-400 opacity-0 group-hover:opacity-100 transition-all duration-300"></div>
+              </div>
+
+              {/* Junk Removal Services */}
+              <div className="bg-white rounded-lg shadow-construction border border-gray-200 hover:shadow-xl hover:border-blue-600/20 transition-all duration-300 group overflow-hidden">
+                <div className="p-6">
+                  <div className="flex items-start space-x-4 mb-4">
+                    <div className="flex-shrink-0 p-3 rounded-lg bg-blue-100 text-blue-700 group-hover:scale-110 transition-transform duration-300">
+                      <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                      </svg>
+                    </div>
+                    <div className="flex-grow">
+                      <h3 className="text-xl font-bold text-blue-700 group-hover:text-blue-600 transition-colors duration-300">
+                        Fast Junk Removal Services
+                      </h3>
+                    </div>
+                  </div>
+                  
+                  <p className="text-gray-600 mb-4 leading-relaxed">
+                    Quick and reliable removal of construction debris, household items, and commercial waste with eco-friendly disposal.
+                  </p>
+                  
+                  <div className="mb-6">
+                    <ul className="space-y-2">
+                      <li className="flex items-start space-x-2 text-sm">
+                        <svg className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                        <span className="text-gray-700">Construction debris cleanup</span>
+                      </li>
+                      <li className="flex items-start space-x-2 text-sm">
+                        <svg className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                        <span className="text-gray-700">Household item removal</span>
+                      </li>
+                      <li className="flex items-start space-x-2 text-sm">
+                        <svg className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                        <span className="text-gray-700">Same-day service available</span>
+                      </li>
+                    </ul>
+                  </div>
+                  
+                  <div className="space-y-3">
+                    <Link
+                      href="/services/junk-removal"
+                      className="block w-full text-center font-semibold py-3 px-4 rounded-lg bg-white border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white transition-all duration-300 transform group-hover:scale-105"
+                    >
+                      View Junk Removal Services
+                    </Link>
+                  </div>
+                </div>
+                <div className="h-1 bg-gradient-to-r from-blue-700 via-blue-500 to-cyan-400 opacity-0 group-hover:opacity-100 transition-all duration-300"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Lead Capture Form */}
         <section
           className="py-16 bg-gradient-to-br from-green-600 to-green-700 text-white"
@@ -978,6 +1126,35 @@ export default function FlooringServices() {
       <Footer />
 
       {/* JSON-LD Schema Markup */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://wildwestslc.com"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Services",
+                "item": "https://wildwestslc.com/services"
+              },
+              {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "Flooring Services",
+                "item": "https://wildwestslc.com/services/flooring"
+              }
+            ]
+          }),
+        }}
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
