@@ -260,7 +260,7 @@ const LeadForm: React.FC<LeadFormProps> = ({
                 value={formData.name}
                 onChange={handleInputChange}
                 onFocus={handleFocus}
-                className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-red-600 focus:border-transparent transition-colors duration-200 ${
+                className={`w-full px-3 py-2 border rounded-lg text-gray-900 bg-white focus:ring-2 focus:ring-red-600 focus:border-transparent transition-colors duration-200 ${
                   errors.name ? "border-red-500" : "border-gray-300"
                 }`}
                 placeholder="John Smith"
@@ -288,7 +288,7 @@ const LeadForm: React.FC<LeadFormProps> = ({
                 value={formData.phone}
                 onChange={handleInputChange}
                 onFocus={handleFocus}
-                className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-red-600 focus:border-transparent transition-colors duration-200 ${
+                className={`w-full px-3 py-2 border rounded-lg text-gray-900 bg-white focus:ring-2 focus:ring-red-600 focus:border-transparent transition-colors duration-200 ${
                   errors.phone ? "border-red-500" : "border-gray-300"
                 }`}
                 placeholder="801-555-0123"
@@ -318,7 +318,7 @@ const LeadForm: React.FC<LeadFormProps> = ({
               value={formData.email}
               onChange={handleInputChange}
               onFocus={handleFocus}
-              className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-red-600 focus:border-transparent transition-colors duration-200 ${
+              className={`w-full px-3 py-2 border rounded-lg text-gray-900 bg-white focus:ring-2 focus:ring-red-600 focus:border-transparent transition-colors duration-200 ${
                 errors.email ? "border-red-500" : "border-gray-300"
               }`}
               placeholder="john@example.com"
