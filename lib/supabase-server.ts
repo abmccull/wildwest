@@ -6,15 +6,29 @@
 import { createClient } from "@supabase/supabase-js";
 import { Database } from "@/types/database";
 
+// Validate and clean environment variables
+function cleanEnvVar(value: string | undefined): string | undefined {
+  if (!value) return undefined;
+  // Remove any trailing newlines or whitespace
+  return value.trim().replace(/[\n\r]+/g, '');
+}
+
 /**
  * Create a Supabase client for server-side operations
  */
 export async function createServerClient() {
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  const supabaseUrl = cleanEnvVar(process.env.NEXT_PUBLIC_SUPABASE_URL);
+  const supabaseAnonKey = cleanEnvVar(process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
   
   if (!supabaseUrl || !supabaseAnonKey) {
     throw new Error("Missing Supabase environment variables");
+  }
+  
+  // Validate URL format
+  try {
+    new URL(supabaseUrl);
+  } catch (error) {
+    throw new Error(`Invalid NEXT_PUBLIC_SUPABASE_URL format: ${supabaseUrl}`);
   }
   
   return createClient<Database>(
@@ -34,11 +48,18 @@ export async function createServerClient() {
  * WARNING: Only use this for server-side operations that require admin access
  */
 export function createAdminClient() {
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  const supabaseUrl = cleanEnvVar(process.env.NEXT_PUBLIC_SUPABASE_URL);
+  const supabaseServiceKey = cleanEnvVar(process.env.SUPABASE_SERVICE_ROLE_KEY);
   
   if (!supabaseUrl || !supabaseServiceKey) {
     throw new Error("Missing Supabase environment variables for admin client");
+  }
+  
+  // Validate URL format
+  try {
+    new URL(supabaseUrl);
+  } catch (error) {
+    throw new Error(`Invalid NEXT_PUBLIC_SUPABASE_URL format: ${supabaseUrl}`);
   }
 
   return createClient<Database>(

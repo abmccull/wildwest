@@ -55,13 +55,20 @@ export const supabase = createSupabaseClient();
 
 // Create Supabase admin client for server-side operations (with service role key)
 export const createServerSupabaseClient = () => {
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  const supabaseUrl = cleanEnvVar(process.env.NEXT_PUBLIC_SUPABASE_URL);
+  const supabaseServiceKey = cleanEnvVar(process.env.SUPABASE_SERVICE_ROLE_KEY);
   
   if (!supabaseUrl || !supabaseServiceKey) {
     throw new Error(
       "Missing Supabase environment variables for server-side operations",
     );
+  }
+  
+  // Validate URL format
+  try {
+    new URL(supabaseUrl);
+  } catch (error) {
+    throw new Error(`Invalid NEXT_PUBLIC_SUPABASE_URL format: ${supabaseUrl}`);
   }
 
   return createClient<Database>(

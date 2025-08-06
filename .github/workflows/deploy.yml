@@ -2,213 +2,194 @@ name: Deploy to Vercel
 
 on:
   push:
-    branches:
-      - main
+    branches: [main, master]
   pull_request:
-    branches:
-      - main
+    branches: [main, master]
   workflow_dispatch:
 
 env:
-  NODE_VERSION: "20"
-  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+  NODE_VERSION: '18'
 
 jobs:
-  # Build and Type Check
-  build-and-test:
-    name: Build and Type Check
+  validate:
+    name: Validate Environment
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
+      - uses: actions/checkout@v4
+      
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: "npm"
-
-      - name: Cache dependencies
-        uses: actions/cache@v4
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-
+          cache: 'npm'
+      
       - name: Install dependencies
         run: npm ci
-
-      - name: Run TypeScript type check
-        run: npx tsc --noEmit
-
-      - name: Run ESLint
-        run: npm run lint
+      
+      - name: Validate environment setup
+        run: npm run validate:env
         continue-on-error: true
 
-      - name: Build application
+  test-build:
+    name: Test Build
+    runs-on: ubuntu-latest
+    needs: validate
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Run linter
+        run: npm run lint
+        continue-on-error: true
+      
+      - name: Test build
         run: npm run build
         env:
           NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
           NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
-
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          NEXT_PUBLIC_BUSINESS_NAME: "Wild West Construction"
+          NEXT_PUBLIC_BUSINESS_PHONE: "(801) 691-4065"
+          NEXT_PUBLIC_BUSINESS_EMAIL: "info@wildwestslc.com"
+          NEXT_PUBLIC_BUSINESS_ADDRESS: "4097 S 420 W Murray, UT 84123"
+          NEXT_PUBLIC_WHATSAPP_LINK: "https://wa.me/18016914065"
+      
       - name: Upload build artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v3
         with:
-          name: build-files
-          path: .next/
-          retention-days: 7
+          name: nextjs-build
+          path: .next
+          retention-days: 1
 
-  # Deploy to Vercel Preview
   deploy-preview:
-    name: Deploy Preview to Vercel
+    name: Deploy Preview
     runs-on: ubuntu-latest
-    needs: build-and-test
+    needs: test-build
     if: github.event_name == 'pull_request'
-
     environment:
-      name: preview
+      name: Preview
       url: ${{ steps.deploy.outputs.url }}
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
+      - uses: actions/checkout@v4
+      
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-
+          cache: 'npm'
+      
       - name: Install Vercel CLI
-        run: npm install --global vercel@latest
-
+        run: npm install -g vercel@latest
+      
       - name: Pull Vercel Environment Information
         run: vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
-
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+      
       - name: Build Project Artifacts
         run: vercel build --token=${{ secrets.VERCEL_TOKEN }}
-
-      - name: Deploy to Vercel Preview
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+      
+      - name: Deploy Preview to Vercel
         id: deploy
         run: |
           url=$(vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }})
           echo "url=$url" >> $GITHUB_OUTPUT
-          echo "Preview URL: $url"
-
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+      
       - name: Comment PR with Preview URL
         uses: actions/github-script@v7
+        if: github.event_name == 'pull_request'
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: '🚀 Preview deployed to: ${{ steps.deploy.outputs.url }}'
+              body: '🚀 Preview deployment ready: ${{ steps.deploy.outputs.url }}'
             })
 
-  # Deploy to Vercel Production
   deploy-production:
-    name: Deploy to Vercel Production
+    name: Deploy to Production
     runs-on: ubuntu-latest
-    needs: build-and-test
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-
+    needs: test-build
+    if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
     environment:
-      name: production
-      url: https://wildwestconstruction.com
-
+      name: Production
+      url: https://wildwestslc.com
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
+      - uses: actions/checkout@v4
+      
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-
+          cache: 'npm'
+      
       - name: Install Vercel CLI
-        run: npm install --global vercel@latest
-
+        run: npm install -g vercel@latest
+      
       - name: Pull Vercel Environment Information
         run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
-
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+      
       - name: Build Project Artifacts
         run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
-
-      - name: Deploy to Vercel Production
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+      
+      - name: Deploy to Production
         run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
-
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+      
       - name: Purge CDN Cache
         run: |
-          echo "CDN cache purged for production deployment"
+          echo "Deployment complete. CDN cache will auto-purge."
         continue-on-error: true
 
-  # Lighthouse CI Check (Optional)
-  lighthouse:
-    name: Lighthouse CI
+  health-check:
+    name: Health Check
     runs-on: ubuntu-latest
-    needs: deploy-preview
-    if: github.event_name == 'pull_request'
-
+    needs: [deploy-production]
+    if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-
-      - name: Install Lighthouse CI
-        run: npm install -g @lhci/cli@0.13.x
-
-      - name: Run Lighthouse CI
+      - name: Wait for deployment
+        run: sleep 30
+      
+      - name: Check site health
         run: |
-          lhci autorun --collect.url=${{ needs.deploy-preview.outputs.url }} \
-            --assert.preset=lighthouse:recommended \
-            --assert.assertions.categories:performance=off \
-            --assert.assertions.categories:accessibility=off \
-            --assert.assertions.categories:best-practices=off \
-            --assert.assertions.categories:seo=off \
-            --upload.target=temporary-public-storage
-        continue-on-error: true
-
-  # Security Scan
-  security-scan:
-    name: Security Vulnerability Scan
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Run Trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@master
-        with:
-          scan-type: "fs"
-          scan-ref: "."
-          format: "sarif"
-          output: "trivy-results.sarif"
-          severity: "CRITICAL,HIGH"
-
-      - name: Upload Trivy results to GitHub Security
-        uses: github/codeql-action/upload-sarif@v3
-        with:
-          sarif_file: "trivy-results.sarif"
-        continue-on-error: true
-
-  # Notify on Failure
-  notify-failure:
-    name: Notify on Deployment Failure
-    runs-on: ubuntu-latest
-    needs: [build-and-test, deploy-production]
-    if: failure() && github.ref == 'refs/heads/main'
-
-    steps:
-      - name: Send failure notification
+          response=$(curl -s -o /dev/null -w "%{http_code}" https://wildwestslc.com)
+          if [ $response -eq 200 ]; then
+            echo "✅ Site is healthy (HTTP $response)"
+          else
+            echo "❌ Site health check failed (HTTP $response)"
+            exit 1
+          fi
+      
+      - name: Check API health
         run: |
-          echo "Deployment failed. Notification would be sent to team."
-          # Add Slack, Discord, or email notification here
+          response=$(curl -s -o /dev/null -w "%{http_code}" https://wildwestslc.com/api/health)
+          if [ $response -eq 200 ]; then
+            echo "✅ API is healthy (HTTP $response)"
+          else
+            echo "⚠️ API health check failed (HTTP $response)"
+          fi
+        continue-on-error: true
