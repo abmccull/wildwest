@@ -7,6 +7,8 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import SocialShare from "@/components/SocialShare";
 
+export const revalidate = 3600; // Revalidate every hour
+
 interface BlogPostPageProps {
   params: Promise<{
     slug: string;
@@ -33,6 +35,28 @@ async function getBlogPost(slug: string) {
   } catch (error) {
     console.error("Error in getBlogPost:", error);
     return null;
+  }
+}
+
+export async function generateStaticParams() {
+  try {
+    const supabase = await createServerClient();
+    const { data: posts, error } = await supabase
+      .from("blog_posts")
+      .select("slug")
+      .eq("published", true);
+    
+    if (error) {
+      console.error("Error fetching blog posts for static generation:", error);
+      return [];
+    }
+
+    return (posts || []).map((post) => ({
+      slug: post.slug,
+    }));
+  } catch (error) {
+    console.error("Error in generateStaticParams:", error);
+    return [];
   }
 }
 

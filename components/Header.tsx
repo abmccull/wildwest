@@ -78,7 +78,7 @@ const Header: React.FC = () => {
   return (
     <header className="bg-white shadow-construction sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16 md:h-18 lg:h-20">
+        <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex-shrink-0">
             <Link
@@ -86,7 +86,7 @@ const Header: React.FC = () => {
               className="flex items-center space-x-2 sm:space-x-3"
               onClick={closeMenus}
             >
-              <div className="relative w-10 h-10 md:w-12 md:h-12">
+              <div className="relative w-10 h-10">
                 <Image
                   src="/logo.webp"
                   alt="Wild West Construction Logo"
@@ -94,7 +94,7 @@ const Header: React.FC = () => {
                   height={48}
                   className="object-contain"
                   priority
-                  sizes="(max-width: 768px) 40px, 48px"
+                  sizes="40px"
                 />
               </div>
               <div className="hidden sm:block">

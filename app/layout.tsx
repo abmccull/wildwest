@@ -135,8 +135,30 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{
             __html: `
               (function() {
+                // Check if we should apply CSS optimizations
+                var shouldOptimizeCSS = function() {
+                  // Only apply aggressive optimizations on mobile or slower connections
+                  var isMobile = window.innerWidth <= 768;
+                  var isSlowConnection = false;
+                  
+                  // Check connection speed if available
+                  if ('connection' in navigator) {
+                    var connection = navigator.connection;
+                    isSlowConnection = connection.effectiveType === '2g' || 
+                                     connection.effectiveType === 'slow-2g' ||
+                                     (connection.downlink && connection.downlink < 1.5);
+                  }
+                  
+                  // Apply optimizations if mobile or slow connection
+                  return isMobile || isSlowConnection;
+                };
+                
                 // Monitor for render-blocking CSS and convert to async
                 var processCSS = function() {
+                  if (!shouldOptimizeCSS()) {
+                    return false; // Skip optimization on desktop with good connections
+                  }
+                  
                   var links = document.querySelectorAll('link[rel="stylesheet"], link[data-n-css]');
                   var processed = false;
                   
@@ -152,10 +174,10 @@ export default function RootLayout({
                       link.onload = function() {
                         link.media = originalMedia;
                       };
-                      // Fallback timeout
+                      // Shorter timeout for mobile optimization
                       setTimeout(function() {
                         link.media = originalMedia;
-                      }, 100);
+                      }, 50);
                       processed = true;
                     }
                   });
@@ -196,6 +218,11 @@ export default function RootLayout({
                 } else {
                   processCSS();
                 }
+                
+                // Re-evaluate on resize (mobile/desktop switch)
+                window.addEventListener('resize', function() {
+                  setTimeout(processCSS, 100);
+                });
               })();
             `,
           }}

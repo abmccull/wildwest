@@ -48,7 +48,7 @@
       ]
     },
     {
-      "source": "/(.*)\\.webp",
+      "source": "/(.*).webp",
       "headers": [
         {
           "key": "Cache-Control",
@@ -57,7 +57,7 @@
       ]
     },
     {
-      "source": "/(.*)\\.avif",
+      "source": "/(.*).avif",
       "headers": [
         {
           "key": "Cache-Control",
@@ -66,7 +66,7 @@
       ]
     },
     {
-      "source": "/(.*)\\.woff2",
+      "source": "/(.*).woff2",
       "headers": [
         {
           "key": "Cache-Control",
@@ -79,7 +79,7 @@
       ]
     },
     {
-      "source": "/(.*)\\.woff",
+      "source": "/(.*).woff",
       "headers": [
         {
           "key": "Cache-Control",
@@ -147,19 +147,6 @@
       ]
     },
     {
-      "source": "/((?!api).*)\.(html|js|css)",
-      "headers": [
-        {
-          "key": "CDN-Cache-Control",
-          "value": "public, s-maxage=31536000, immutable"
-        },
-        {
-          "key": "Vercel-CDN-Cache-Control",
-          "value": "public, s-maxage=31536000, immutable"
-        }
-      ]
-    },
-    {
       "source": "/",
       "headers": [
         {
@@ -188,21 +175,16 @@
       "maxDuration": 5
     },
     "app/api/lead/route.ts": {
-      "maxDuration": 10,
-      "runtime": "nodejs18.x",
-      "regions": ["cle1", "iad1", "sfo1"]
+      "maxDuration": 10
     },
     "app/api/health/route.ts": {
-      "maxDuration": 5,
-      "runtime": "edge"
+      "maxDuration": 5
     },
     "app/sitemap.ts": {
-      "maxDuration": 30,
-      "runtime": "nodejs18.x"
+      "maxDuration": 30
     },
     "app/robots.ts": {
-      "maxDuration": 5,
-      "runtime": "edge"
+      "maxDuration": 5
     }
   },
   "crons": []
