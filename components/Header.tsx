@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 interface NavigationItem {
   label: string;
@@ -85,10 +86,15 @@ const Header: React.FC = () => {
               className="flex items-center space-x-2 sm:space-x-3"
               onClick={closeMenus}
             >
-              <div className="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-br from-desert-red to-mustang-yellow rounded-lg flex items-center justify-center shadow-western">
-                <span className="text-white font-bold text-lg md:text-xl">
-                  W
-                </span>
+              <div className="relative w-10 h-10 md:w-12 md:h-12">
+                <Image
+                  src="/logo.webp"
+                  alt="Wild West Construction Logo"
+                  width={48}
+                  height={48}
+                  className="object-contain"
+                  priority
+                />
               </div>
               <div className="hidden sm:block">
                 <h1 className="text-lg sm:text-xl md:text-2xl font-bold text-blue-900 leading-tight">
@@ -231,8 +237,14 @@ const Header: React.FC = () => {
                   className="flex items-center space-x-2"
                   onClick={closeMenus}
                 >
-                  <div className="w-10 h-10 bg-gradient-to-br from-desert-red to-mustang-yellow rounded-lg flex items-center justify-center shadow-western">
-                    <span className="text-white font-bold text-lg">W</span>
+                  <div className="relative w-10 h-10">
+                    <Image
+                      src="/logo.webp"
+                      alt="Wild West Construction Logo"
+                      width={40}
+                      height={40}
+                      className="object-contain"
+                    />
                   </div>
                   <span className="text-lg font-bold text-blue-900">Wild West</span>
                 </Link>

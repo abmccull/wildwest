@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 
 interface FooterLink {
   label: string;
@@ -47,8 +48,14 @@ const Footer: React.FC = () => {
           {/* Company Information */}
           <div className="lg:col-span-1">
             <div className="flex items-center space-x-3 mb-4">
-              <div className="w-12 h-12 bg-gradient-to-br from-desert-red to-mustang-yellow rounded-lg flex items-center justify-center shadow-western">
-                <span className="text-white font-bold text-xl">W</span>
+              <div className="relative w-12 h-12">
+                <Image
+                  src="/logo.webp"
+                  alt="Wild West Construction Logo"
+                  width={48}
+                  height={48}
+                  className="object-contain"
+                />
               </div>
               <div>
                 <h3 className="text-xl font-bold">Wild West Construction</h3>

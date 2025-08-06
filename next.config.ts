@@ -1,5 +1,21 @@
 import type { NextConfig } from "next";
 
+// Validate critical environment variables at build time
+const requiredEnvVars = [
+  'NEXT_PUBLIC_SUPABASE_URL',
+  'NEXT_PUBLIC_SUPABASE_ANON_KEY',
+];
+
+// Check for required environment variables
+const missingEnvVars = requiredEnvVars.filter(
+  (envVar) => !process.env[envVar] || process.env[envVar]?.includes('\n')
+);
+
+if (missingEnvVars.length > 0 && process.env.NODE_ENV === 'production') {
+  console.error('Missing or malformed required environment variables:', missingEnvVars);
+  console.error('Please check your .env.production or Vercel environment settings');
+}
+
 const nextConfig: NextConfig = {
   // Performance optimizations
   experimental: {

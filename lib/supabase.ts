@@ -1,15 +1,31 @@
 import { createClient } from "@supabase/supabase-js";
 import { Database, Lead, Page } from "@/types/database";
 
+// Validate and clean environment variables
+function cleanEnvVar(value: string | undefined): string | undefined {
+  if (!value) return undefined;
+  // Remove any trailing newlines or whitespace
+  return value.trim().replace(/[\n\r]+/g, '');
+}
+
 // Create Supabase client for client-side operations
 function createSupabaseClient() {
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  const supabaseUrl = cleanEnvVar(process.env.NEXT_PUBLIC_SUPABASE_URL);
+  const supabaseAnonKey = cleanEnvVar(process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
   
   if (!supabaseUrl || !supabaseAnonKey) {
     // Return a dummy client that will throw errors when used
     // This prevents build-time failures
     console.warn("Supabase environment variables not configured");
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return null as any;
+  }
+  
+  // Validate URL format
+  try {
+    new URL(supabaseUrl);
+  } catch (error) {
+    console.error("Invalid NEXT_PUBLIC_SUPABASE_URL format:", supabaseUrl);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return null as any;
   }
