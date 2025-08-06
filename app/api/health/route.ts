@@ -1,11 +1,6 @@
 import { createClient } from "@supabase/supabase-js";
 import { NextResponse } from "next/server";
 
-// Initialize Supabase client
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
-const supabase = createClient(supabaseUrl, supabaseServiceKey);
-
 interface HealthCheckResponse {
   status: "healthy" | "unhealthy";
   timestamp: string;
@@ -29,6 +24,10 @@ export async function GET() {
   const startTime = Date.now();
 
   try {
+    // Initialize Supabase client inside the function
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+    
     // Initialize health check response
     const healthCheck: HealthCheckResponse = {
       status: "healthy",
@@ -47,38 +46,42 @@ export async function GET() {
       environment: process.env.NODE_ENV || "development",
     };
 
-    // Test database connectivity
+    // Test database connectivity only if credentials are available
     const dbStartTime = Date.now();
-    try {
-      const { error } = await supabase
-        .from("leads")
-        .select("count", { count: "exact", head: true })
-        .limit(1);
+    
+    if (supabaseUrl && supabaseServiceKey) {
+      try {
+        const supabase = createClient(supabaseUrl, supabaseServiceKey);
+        const { error } = await supabase
+          .from("leads")
+          .select("count", { count: "exact", head: true })
+          .limit(1);
 
-      const dbResponseTime = Date.now() - dbStartTime;
+        const dbResponseTime = Date.now() - dbStartTime;
 
-      if (error) {
+        if (error) {
+          healthCheck.services.database = {
+            status: "error",
+            responseTime: dbResponseTime,
+            error: error.message,
+          };
+          healthCheck.status = "unhealthy";
+        } else {
+          healthCheck.services.database = {
+            status: "connected",
+            responseTime: dbResponseTime,
+          };
+        }
+      } catch (dbError) {
+        const dbResponseTime = Date.now() - dbStartTime;
         healthCheck.services.database = {
           status: "error",
           responseTime: dbResponseTime,
-          error: error.message,
+          error:
+            dbError instanceof Error ? dbError.message : "Unknown database error",
         };
         healthCheck.status = "unhealthy";
-      } else {
-        healthCheck.services.database = {
-          status: "connected",
-          responseTime: dbResponseTime,
-        };
       }
-    } catch (dbError) {
-      const dbResponseTime = Date.now() - dbStartTime;
-      healthCheck.services.database = {
-        status: "error",
-        responseTime: dbResponseTime,
-        error:
-          dbError instanceof Error ? dbError.message : "Unknown database error",
-      };
-      healthCheck.status = "unhealthy";
     }
 
     // Calculate API response time
