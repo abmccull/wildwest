@@ -1094,7 +1094,7 @@ export default function FlooringServices() {
                     rel="noopener noreferrer"
                     data-source="flooring_cta"
                     data-service-type="flooring"
-                    className="px-8 py-4 bg-green-800 text-white font-bold rounded-lg hover:bg-green-900 transition-colors duration-200 text-center text-lg flex items-center justify-center space-x-2"
+                    className="px-8 py-4 btn-whatsapp font-bold rounded-lg text-center text-lg flex items-center justify-center space-x-2"
                   >
                     <svg
                       className="w-6 h-6"

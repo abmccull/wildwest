@@ -34,7 +34,7 @@ export default function Home() {
     <>
       <Header />
 
-      <main>
+      <main id="main-content">
         {/* Hero Section */}
         <section className="bg-gradient-to-r from-blue-900 to-blue-700 text-white py-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -75,7 +75,7 @@ export default function Home() {
                     rel="noopener noreferrer"
                     data-source="homepage_hero"
                     data-service-type="general"
-                    className="px-8 py-4 bg-green-600 text-white font-bold rounded-lg hover:bg-green-700 transition-colors duration-200 text-center text-lg flex items-center justify-center space-x-2"
+                    className="px-8 py-4 btn-whatsapp font-bold rounded-lg text-center text-lg flex items-center justify-center space-x-2"
                   >
                     <svg
                       className="w-6 h-6"
@@ -153,7 +153,7 @@ export default function Home() {
         </section>
 
         {/* Services Overview */}
-        <section className="py-16 bg-white">
+        <section id="below-fold" className="py-16 bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
               <h2 className="text-4xl font-bold text-gray-900 mb-4">

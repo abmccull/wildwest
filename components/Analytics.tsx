@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import Script from "next/script";
 import { getCurrentPageData } from "@/lib/analytics";
@@ -10,6 +10,10 @@ const GA_MEASUREMENT_ID =
   process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || "G-XXXXXXXXXX";
 const FACEBOOK_PIXEL_ID =
   process.env.NEXT_PUBLIC_FACEBOOK_PIXEL_ID || "XXXXXXXXX";
+
+// Performance optimization: Only load scripts when needed
+const IDLE_TIMEOUT = 3000; // 3 seconds
+const INTERACTION_EVENTS = ['mousedown', 'mousemove', 'keydown', 'scroll', 'touchstart'];
 
 // Business contact information
 const BUSINESS_PHONE = "(801) 691-4065";
@@ -176,9 +180,11 @@ const debounce = (func: Function, wait: number) => {
   };
 };
 
-// Main Analytics component
+// Main Analytics component with lazy loading
 export default function Analytics() {
   const pathname = usePathname();
+  const [shouldLoadScripts, setShouldLoadScripts] = useState(false);
+  const [scriptsLoaded, setScriptsLoaded] = useState({ gtag: false, fbq: false });
 
   useEffect(() => {
     // Initialize Google Analytics 4 with manual configuration

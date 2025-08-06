@@ -1,0 +1,35 @@
+{
+  "jsc": {
+    "target": "es2022",
+    "parser": {
+      "syntax": "typescript",
+      "tsx": true,
+      "decorators": false,
+      "dynamicImport": true
+    },
+    "transform": {
+      "react": {
+        "runtime": "automatic"
+      }
+    },
+    "minify": {
+      "compress": true,
+      "mangle": true
+    }
+  },
+  "env": {
+    "targets": {
+      "chrome": "91",
+      "firefox": "90", 
+      "safari": "15",
+      "edge": "91"
+    },
+    "mode": "entry",
+    "coreJs": false,
+    "shippedProposals": true,
+    "bugfixes": true
+  },
+  "minify": true,
+  "sourceMaps": false,
+  "isModule": true
+}

@@ -213,11 +213,11 @@ const LeadForm: React.FC<LeadFormProps> = ({
       <div className={`${isCompact ? "p-4" : "p-6"}`}>
         {/* Header */}
         <div className="mb-6">
-          <h3
+          <h2
             className={`font-bold ${isCareers ? "text-blue-700" : "text-green-700"} ${isCompact ? "text-lg" : "text-xl"}`}
           >
             {isCareers ? "Apply Today" : "Get Your Free Quote"}
-          </h3>
+          </h2>
           <p className="text-gray-600 text-sm mt-1">
             {isCareers 
               ? "Submit your information and we'll contact you within 24 hours about career opportunities."
@@ -267,9 +267,13 @@ const LeadForm: React.FC<LeadFormProps> = ({
                 autoComplete="name"
                 required
                 disabled={isSubmitting}
+                aria-invalid={errors.name ? "true" : "false"}
+                aria-describedby={errors.name ? "name-error" : undefined}
               />
               {errors.name && (
-                <p className="text-red-600 text-xs mt-1">{errors.name}</p>
+                <p id="name-error" className="text-red-600 text-xs mt-1" role="alert">
+                  {errors.name}
+                </p>
               )}
             </div>
 
@@ -296,9 +300,13 @@ const LeadForm: React.FC<LeadFormProps> = ({
                 autoComplete="tel"
                 required
                 disabled={isSubmitting}
+                aria-invalid={errors.phone ? "true" : "false"}
+                aria-describedby={errors.phone ? "phone-error" : undefined}
               />
               {errors.phone && (
-                <p className="text-red-600 text-xs mt-1">{errors.phone}</p>
+                <p id="phone-error" className="text-red-600 text-xs mt-1" role="alert">
+                  {errors.phone}
+                </p>
               )}
             </div>
           </div>
@@ -325,9 +333,13 @@ const LeadForm: React.FC<LeadFormProps> = ({
               autoComplete="email"
               required
               disabled={isSubmitting}
+              aria-invalid={errors.email ? "true" : "false"}
+              aria-describedby={errors.email ? "email-error" : undefined}
             />
             {errors.email && (
-              <p className="text-red-600 text-xs mt-1">{errors.email}</p>
+              <p id="email-error" className="text-red-600 text-xs mt-1" role="alert">
+                {errors.email}
+              </p>
             )}
           </div>
 

@@ -1,9 +1,12 @@
 // Service Worker for Wild West Construction
 // Implements caching strategies for optimal Core Web Vitals
+// Enhanced with third-party script optimization
 
-const CACHE_NAME = "wildwest-construction-v1";
-const STATIC_CACHE_NAME = "wildwest-static-v1";
-const DYNAMIC_CACHE_NAME = "wildwest-dynamic-v1";
+const CACHE_NAME = "wildwest-construction-v3";
+const STATIC_CACHE_NAME = "wildwest-static-v3";
+const DYNAMIC_CACHE_NAME = "wildwest-dynamic-v3";
+const ANALYTICS_CACHE_NAME = "wildwest-analytics-v2";
+const THIRD_PARTY_CACHE_NAME = "wildwest-third-party-v1";
 
 // Assets to cache on install
 const STATIC_ASSETS = [
@@ -34,7 +37,9 @@ self.addEventListener("activate", (event) => {
         cacheNames.map((cacheName) => {
           if (
             cacheName !== STATIC_CACHE_NAME &&
-            cacheName !== DYNAMIC_CACHE_NAME
+            cacheName !== DYNAMIC_CACHE_NAME &&
+            cacheName !== ANALYTICS_CACHE_NAME &&
+            cacheName !== THIRD_PARTY_CACHE_NAME
           ) {
             console.log("Service Worker: Deleting old cache:", cacheName);
             return caches.delete(cacheName);
@@ -54,11 +59,18 @@ self.addEventListener("fetch", (event) => {
   // Skip non-GET requests
   if (request.method !== "GET") return;
 
-  // Skip cross-origin requests (except for fonts and images)
+  // Handle third-party analytics scripts with caching strategy
+  if (isAnalyticsScript(request)) {
+    event.respondWith(handleAnalyticsRequest(request));
+    return;
+  }
+
+  // Skip other cross-origin requests (except for fonts and images)
   if (
     url.origin !== location.origin &&
     !url.pathname.includes("fonts") &&
-    !request.destination.includes("image")
+    !request.destination.includes("image") &&
+    !isAnalyticsScript(request)
   ) {
     return;
   }
@@ -136,10 +148,123 @@ function isStaticAsset(request) {
 function isNetworkFirst(request) {
   return (
     request.destination === "document" ||
-    request.url.includes("/api/") ||
-    request.url.includes("analytics") ||
-    request.url.includes("gtag")
+    request.url.includes("/api/")
   );
+}
+
+// Analytics script detection
+function isAnalyticsScript(request) {
+  const url = new URL(request.url);
+  return (
+    url.hostname.includes("googletagmanager.com") ||
+    url.hostname.includes("google-analytics.com") ||
+    url.hostname.includes("connect.facebook.net") ||
+    url.hostname.includes("facebook.com") ||
+    url.hostname.includes("doubleclick.net") ||
+    url.hostname.includes("google.com/recaptcha") ||
+    url.pathname.includes("gtag/js") ||
+    url.pathname.includes("fbevents.js") ||
+    url.pathname.includes("/tr")
+  );
+}
+
+// Optimized analytics request handling with extended caching
+async function handleAnalyticsRequest(request) {
+  const url = new URL(request.url);
+  
+  try {
+    // Check if we have a cached version
+    const cachedResponse = await caches.match(request);
+    
+    if (cachedResponse) {
+      // Check cache age
+      const cachedDate = new Date(cachedResponse.headers.get('date'));
+      const cacheAge = Date.now() - cachedDate.getTime();
+      const maxAge = getMaxAgeForScript(url);
+      
+      // If cache is still fresh, return it immediately
+      if (cacheAge < maxAge) {
+        return cachedResponse;
+      }
+      
+      // Cache is stale, update in background
+      const fetchPromise = fetch(request)
+        .then(response => {
+          if (response.ok) {
+            const responseToCache = response.clone();
+            const modifiedResponse = new Response(responseToCache.body, {
+              status: responseToCache.status,
+              statusText: responseToCache.statusText,
+              headers: new Headers(responseToCache.headers)
+            });
+            
+            // Add custom cache headers
+            modifiedResponse.headers.set('sw-cache-date', new Date().toISOString());
+            modifiedResponse.headers.set('cache-control', `max-age=${maxAge / 1000}`);
+            
+            caches.open(ANALYTICS_CACHE_NAME)
+              .then(cache => cache.put(request, modifiedResponse));
+          }
+          return response;
+        })
+        .catch(error => {
+          console.log('Analytics script background update failed:', error);
+        });
+      
+      // Return stale cache while updating
+      return cachedResponse;
+    }
+    
+    // No cache, fetch and cache
+    const response = await fetch(request);
+    if (response.ok) {
+      const responseToCache = response.clone();
+      const modifiedResponse = new Response(responseToCache.body, {
+        status: responseToCache.status,
+        statusText: responseToCache.statusText,
+        headers: new Headers(responseToCache.headers)
+      });
+      
+      // Add custom cache headers
+      const maxAge = getMaxAgeForScript(url);
+      modifiedResponse.headers.set('sw-cache-date', new Date().toISOString());
+      modifiedResponse.headers.set('cache-control', `max-age=${maxAge / 1000}`);
+      
+      const cache = await caches.open(ANALYTICS_CACHE_NAME);
+      cache.put(request, modifiedResponse);
+    }
+    return response;
+    
+  } catch (error) {
+    // Return cached version if network fails
+    const cachedResponse = await caches.match(request);
+    if (cachedResponse) {
+      return cachedResponse;
+    }
+    // For analytics, fail silently to not break the page
+    return new Response('', { status: 204 });
+  }
+}
+
+// Get appropriate cache duration for different scripts
+function getMaxAgeForScript(url) {
+  // Facebook scripts - cache for 24 hours
+  if (url.hostname.includes('facebook') || url.pathname.includes('fbevents')) {
+    return 24 * 60 * 60 * 1000; // 24 hours
+  }
+  
+  // Google Tag Manager - cache for 1 hour
+  if (url.hostname.includes('googletagmanager')) {
+    return 60 * 60 * 1000; // 1 hour
+  }
+  
+  // Google Analytics - cache for 2 hours
+  if (url.hostname.includes('google-analytics')) {
+    return 2 * 60 * 60 * 1000; // 2 hours
+  }
+  
+  // Default cache for 12 hours
+  return 12 * 60 * 60 * 1000; // 12 hours
 }
 
 // Background sync for form submissions

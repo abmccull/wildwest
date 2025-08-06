@@ -7,7 +7,8 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 import WebVitals from "@/components/WebVitals";
 import ServiceWorkerRegistration from "@/components/ServiceWorkerRegistration";
-import Analytics from "@/components/Analytics";
+import Analytics from "@/components/AnalyticsOptimized";
+import CSSOptimizer from "@/components/CSSOptimizer";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -110,19 +111,60 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.className} ${inter.variable}`}>
       <head>
-        {/* Performance Resource Hints */}
+        {/* Critical Performance Resource Hints */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
           rel="preconnect"
           href="https://fonts.gstatic.com"
           crossOrigin="anonymous"
         />
-        <link rel="preconnect" href="https://www.google-analytics.com" />
-        <link rel="preconnect" href="https://www.googletagmanager.com" />
-        <link rel="preconnect" href="https://connect.facebook.net" />
-        <link rel="preconnect" href="https://www.facebook.com" />
+        
+        {/* Analytics domains - DNS prefetch only to avoid early connection */}
+        <link rel="dns-prefetch" href="https://www.google-analytics.com" />
+        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+        <link rel="dns-prefetch" href="https://connect.facebook.net" />
+        <link rel="dns-prefetch" href="https://www.facebook.com" />
         <link rel="dns-prefetch" href="https://vitals.vercel-insights.com" />
         <link rel="dns-prefetch" href="https://vercel.live" />
+        
+        {/* Preconnect for analytics only after user interaction */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                var preconnectAnalytics = function() {
+                  var link1 = document.createElement('link');
+                  link1.rel = 'preconnect';
+                  link1.href = 'https://www.googletagmanager.com';
+                  document.head.appendChild(link1);
+                  
+                  var link2 = document.createElement('link');
+                  link2.rel = 'preconnect'; 
+                  link2.href = 'https://connect.facebook.net';
+                  document.head.appendChild(link2);
+                };
+                
+                var events = ['mousedown', 'touchstart', 'keydown'];
+                var addListeners = function() {
+                  events.forEach(function(event) {
+                    document.addEventListener(event, function() {
+                      preconnectAnalytics();
+                      events.forEach(function(e) {
+                        document.removeEventListener(e, arguments.callee);
+                      });
+                    }, { passive: true, once: true });
+                  });
+                };
+                
+                if (document.readyState === 'loading') {
+                  document.addEventListener('DOMContentLoaded', addListeners);
+                } else {
+                  addListeners();
+                }
+              })();
+            `,
+          }}
+        />
 
         {/* PWA Manifest */}
         <link rel="manifest" href="/manifest.json" />
@@ -161,14 +203,151 @@ export default function RootLayout({
         {/* Open Graph optimized images */}
         <link rel="preload" href="/images/og-image.jpg" as="image" />
 
-        {/* Critical CSS for layout shift prevention */}
+        {/* CSS loading optimization will be handled by CSSOptimizer component */}
+
+        {/* Comprehensive critical CSS for above-the-fold content - prevents render blocking and FOUC */}
         <style
           dangerouslySetInnerHTML={{
             __html: `
-            .btn-primary{background:#dc2626;color:#fff;padding:.75rem 2rem;border-radius:.5rem}
+            /* Reset and base styles */
+            *,::before,::after{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}
+            html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif}
+            body{margin:0;line-height:inherit;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;background-color:#ffffff;color:#111827}
+
+            /* Header critical styles */
+            .sticky{position:-webkit-sticky;position:sticky}
+            .top-0{top:0px}
+            .z-50{z-index:50}
+            .z-10{z-index:10}
+            .bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity))}
+            .shadow-construction{--tw-shadow:0 10px 15px -3px rgb(38 70 83 / 0.1), 0 4px 6px -2px rgb(38 70 83 / 0.05);box-shadow:var(--tw-shadow)}
+            
+            /* Layout utilities */
+            .max-w-7xl{max-width:80rem}
+            .max-w-4xl{max-width:56rem}
+            .max-w-3xl{max-width:48rem}
+            .mx-auto{margin-left:auto;margin-right:auto}
+            .px-4{padding-left:1rem;padding-right:1rem}
+            .py-2{padding-top:0.5rem;padding-bottom:0.5rem}
+            .py-16{padding-top:4rem;padding-bottom:4rem}
+            .flex{display:flex}
+            .flex-col{flex-direction:column}
+            .flex-wrap{flex-wrap:wrap}
+            .items-center{align-items:center}
+            .items-start{align-items:flex-start}
+            .justify-between{justify-content:space-between}
+            .justify-center{justify-content:center}
+            .space-x-2>:not([hidden])~:not([hidden]){--tw-space-x-reverse:0;margin-right:calc(.5rem * var(--tw-space-x-reverse));margin-left:calc(.5rem * calc(1 - var(--tw-space-x-reverse)))}
+            .space-x-4>:not([hidden])~:not([hidden]){--tw-space-x-reverse:0;margin-right:calc(1rem * var(--tw-space-x-reverse));margin-left:calc(1rem * calc(1 - var(--tw-space-x-reverse)))}
+            .space-x-8>:not([hidden])~:not([hidden]){--tw-space-x-reverse:0;margin-right:calc(2rem * var(--tw-space-x-reverse));margin-left:calc(2rem * calc(1 - var(--tw-space-x-reverse)))}
+            .space-y-4>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem * var(--tw-space-y-reverse))}
+            
+            /* Hero gradient background */
+            .bg-gradient-to-r{background-image:linear-gradient(to right,var(--tw-gradient-stops))}
+            .from-blue-900{--tw-gradient-from:#1e3a8a;--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to,rgb(30 58 138 / 0))}
+            .to-blue-700{--tw-gradient-to:#1d4ed8}
+            .text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity))}
+            .text-blue-100{color:#dbeafe}
+            .text-blue-200{color:#bfdbfe}
+            .text-red-400{color:#f87171}
+            .text-green-400{color:#4ade80}
+            .text-yellow-400{color:#facc15}
+            .text-blue-400{color:#60a5fa}
+            .text-blue-600{color:#2563eb}
+            .text-gray-900{color:#111827}
+            .py-20{padding-top:5rem;padding-bottom:5rem}
+            
+            /* Typography */
+            .text-sm{font-size:.875rem;line-height:1.25rem}
+            .text-lg{font-size:1.125rem;line-height:1.75rem}
+            .text-xl{font-size:1.25rem;line-height:1.75rem}
+            .text-2xl{font-size:1.5rem;line-height:2rem}
+            .text-4xl{font-size:2.25rem;line-height:2.5rem}
+            .text-5xl{font-size:3rem;line-height:1}
+            .font-medium{font-weight:500}
+            .font-semibold{font-weight:600}
+            .font-bold{font-weight:700}
+            .mb-4{margin-bottom:1rem}
+            .mb-6{margin-bottom:1.5rem}
+            .mb-8{margin-bottom:2rem}
+            .mt-8{margin-top:2rem}
+            .leading-tight{line-height:1.25}
+            .leading-relaxed{line-height:1.625}
+            
+            /* Button styles */
+            .btn-primary,.inline-block{display:inline-block}
+            .px-6{padding-left:1.5rem;padding-right:1.5rem}
+            .px-8{padding-left:2rem;padding-right:2rem}
+            .py-4{padding-top:1rem;padding-bottom:1rem}
+            .bg-red-600{--tw-bg-opacity:1;background-color:rgb(220 38 38 / var(--tw-bg-opacity))}
+            .hover\\:bg-red-700:hover{background-color:#b91c1c}
+            .bg-blue-600{background-color:#2563eb}
+            .border-2{border-width:2px}
+            .border-white{border-color:#ffffff}
+            .hover\\:bg-white:hover{background-color:#ffffff}
+            .hover\\:text-blue-900:hover{color:#1e3a8a}
+            .hover\\:text-red-600:hover{color:#dc2626}
+            .rounded{border-radius:.25rem}
+            .rounded-lg{border-radius:.5rem}
+            .text-center{text-align:center}
+            .transition-colors{transition-property:color,background-color,border-color,text-decoration-color,fill,stroke;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s}
+            .duration-200{transition-duration:.2s}
+            
+            /* Grid system */
+            .grid{display:grid}
+            .grid-cols-1{grid-template-columns:repeat(1,minmax(0,1fr))}
+            .gap-12{gap:3rem}
+            
+            /* SVG and icons */
+            .w-5{width:1.25rem}
+            .w-6{width:1.5rem}
+            .h-5{height:1.25rem}
+            .h-6{height:1.5rem}
+            
+            /* Form and container styles */
+            .shadow-2xl{--tw-shadow:0 25px 50px -12px rgb(0 0 0 / 0.25);box-shadow:var(--tw-shadow)}
+            .p-1{padding:.25rem}
+            .relative{position:relative}
+            
+            /* Skip link for accessibility */
+            .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border-width:0}
+            .focus\\:not-sr-only:focus{position:static;width:auto;height:auto;padding:inherit;margin:inherit;overflow:visible;clip:auto;white-space:normal}
+            .focus\\:absolute:focus{position:absolute}
+            .focus\\:top-4:focus{top:1rem}
+            .focus\\:left-4:focus{left:1rem}
+            
+            /* WhatsApp button styles */
+            .btn-whatsapp{background-color:#0d5016;color:#ffffff;transition:background-color 0.2s ease}
+            .btn-whatsapp:hover{background-color:#0a3f12}
+            
+            /* Responsive design */
+            @media (min-width:640px){
+              .sm\\:px-6{padding-left:1.5rem;padding-right:1.5rem}
+              .sm\\:flex-row{flex-direction:row}
+              .sm\\:space-y-0>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0px * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0px * var(--tw-space-y-reverse))}
+              .sm\\:space-x-4>:not([hidden])~:not([hidden]){--tw-space-x-reverse:0;margin-right:calc(1rem * var(--tw-space-x-reverse));margin-left:calc(1rem * calc(1 - var(--tw-space-x-reverse)))}
+            }
+            @media (min-width:768px){
+              .md\\:text-6xl{font-size:3.75rem;line-height:1}
+            }
+            @media (min-width:1024px){
+              .lg\\:px-8{padding-left:2rem;padding-right:2rem}
+              .lg\\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+            }
+            
+            /* Anti-aliasing */
+            .antialiased{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+            
+            /* Animation placeholder for forms */
+            .animate-pulse{animation:pulse 2s cubic-bezier(.4,0,.6,1) infinite}
+            @keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+            
+            /* Hide elements initially to prevent FOUC */
+            .bg-gray-200{background-color:#e5e7eb}
           `,
           }}
         />
+
 
         {/* Structured Data for Organization */}
         <script
@@ -215,8 +394,15 @@ export default function RootLayout({
         />
       </head>
       <body className="antialiased bg-white text-gray-900">
+        {/* Skip to content link for keyboard navigation accessibility */}
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-blue-600 text-white px-4 py-2 rounded-lg font-medium z-50 focus:z-50"
+        >
+          Skip to main content
+        </a>
 
-
+        <CSSOptimizer />
         <ServiceWorkerRegistration />
         <WebVitals />
         <Analytics />
