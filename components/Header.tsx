@@ -320,6 +320,7 @@ const Header: React.FC = () => {
                     >
                       Call: (801) 691-4065
                     </a>
+                  </div>
                 </div>
               </div>
             </div>
