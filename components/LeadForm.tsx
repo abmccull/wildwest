@@ -15,7 +15,7 @@ interface LeadFormData {
 }
 
 interface LeadFormProps {
-  variant?: "default" | "compact" | "sidebar";
+  variant?: "default" | "compact" | "sidebar" | "careers";
   onSuccess?: () => void;
   className?: string;
 }
@@ -170,6 +170,7 @@ const LeadForm: React.FC<LeadFormProps> = ({
   };
 
   const isCompact = variant === "compact" || variant === "sidebar";
+  const isCareers = variant === "careers";
 
   return (
     <div
@@ -179,13 +180,15 @@ const LeadForm: React.FC<LeadFormProps> = ({
         {/* Header */}
         <div className="mb-6">
           <h3
-            className={`font-bold text-green-700 ${isCompact ? "text-lg" : "text-xl"}`}
+            className={`font-bold ${isCareers ? "text-blue-700" : "text-green-700"} ${isCompact ? "text-lg" : "text-xl"}`}
           >
-            Get Your Free Quote
+            {isCareers ? "Apply Today" : "Get Your Free Quote"}
           </h3>
           <p className="text-gray-600 text-sm mt-1">
-            Provide your contact information and we&apos;ll get back to you within 24
-            hours to discuss your project needs.
+            {isCareers 
+              ? "Submit your information and we'll contact you within 24 hours about career opportunities."
+              : "Provide your contact information and we'll get back to you within 24 hours to discuss your project needs."
+            }
           </p>
         </div>
 
@@ -314,16 +317,17 @@ const LeadForm: React.FC<LeadFormProps> = ({
                   <span>Submitting...</span>
                 </div>
               ) : (
-                "Get Free Quote"
+                isCareers ? "Submit Application" : "Get Free Quote"
               )}
             </button>
           </div>
 
           {/* Privacy Notice */}
           <div className="text-xs text-gray-500 text-center">
-            By submitting this form, you agree to be contacted about your
-            project. We respect your privacy and will never share your
-            information.
+            {isCareers 
+              ? "By submitting this form, you agree to be contacted about career opportunities. We respect your privacy and will never share your information."
+              : "By submitting this form, you agree to be contacted about your project. We respect your privacy and will never share your information."
+            }
           </div>
         </form>
       </div>

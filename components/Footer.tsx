@@ -8,7 +8,7 @@ interface FooterLink {
 const services: FooterLink[] = [
   { label: "Flooring Services", href: "/services/flooring" },
   { label: "Demolition Services", href: "/services/demolition" },
-  { label: "Junk Removal", href: "/services/junk_removal" },
+  { label: "Junk Removal", href: "/services/junk-removal" },
 ];
 
 const locations: FooterLink[] = [

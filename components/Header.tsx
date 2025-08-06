@@ -50,10 +50,13 @@ const navigation: NavigationItem[] = [
       { label: "Murray", href: "/locations/murray" },
     ],
   },
+  { label: "About", href: "/about" },
+  { label: "Team", href: "/team" },
   { label: "Blog", href: "/blog" },
   { label: "Gallery", href: "/gallery" },
   { label: "Testimonials", href: "/testimonials" },
-  { label: "Contact", href: "/contact" },
+  { label: "Careers", href: "/careers" },
+  { label: "Contact", href: "/#contact" },
 ];
 
 const Header: React.FC = () => {
@@ -161,15 +164,8 @@ const Header: React.FC = () => {
             ))}
           </nav>
 
-          {/* CTA Button */}
-          <div className="hidden md:flex items-center space-x-4 lg:space-x-6">
-            <a
-              href="/quote"
-              className="btn-primary text-sm lg:text-base px-4 py-2 lg:px-6"
-              onClick={closeMenus}
-            >
-              Get Free Quote
-            </a>
+          {/* Phone Number */}
+          <div className="hidden md:flex items-center">
             <a
               href="tel:+1-801-691-4065"
               data-source="header"
@@ -274,15 +270,8 @@ const Header: React.FC = () => {
                 </div>
               ))}
 
-              {/* Mobile CTA */}
-              <div className="border-t border-gray-200 mt-6 pt-4 px-2 space-y-3">
-                <a
-                  href="/quote"
-                  className="block w-full text-center btn-primary py-3"
-                  onClick={closeMenus}
-                >
-                  Get Free Quote
-                </a>
+              {/* Mobile Phone */}
+              <div className="border-t border-gray-200 mt-6 pt-4 px-2">
                 <a
                   href="tel:+1-801-691-4065"
                   data-source="mobile-menu"
