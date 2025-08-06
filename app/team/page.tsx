@@ -557,7 +557,7 @@ export default function TeamPage() {
                 <h2 className="text-4xl md:text-5xl font-bold mb-6">
                   Ready to Work with Utah&apos;s Best?
                 </h2>
-                <p className="text-xl text-red-50 mb-8 leading-relaxed">
+                <p className="text-xl text-white/90 mb-8 leading-relaxed">
                   Our experienced team is ready to bring your construction project 
                   to life. From concept to completion, we&apos;re with you every step 
                   of the way with professional service you can trust.

@@ -78,11 +78,11 @@ export default function DemolitionServices() {
                   <span className="block text-yellow-400">
                     Demolition Services
                   </span>
-                  <span className="block text-3xl md:text-4xl font-semibold text-red-50 mt-2">
+                  <span className="block text-3xl md:text-4xl font-semibold text-white/90 mt-2">
                     Throughout Utah
                   </span>
                 </h1>
-                <p className="text-xl text-red-50 mb-8 leading-relaxed">
+                <p className="text-xl text-white/90 mb-8 leading-relaxed">
                   Safe, efficient, and precise demolition services for
                   residential and commercial projects. From interior remodeling
                   to complete structure removal, we handle every demolition job
@@ -987,7 +987,7 @@ export default function DemolitionServices() {
                 <h2 className="text-4xl md:text-5xl font-bold mb-6">
                   Ready to Start Your Demolition Project?
                 </h2>
-                <p className="text-xl text-red-50 mb-8 leading-relaxed">
+                <p className="text-xl text-white/90 mb-8 leading-relaxed">
                   Get your free, comprehensive estimate today. Our demolition
                   experts will assess your project and
                   provide transparent pricing with no hidden fees.

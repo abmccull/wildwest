@@ -169,7 +169,7 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               <Suspense
                 fallback={
                   <div className="h-96 animate-pulse bg-gray-200 rounded-lg"></div>
@@ -404,12 +404,12 @@ export default function Home() {
             <h2 className="text-4xl md:text-5xl font-bold mb-6">
               Ready to Start Your Project?
             </h2>
-            <p className="text-xl mb-8 text-red-50">
+            <p className="text-xl mb-8 text-white/90 max-w-2xl mx-auto">
               Contact Wild West Construction today for a free consultation and
               estimate. We&apos;re here to make your construction dreams a
               reality.
             </p>
-            <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+            <div className="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4">
               <a
                 href="#quote-form"
                 className="px-8 py-4 bg-white text-red-600 font-bold rounded-lg hover:bg-gray-100 transition-colors duration-200"
