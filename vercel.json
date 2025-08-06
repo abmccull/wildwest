@@ -8,24 +8,13 @@
 
   "functions": {
     "app/api/lead/route.ts": {
-      "maxDuration": 10,
-      "memory": 512
+      "maxDuration": 10
     },
     "app/api/health/route.ts": {
-      "maxDuration": 5,
-      "memory": 128
+      "maxDuration": 10
     },
     "app/api/admin/**/*.ts": {
-      "maxDuration": 30,
-      "memory": 1024
-    },
-    "app/locations/**/*.tsx": {
-      "runtime": "edge",
-      "maxDuration": 30
-    },
-    "app/**/*.tsx": {
-      "runtime": "edge",
-      "maxDuration": 30
+      "maxDuration": 10
     }
   },
 
@@ -203,56 +192,47 @@
     {
       "source": "/index.html",
       "destination": "/",
-      "permanent": true,
-      "statusCode": 301
+      "permanent": true
     },
     {
       "source": "/home",
       "destination": "/",
-      "permanent": true,
-      "statusCode": 301
+      "permanent": true
     },
     {
       "source": "/services.html",
       "destination": "/#services",
-      "permanent": true,
-      "statusCode": 301
+      "permanent": true
     },
     {
       "source": "/contact.html",
       "destination": "/#contact",
-      "permanent": true,
-      "statusCode": 301
+      "permanent": true
     },
     {
       "source": "/about.html",
       "destination": "/#about",
-      "permanent": true,
-      "statusCode": 301
+      "permanent": true
     },
     {
       "source": "/(.*)/index.html",
       "destination": "/$1",
-      "permanent": true,
-      "statusCode": 301
+      "permanent": true
     },
     {
       "source": "/(.*).php",
       "destination": "/$1",
-      "permanent": true,
-      "statusCode": 301
+      "permanent": true
     },
     {
       "source": "/wp-admin",
       "destination": "/",
-      "permanent": false,
-      "statusCode": 302
+      "permanent": false
     },
     {
       "source": "/wp-login.php",
       "destination": "/",
-      "permanent": false,
-      "statusCode": 302
+      "permanent": false
     }
   ],
 
@@ -276,7 +256,7 @@
   "crons": [
     {
       "path": "/api/health",
-      "schedule": "0 */6 * * *"
+      "schedule": "0 12 * * *"
     }
   ],
 
