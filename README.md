@@ -1,5 +1,7 @@
 # Wild West Construction - SEO Optimized Website
 
+[![Deployed on Vercel](https://vercel.com/button)](https://vercel.com/abmcculls-projects/wildwest-seo)
+
 A high-performance, SEO-optimized Next.js website for Wild West Construction, a premier construction company serving the Greater Salt Lake City area.
 
 ## Project Overview
