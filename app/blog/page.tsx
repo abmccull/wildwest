@@ -58,12 +58,31 @@ async function getBlogPosts(page = 1, category?: string, search?: string) {
   const supabase = await createServerClient();
 
   try {
-    const { data: posts, error } = await supabase.rpc("get_blog_posts", {
-      page_num: page,
-      page_size: 12,
-      filter_category_slug: category || null,
-      search_term: search || null,
-    });
+    // Build the query
+    let query = supabase
+      .from("blog_posts")
+      .select(`
+        *,
+        blog_categories(name, slug)
+      `)
+      .eq("published", true)
+      .order("featured", { ascending: false })
+      .order("published_at", { ascending: false, nullsFirst: false })
+      .range((page - 1) * 12, page * 12 - 1);
+
+    // Add category filter if provided
+    if (category) {
+      query = query.eq("blog_categories.slug", category);
+    }
+
+    // Add search filter if provided
+    if (search) {
+      query = query.or(
+        `title.ilike.%${search}%,excerpt.ilike.%${search}%`
+      );
+    }
+
+    const { data: posts, error } = await query;
 
     if (error) {
       console.error("Error fetching blog posts:", error);
@@ -71,12 +90,35 @@ async function getBlogPosts(page = 1, category?: string, search?: string) {
     }
 
     // Get total count for pagination
-    const { data: totalCount } = await supabase.rpc("get_blog_posts_count", {
-      filter_category_slug: category || null,
-      search_term: search || null,
-    });
+    let countQuery = supabase
+      .from("blog_posts")
+      .select("*", { count: "exact", head: true })
+      .eq("published", true);
 
-    return { posts: posts || [], totalCount: totalCount || 0 };
+    if (category) {
+      countQuery = supabase
+        .from("blog_posts")
+        .select("*, blog_categories!inner(slug)", { count: "exact", head: true })
+        .eq("published", true)
+        .eq("blog_categories.slug", category);
+    }
+
+    if (search) {
+      countQuery = countQuery.or(
+        `title.ilike.%${search}%,excerpt.ilike.%${search}%`
+      );
+    }
+
+    const { count } = await countQuery;
+
+    // Transform posts to match expected format
+    const transformedPosts = posts?.map(post => ({
+      ...post,
+      category_name: post.blog_categories?.name || "",
+      category_slug: post.blog_categories?.slug || ""
+    })) || [];
+
+    return { posts: transformedPosts, totalCount: count || 0 };
   } catch (error) {
     console.error("Error in getBlogPosts:", error);
     return { posts: [], totalCount: 0 };

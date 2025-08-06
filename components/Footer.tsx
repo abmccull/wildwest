@@ -43,9 +43,9 @@ const Footer: React.FC = () => {
     <footer className="bg-gray-900 text-white">
       {/* Main Footer Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Company Information */}
-          <div className="lg:col-span-1">
+          <div className="sm:col-span-2 lg:col-span-1">
             <div className="flex items-center space-x-3 mb-4">
               <div className="relative w-12 h-12">
                 <Image
@@ -245,7 +245,7 @@ const Footer: React.FC = () => {
 
         {/* Social Media & Newsletter */}
         <div className="border-t border-gray-700 mt-12 pt-8">
-          <div className="flex flex-col lg:flex-row justify-between items-center space-y-6 lg:space-y-0">
+          <div className="flex flex-col md:flex-row justify-between items-center space-y-6 md:space-y-0">
             {/* Social Media Links */}
             <div className="flex items-center space-x-6">
               <span className="text-sm text-gray-300">Follow us:</span>
@@ -295,7 +295,7 @@ const Footer: React.FC = () => {
             </div>
 
             {/* Newsletter Signup */}
-            <div className="flex items-center space-x-4">
+            <div className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-4">
               <span className="text-sm text-gray-300 whitespace-nowrap">
                 Stay updated:
               </span>
@@ -303,9 +303,9 @@ const Footer: React.FC = () => {
                 <input
                   type="email"
                   placeholder="Enter your email"
-                  className="px-3 py-2 text-sm bg-white/10 border border-white/20 rounded-l-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-mustang-yellow focus:border-transparent"
+                  className="px-3 py-2 text-sm bg-white/10 border border-white/20 rounded-l-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-transparent w-40 sm:w-48"
                 />
-                <button className="px-4 py-2 bg-red-600 text-white font-medium text-sm rounded-r-md hover:bg-red-700 transition-colors duration-200">
+                <button className="px-4 py-2 bg-red-600 text-white font-medium text-sm rounded-r-md hover:bg-red-700 transition-colors duration-200 whitespace-nowrap">
                   Subscribe
                 </button>
               </div>
