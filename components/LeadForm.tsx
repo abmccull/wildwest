@@ -260,8 +260,8 @@ const LeadForm: React.FC<LeadFormProps> = ({
                 value={formData.name}
                 onChange={handleInputChange}
                 onFocus={handleFocus}
-                className={`w-full px-3 py-2 border rounded-lg text-gray-900 bg-white focus:ring-2 focus:ring-red-600 focus:border-transparent transition-colors duration-200 ${
-                  errors.name ? "border-red-500" : "border-gray-300"
+                className={`w-full px-3 py-2 border rounded-lg text-gray-900 bg-white focus:ring-2 focus:ring-red-600 focus:border-red-600 transition-colors duration-200 ${
+                  errors.name ? "border-red-500" : "border-gray-400"
                 }`}
                 placeholder="John Smith"
                 autoComplete="name"
@@ -292,8 +292,8 @@ const LeadForm: React.FC<LeadFormProps> = ({
                 value={formData.phone}
                 onChange={handleInputChange}
                 onFocus={handleFocus}
-                className={`w-full px-3 py-2 border rounded-lg text-gray-900 bg-white focus:ring-2 focus:ring-red-600 focus:border-transparent transition-colors duration-200 ${
-                  errors.phone ? "border-red-500" : "border-gray-300"
+                className={`w-full px-3 py-2 border rounded-lg text-gray-900 bg-white focus:ring-2 focus:ring-red-600 focus:border-red-600 transition-colors duration-200 ${
+                  errors.phone ? "border-red-500" : "border-gray-400"
                 }`}
                 placeholder="801-555-0123"
                 maxLength={12}
@@ -326,8 +326,8 @@ const LeadForm: React.FC<LeadFormProps> = ({
               value={formData.email}
               onChange={handleInputChange}
               onFocus={handleFocus}
-              className={`w-full px-3 py-2 border rounded-lg text-gray-900 bg-white focus:ring-2 focus:ring-red-600 focus:border-transparent transition-colors duration-200 ${
-                errors.email ? "border-red-500" : "border-gray-300"
+              className={`w-full px-3 py-2 border rounded-lg text-gray-900 bg-white focus:ring-2 focus:ring-red-600 focus:border-red-600 transition-colors duration-200 ${
+                errors.email ? "border-red-500" : "border-gray-400"
               }`}
               placeholder="john@example.com"
               autoComplete="email"
