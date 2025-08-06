@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import Script from "next/script";
 import Image from "next/image";
@@ -15,10 +15,15 @@ const inter = Inter({
   subsets: ["latin"],
   display: "swap",
   variable: "--font-inter",
-  weight: ["300", "400", "500", "600", "700"],
+  weight: ["400", "500", "600", "700"],
   preload: true,
   fallback: ["system-ui", "arial"],
 });
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+};
 
 export const metadata: Metadata = {
   title: {
@@ -32,10 +37,6 @@ export const metadata: Metadata = {
   authors: [{ name: "Wild West Construction" }],
   creator: "Wild West Construction",
   publisher: "Wild West Construction",
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-  },
   formatDetection: {
     email: false,
     address: false,

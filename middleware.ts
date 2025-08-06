@@ -38,12 +38,15 @@ export function middleware(request: NextRequest) {
     response.headers.set('Vercel-CDN-Cache-Control', CACHE_HEADERS.CDN_LONG);
   }
   
-  // Fonts - long-term caching
+  // Fonts - long-term caching with CORS headers
   if (pathname.match(/\.(woff|woff2|ttf|otf|eot)$/i)) {
     response.headers.set('Cache-Control', CACHE_HEADERS.STATIC_LONG);
     response.headers.set('CDN-Cache-Control', CACHE_HEADERS.CDN_LONG);
     response.headers.set('Vercel-CDN-Cache-Control', CACHE_HEADERS.CDN_LONG);
     response.headers.set('Access-Control-Allow-Origin', '*');
+    response.headers.set('Access-Control-Allow-Methods', 'GET, HEAD, OPTIONS');
+    response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Accept, Origin, User-Agent');
+    response.headers.set('Cross-Origin-Resource-Policy', 'cross-origin');
   }
   
   // HTML pages - aggressive edge caching with stale-while-revalidate

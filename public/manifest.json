@@ -36,4 +36,3 @@
   "categories": ["business", "construction", "utilities"],
   "prefer_related_applications": false
 }
-EOF < /dev/null
