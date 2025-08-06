@@ -399,12 +399,12 @@ export default function Home() {
         </section>
 
         {/* Final Call to Action */}
-        <section className="py-16 bg-gradient-to-r from-red-600 to-red-700 text-white">
+        <section className="py-16 bg-gray-50">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900">
               Ready to Start Your Project?
             </h2>
-            <p className="text-xl mb-8 text-white/90 max-w-2xl mx-auto">
+            <p className="text-xl mb-8 text-gray-700 max-w-2xl mx-auto">
               Contact Wild West Construction today for a free consultation and
               estimate. We&apos;re here to make your construction dreams a
               reality.
@@ -412,7 +412,7 @@ export default function Home() {
             <div className="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4">
               <a
                 href="#quote-form"
-                className="px-8 py-4 bg-white text-red-600 font-bold rounded-lg hover:bg-gray-100 transition-colors duration-200"
+                className="px-8 py-4 bg-red-600 text-white font-bold rounded-lg hover:bg-red-700 transition-colors duration-200"
               >
                 Get Free Quote
               </a>
@@ -420,7 +420,7 @@ export default function Home() {
                 href="tel:+1-801-691-4065"
                 data-source="homepage_cta"
                 data-service-type="general"
-                className="px-8 py-4 border-2 border-white text-white font-bold rounded-lg hover:bg-white hover:text-red-600 transition-colors duration-200"
+                className="px-8 py-4 border-2 border-red-600 text-red-600 font-bold rounded-lg hover:bg-red-600 hover:text-white transition-colors duration-200"
               >
                 Call (801) 691-4065
               </a>

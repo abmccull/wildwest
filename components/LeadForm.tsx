@@ -261,7 +261,7 @@ const LeadForm: React.FC<LeadFormProps> = ({
                 onChange={handleInputChange}
                 onFocus={handleFocus}
                 className={`w-full px-3 py-2 border rounded-lg text-gray-900 bg-white focus:ring-2 focus:ring-red-600 focus:border-red-600 transition-colors duration-200 ${
-                  errors.name ? "border-red-500" : "border-gray-400"
+                  errors.name ? "border-red-500" : "border-gray-700"
                 }`}
                 placeholder="John Smith"
                 autoComplete="name"
@@ -293,7 +293,7 @@ const LeadForm: React.FC<LeadFormProps> = ({
                 onChange={handleInputChange}
                 onFocus={handleFocus}
                 className={`w-full px-3 py-2 border rounded-lg text-gray-900 bg-white focus:ring-2 focus:ring-red-600 focus:border-red-600 transition-colors duration-200 ${
-                  errors.phone ? "border-red-500" : "border-gray-400"
+                  errors.phone ? "border-red-500" : "border-gray-700"
                 }`}
                 placeholder="801-555-0123"
                 maxLength={12}
@@ -327,7 +327,7 @@ const LeadForm: React.FC<LeadFormProps> = ({
               onChange={handleInputChange}
               onFocus={handleFocus}
               className={`w-full px-3 py-2 border rounded-lg text-gray-900 bg-white focus:ring-2 focus:ring-red-600 focus:border-red-600 transition-colors duration-200 ${
-                errors.email ? "border-red-500" : "border-gray-400"
+                errors.email ? "border-red-500" : "border-gray-700"
               }`}
               placeholder="john@example.com"
               autoComplete="email"
