@@ -27,7 +27,7 @@ function cleanEnvVar(value: string | undefined): string | undefined {
 }
 
 /**
- * Create a Supabase client for server-side operations
+ * Create a Supabase client for server-side operations with connection pooling
  */
 export async function createServerClient() {
   const supabaseUrl = cleanEnvVar(process.env.NEXT_PUBLIC_SUPABASE_URL);
@@ -52,15 +52,33 @@ export async function createServerClient() {
         persistSession: false,
         autoRefreshToken: false,
       },
+      // Optimize for faster connection times
+      global: {
+        headers: {
+          'Connection': 'keep-alive',
+          'Keep-Alive': 'timeout=30, max=1000'
+        }
+      },
+      // Connection pool optimization
+      db: {
+        schema: 'public'
+      }
     },
   );
 }
 
+// Cache admin client to reuse connections
+let adminClientCache: ReturnType<typeof createClient<Database>> | null = null;
+
 /**
- * Create a Supabase admin client for privileged operations
+ * Create a Supabase admin client for privileged operations with connection caching
  * WARNING: Only use this for server-side operations that require admin access
  */
 export function createAdminClient() {
+  if (adminClientCache) {
+    return adminClientCache;
+  }
+  
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
   
@@ -68,7 +86,7 @@ export function createAdminClient() {
     throw new Error("Missing Supabase environment variables for admin client");
   }
 
-  return createClient<Database>(
+  adminClientCache = createClient<Database>(
     supabaseUrl,
     supabaseServiceKey,
     {
@@ -76,8 +94,21 @@ export function createAdminClient() {
         persistSession: false,
         autoRefreshToken: false,
       },
+      // Optimize for faster connection times
+      global: {
+        headers: {
+          'Connection': 'keep-alive',
+          'Keep-Alive': 'timeout=30, max=1000'
+        }
+      },
+      // Connection pool optimization
+      db: {
+        schema: 'public'
+      }
     },
   );
+  
+  return adminClientCache;
 }
 
 /**

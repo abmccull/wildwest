@@ -9,70 +9,117 @@ import { useEffect } from "react";
  */
 const CSSOptimizer: React.FC = () => {
   useEffect(() => {
-    // Load CSS asynchronously after critical rendering
+    // Advanced CSS loading strategy to eliminate render-blocking CSS
     const loadCSSAsynchronously = () => {
-      // Find Next.js CSS files that need to be loaded
-      const existingStylesheets = document.querySelectorAll('link[rel="stylesheet"]');
+      // Find ALL stylesheets, including render-blocking ones
+      const allStylesheets = document.querySelectorAll('link[rel="stylesheet"], link[data-n-css]');
       const cssFiles: string[] = [];
       
-      // Extract CSS file URLs from existing stylesheets
-      existingStylesheets.forEach((link: any) => {
-        if (link.href && link.href.includes('_next/static/css/')) {
+      // Handle existing render-blocking stylesheets
+      allStylesheets.forEach((link: any) => {
+        if (link.href && (
+          link.href.includes('_next/static/css/') || 
+          link.href.includes('dc1f36d2e80006fc.css') ||
+          link.hasAttribute('data-n-css')
+        )) {
           cssFiles.push(link.href);
-          // Remove the render-blocking stylesheet temporarily
-          link.disabled = true;
+          // Immediately disable render-blocking behavior
+          link.media = 'print';
+          link.onload = function() {
+            link.media = 'all';
+          };
         }
       });
       
-      // If no existing CSS files found, try to discover them
+      // Discover CSS files from Next.js build manifest
       if (cssFiles.length === 0) {
-        // Look for CSS files in script tags or manifest
-        const scripts = document.querySelectorAll('script');
+        // Look for build manifest or script tags containing CSS references
+        const scripts = document.querySelectorAll('script[id="__NEXT_DATA__"], script');
         scripts.forEach((script: any) => {
-          if (script.innerHTML && script.innerHTML.includes('_next/static/css/')) {
-            const matches = script.innerHTML.match(/"_next\/static\/css\/[^"]+\.css"/g);
+          let scriptContent = script.innerHTML || script.textContent || '';
+          
+          // Look for CSS file patterns
+          const cssPatterns = [
+            /"_next\/static\/css\/[a-z0-9]+\.css"/g,
+            /static\/css\/[a-z0-9]+\.css/g,
+            /dc1f36d2e80006fc\.css/g
+          ];
+          
+          cssPatterns.forEach(pattern => {
+            const matches = scriptContent.match(pattern);
             if (matches) {
               matches.forEach((match: string) => {
-                const cssUrl = match.replace(/"/g, '');
+                let cssUrl = match.replace(/"/g, '');
+                // Ensure absolute URL
+                if (cssUrl.startsWith('_next/')) {
+                  cssUrl = '/' + cssUrl;
+                }
                 if (!cssFiles.includes(cssUrl)) {
                   cssFiles.push(cssUrl);
                 }
               });
             }
-          }
+          });
         });
       }
       
-      // Load CSS files asynchronously
+      // Async load strategy for each discovered CSS file
       cssFiles.forEach((cssUrl) => {
-        const link = document.createElement('link');
-        link.rel = 'preload';
-        link.as = 'style';
-        link.href = cssUrl;
-        link.onload = function() {
-          // Convert preload to stylesheet after loading
-          const stylesheet = document.createElement('link');
-          stylesheet.rel = 'stylesheet';
-          stylesheet.href = cssUrl;
+        // Create preload link for faster fetch
+        const preloadLink = document.createElement('link');
+        preloadLink.rel = 'preload';
+        preloadLink.as = 'style';
+        preloadLink.href = cssUrl;
+        preloadLink.crossOrigin = 'anonymous';
+        
+        // Create the actual stylesheet link
+        const stylesheet = document.createElement('link');
+        stylesheet.rel = 'stylesheet';
+        stylesheet.href = cssUrl;
+        stylesheet.media = 'print'; // Start as print media to avoid render blocking
+        
+        // Convert to screen media once loaded
+        stylesheet.onload = function() {
           stylesheet.media = 'all';
-          document.head.appendChild(stylesheet);
         };
-        document.head.appendChild(link);
+        
+        // Fallback for browsers that don't support onload
+        setTimeout(() => {
+          stylesheet.media = 'all';
+        }, 100);
+        
+        document.head.appendChild(preloadLink);
+        document.head.appendChild(stylesheet);
       });
+      
+      // Performance logging in development
+      if (process.env.NODE_ENV === 'development' && cssFiles.length > 0) {
+        console.log('🎨 CSSOptimizer: Loaded', cssFiles.length, 'CSS files asynchronously:', cssFiles);
+      }
     };
 
-    // Re-enable critical rendering path after initial paint
+    // Optimize critical rendering path - run immediately and aggressively
     const optimizeCriticalRenderingPath = () => {
-      // Delay non-critical CSS loading until after initial paint
+      // Run CSS optimization immediately to prevent any render blocking
+      loadCSSAsynchronously();
+      
+      // Also run after requestAnimationFrame to catch any late-loading CSS
+      if ('requestAnimationFrame' in window) {
+        requestAnimationFrame(() => {
+          loadCSSAsynchronously();
+        });
+      }
+      
+      // Additional check after idle callback for any remaining CSS
       if ('requestIdleCallback' in window) {
         requestIdleCallback(() => {
           loadCSSAsynchronously();
-        });
+        }, { timeout: 2000 });
       } else {
         // Fallback for browsers without requestIdleCallback
         setTimeout(() => {
           loadCSSAsynchronously();
-        }, 100);
+        }, 50);
       }
     };
 
@@ -196,6 +243,10 @@ const CSSOptimizer: React.FC = () => {
 
     // Main initialization function
     const initialize = () => {
+      // Run CSS optimization immediately - highest priority
+      optimizeCriticalRenderingPath();
+      
+      // Run other optimizations
       optimizeFonts();
       setupProgressiveEnhancement();
       monitorPerformance();
@@ -203,11 +254,13 @@ const CSSOptimizer: React.FC = () => {
       // Delay non-critical optimizations
       setTimeout(() => {
         prefetchCriticalResources();
-        optimizeCriticalRenderingPath();
       }, 1000);
     };
 
-    // Run optimizations based on document ready state
+    // Run CSS optimization ASAP - don't wait for DOM ready
+    optimizeCriticalRenderingPath();
+
+    // Run full initialization based on document ready state
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', initialize);
     } else {

@@ -1,5 +1,9 @@
 import { MetadataRoute } from "next";
 
+// Use Node.js runtime for better compatibility 
+// export const runtime = 'edge'; // Removed due to compatibility issues
+export const revalidate = 86400; // Revalidate once per day
+
 export default function robots(): MetadataRoute.Robots {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://wildwestslc.com";
 

@@ -1,40 +1,63 @@
 import { NextRequest, NextResponse } from "next/server";
 
+// Use Node.js runtime for better compatibility
+// export const runtime = 'edge'; // Removed due to compatibility issues
+
 // Basic auth credentials (in production, these should be environment variables)
 const ADMIN_USERNAME = process.env.ADMIN_USERNAME || "admin";
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "wildwest2024!";
+
+// Cache control headers for different content types
+const CACHE_HEADERS = {
+  STATIC_LONG: 'public, max-age=31536000, immutable',
+  STATIC_SHORT: 'public, max-age=86400, s-maxage=86400',
+  HTML: 'public, s-maxage=60, stale-while-revalidate=300, max-age=0',
+  API: 'no-store, no-cache, must-revalidate, proxy-revalidate',
+  CDN_LONG: 'public, s-maxage=31536000, immutable',
+  CDN_EDGE: 'public, s-maxage=60, stale-while-revalidate=300',
+};
 
 export function middleware(request: NextRequest) {
   const response = NextResponse.next();
   const url = request.nextUrl;
   
-  // Add cache headers based on content type
+  // Add optimized cache headers based on content type
   const pathname = url.pathname;
   
-  // Static assets - long-term caching
+  // Static assets - long-term caching with CDN optimization
   if (pathname.match(/\.(ico|svg|jpg|jpeg|png|gif|webp|avif)$/i)) {
-    response.headers.set('Cache-Control', 'public, max-age=31536000, immutable');
+    response.headers.set('Cache-Control', CACHE_HEADERS.STATIC_LONG);
+    response.headers.set('CDN-Cache-Control', CACHE_HEADERS.CDN_LONG);
+    response.headers.set('Vercel-CDN-Cache-Control', CACHE_HEADERS.CDN_LONG);
   }
   
   // CSS and JS files - long-term caching with immutable
   if (pathname.match(/\.(css|js)$/i) || pathname.includes('/_next/static/')) {
-    response.headers.set('Cache-Control', 'public, max-age=31536000, immutable');
+    response.headers.set('Cache-Control', CACHE_HEADERS.STATIC_LONG);
+    response.headers.set('CDN-Cache-Control', CACHE_HEADERS.CDN_LONG);
+    response.headers.set('Vercel-CDN-Cache-Control', CACHE_HEADERS.CDN_LONG);
   }
   
   // Fonts - long-term caching
   if (pathname.match(/\.(woff|woff2|ttf|otf|eot)$/i)) {
-    response.headers.set('Cache-Control', 'public, max-age=31536000, immutable');
+    response.headers.set('Cache-Control', CACHE_HEADERS.STATIC_LONG);
+    response.headers.set('CDN-Cache-Control', CACHE_HEADERS.CDN_LONG);
+    response.headers.set('Vercel-CDN-Cache-Control', CACHE_HEADERS.CDN_LONG);
     response.headers.set('Access-Control-Allow-Origin', '*');
   }
   
-  // HTML pages - stale-while-revalidate for better performance
+  // HTML pages - aggressive edge caching with stale-while-revalidate
   if (!pathname.includes('.') && !pathname.startsWith('/api/')) {
-    response.headers.set('Cache-Control', 'public, s-maxage=10, stale-while-revalidate=59');
+    response.headers.set('Cache-Control', CACHE_HEADERS.HTML);
+    response.headers.set('CDN-Cache-Control', CACHE_HEADERS.CDN_EDGE);
+    response.headers.set('Vercel-CDN-Cache-Control', CACHE_HEADERS.CDN_EDGE);
   }
   
-  // API routes - no cache
+  // API routes - no cache with additional headers
   if (pathname.startsWith('/api/')) {
-    response.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+    response.headers.set('Cache-Control', CACHE_HEADERS.API);
+    response.headers.set('CDN-Cache-Control', 'no-cache');
+    response.headers.set('Vercel-CDN-Cache-Control', 'no-cache');
     response.headers.set('Pragma', 'no-cache');
     response.headers.set('Expires', '0');
   }
@@ -45,9 +68,13 @@ export function middleware(request: NextRequest) {
     response.headers.set('ETag', etag);
   }
   
-  // Add performance hints
+  // Add performance and security hints
   response.headers.set('X-DNS-Prefetch-Control', 'on');
   response.headers.set('Connection', 'keep-alive');
+  
+  // Add server timing headers for performance monitoring
+  const serverTiming = `middleware;dur=${Date.now() - (request as any).startTime || 0}`;
+  response.headers.set('Server-Timing', serverTiming);
   
   // Only protect /admin routes
   if (request.nextUrl.pathname.startsWith("/admin")) {
@@ -84,8 +111,9 @@ export function middleware(request: NextRequest) {
 export const config = {
   matcher: [
     /*
-     * Match all admin routes
+     * Match all admin routes and key paths for optimization
      */
     "/admin/:path*",
+    "/((?!_next/static|_next/image|favicon.ico).*)",
   ],
 };

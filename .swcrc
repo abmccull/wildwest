@@ -3,13 +3,13 @@
     "target": "es2022",
     "parser": {
       "syntax": "typescript",
-      "tsx": true,
-      "decorators": false,
-      "dynamicImport": true
+      "tsx": true
     },
     "transform": {
       "react": {
-        "runtime": "automatic"
+        "runtime": "automatic",
+        "development": false,
+        "refresh": false
       }
     },
     "minify": {
@@ -17,19 +17,9 @@
       "mangle": true
     }
   },
-  "env": {
-    "targets": {
-      "chrome": "91",
-      "firefox": "90", 
-      "safari": "15",
-      "edge": "91"
-    },
-    "mode": "entry",
-    "coreJs": false,
-    "shippedProposals": true,
-    "bugfixes": true
+  "module": {
+    "type": "es6"
   },
   "minify": true,
-  "sourceMaps": false,
-  "isModule": true
+  "sourceMaps": false
 }

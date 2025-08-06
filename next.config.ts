@@ -1,16 +1,25 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // Performance optimizations
-  experimental: {
-    // Removed optimizePackageImports due to RSC chunk issues (see troubleshooting)
-    scrollRestoration: true,
-  },
   
   // Compiler configuration for modern browsers - reduces polyfills
   compiler: {
     // Remove console.log in production
     removeConsole: process.env.NODE_ENV === "production",
+    // Use SWC for faster builds and smaller bundles
+    styledComponents: false,
+    // Remove React DevTools in production
+    reactRemoveProperties: process.env.NODE_ENV === "production",
+  },
+
+  // External packages for server components
+  serverExternalPackages: [],
+
+  // Experimental features for better performance  
+  experimental: {
+    // Removed optimizePackageImports due to RSC chunk issues (see troubleshooting)
+    scrollRestoration: true,
+    // CSS optimization handled manually via CSSOptimizer component
   },
 
   
@@ -66,6 +75,22 @@ const nextConfig: NextConfig = {
             key: "Referrer-Policy",
             value: "strict-origin-when-cross-origin",
           },
+          {
+            key: "Cross-Origin-Opener-Policy",
+            value: "same-origin",
+          },
+          {
+            key: "Cross-Origin-Embedder-Policy",
+            value: "require-corp",
+          },
+          {
+            key: "Cross-Origin-Resource-Policy",
+            value: "same-site",
+          },
+          {
+            key: "Content-Security-Policy",
+            value: "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://connect.facebook.net https://vercel.live https://vitals.vercel-insights.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https: http:; connect-src 'self' https://www.google-analytics.com https://www.googletagmanager.com https://connect.facebook.net https://vitals.vercel-insights.com https://vercel.live https://*.supabase.co wss://*.supabase.co; frame-src 'none'; object-src 'none'; base-uri 'self'; require-trusted-types-for 'script'; trusted-types default;",
+          },
           // Performance headers
           {
             key: "X-DNS-Prefetch-Control",
@@ -74,7 +99,7 @@ const nextConfig: NextConfig = {
           // Enable HTTP/2 Server Push hints
           {
             key: "Link",
-            value: "</images/logo.webp>; rel=preload; as=image, </manifest.json>; rel=preload; as=fetch",
+            value: "</logo.webp>; rel=preload; as=image, </manifest.json>; rel=preload; as=fetch",
           },
         ],
       },
@@ -147,7 +172,7 @@ const nextConfig: NextConfig = {
           },
         ],
       },
-      // HTML pages - stale-while-revalidate
+      // HTML pages - aggressive edge caching with stale-while-revalidate
       {
         source: "/:path*",
         has: [
@@ -160,17 +185,33 @@ const nextConfig: NextConfig = {
         headers: [
           {
             key: "Cache-Control",
-            value: "public, s-maxage=10, stale-while-revalidate=59",
+            value: "public, s-maxage=60, stale-while-revalidate=300, max-age=0",
+          },
+          {
+            key: "CDN-Cache-Control",
+            value: "public, s-maxage=60, stale-while-revalidate=300",
+          },
+          {
+            key: "Vercel-CDN-Cache-Control",
+            value: "public, s-maxage=60, stale-while-revalidate=300",
           },
         ],
       },
-      // API routes - no cache
+      // API routes - no cache but with security headers
       {
         source: "/api/(.*)",
         headers: [
           {
             key: "Cache-Control",
             value: "no-store, no-cache, must-revalidate, proxy-revalidate",
+          },
+          {
+            key: "Cross-Origin-Opener-Policy",
+            value: "same-origin",
+          },
+          {
+            key: "Content-Security-Policy",
+            value: "default-src 'none'; script-src 'none'; style-src 'none';",
           },
         ],
       },
@@ -208,16 +249,26 @@ const nextConfig: NextConfig = {
           },
         ],
       },
+      // Third-party script proxy caching optimization
+      {
+        source: "/_next/static/chunks/(.*)",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=31536000, immutable",
+          },
+        ],
+      },
     ];
   },
 
-  // Webpack optimizations for bundle size
+  // Webpack optimizations for bundle size - aggressive polyfill removal
   webpack: (config, { dev, isServer }) => {
     // Disable unnecessary polyfills for modern browsers
     if (!isServer) {
       config.resolve.fallback = {
         ...config.resolve.fallback,
-        // Disable polyfills for modern browsers
+        // Disable all polyfills for modern browsers - ES2022+ support assumed
         stream: false,
         crypto: false,
         http: false,
@@ -229,6 +280,13 @@ const nextConfig: NextConfig = {
         net: false,
         tls: false,
         child_process: false,
+        buffer: false,
+        assert: false,
+        path: false,
+        util: false,
+        events: false,
+        querystring: false,
+        string_decoder: false,
       };
 
       // Configure modern browser targets to reduce polyfills
@@ -236,7 +294,18 @@ const nextConfig: NextConfig = {
         ...config.resolve.alias,
         // Point core-js to empty module since we target modern browsers
         'core-js/modules': false,
+        'core-js/stable': false,
+        'core-js/es': false,
         'core-js': false,
+        'regenerator-runtime': false,
+        '@babel/runtime': false,
+        // Exclude polyfills for ES2022+ features we can assume exist
+        'es6-promise': false,
+        'whatwg-fetch': false,
+        'url-polyfill': false,
+        'intersection-observer': false,
+        'resize-observer-polyfill': false,
+        'abortcontroller-polyfill': false,
       };
 
       // Add more aggressive polyfill exclusions using webpack's DefinePlugin
@@ -245,6 +314,14 @@ const nextConfig: NextConfig = {
       config.plugins.push(
         new webpack.DefinePlugin({
           'process.env.SKIP_POLYFILLS': JSON.stringify('true'),
+          'process.env.MODERN_BROWSERS_ONLY': JSON.stringify('true'),
+        })
+      );
+
+      // Configure to ignore polyfill modules during build
+      config.plugins.push(
+        new webpack.IgnorePlugin({
+          resourceRegExp: /(core-js|regenerator-runtime|@babel\/runtime)/,
         })
       );
     }
@@ -264,19 +341,31 @@ const nextConfig: NextConfig = {
         delete config.entry.polyfills;
       }
 
-      // Configure externals to exclude polyfill libraries
+      // Configure externals to exclude polyfill libraries - comprehensive exclusion
       config.externals = config.externals || [];
       if (Array.isArray(config.externals)) {
         config.externals.push(
-          // Exclude common polyfill modules
+          // Exclude all core-js polyfills (Array.at, flat, flatMap, Object.fromEntries, etc.)
           /^core-js/,
+          /^core-js\//,
           /^regenerator-runtime/,
           /^@babel\/runtime/,
-          // Additional polyfill exclusions for ES2022+ features
+          /^@babel\/polyfill/,
+          // Modern browser feature polyfills we don't need
+          /^es6-promise/,
           /^whatwg-fetch/,
           /^url-polyfill/,
           /^intersection-observer/,
           /^resize-observer-polyfill/,
+          /^abortcontroller-polyfill/,
+          /^custom-event-polyfill/,
+          /^element-closest/,
+          /^classlist-polyfill/,
+          // String/Array method polyfills - not needed for modern browsers
+          /^array-from/,
+          /^array-includes/,
+          /^object-assign/,
+          /^promise-polyfill/,
         );
       }
 

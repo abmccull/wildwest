@@ -10,6 +10,9 @@ const ServiceCard = lazy(() => import("@/components/ServiceCard"));
 
 import { SERVICES, SERVICE_DISPLAY_NAMES } from "@/types/database";
 
+// Enable ISR with revalidation every hour
+export const revalidate = 3600;
+
 // Utah cities we serve (updated for Wild West Construction's service area)
 const utahCities = [
   { name: "Salt Lake City", slug: "salt-lake-city" },
@@ -401,7 +404,7 @@ export default function Home() {
             <h2 className="text-4xl md:text-5xl font-bold mb-6">
               Ready to Start Your Project?
             </h2>
-            <p className="text-xl mb-8 text-red-100">
+            <p className="text-xl mb-8 text-red-50">
               Contact Wild West Construction today for a free consultation and
               estimate. We&apos;re here to make your construction dreams a
               reality.

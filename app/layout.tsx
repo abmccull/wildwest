@@ -9,6 +9,7 @@ import WebVitals from "@/components/WebVitals";
 import ServiceWorkerRegistration from "@/components/ServiceWorkerRegistration";
 import Analytics from "@/components/AnalyticsOptimized";
 import CSSOptimizer from "@/components/CSSOptimizer";
+import PerformanceMonitor from "@/components/PerformanceMonitor";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -111,7 +112,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.className} ${inter.variable}`}>
       <head>
-        {/* Critical Performance Resource Hints */}
+        {/* Critical Performance Resource Hints - immediate preconnect for fonts */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
           rel="preconnect"
@@ -119,47 +120,81 @@ export default function RootLayout({
           crossOrigin="anonymous"
         />
         
-        {/* Analytics domains - DNS prefetch only to avoid early connection */}
-        <link rel="dns-prefetch" href="https://www.google-analytics.com" />
-        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
-        <link rel="dns-prefetch" href="https://connect.facebook.net" />
-        <link rel="dns-prefetch" href="https://www.facebook.com" />
-        <link rel="dns-prefetch" href="https://vitals.vercel-insights.com" />
-        <link rel="dns-prefetch" href="https://vercel.live" />
+        {/* Analytics domains - preconnect for critical third-party origins */}
+        <link rel="preconnect" href="https://www.googletagmanager.com" />
+        <link rel="preconnect" href="https://connect.facebook.net" />
+        <link rel="preconnect" href="https://vitals.vercel-insights.com" />
         
-        {/* Preconnect for analytics only after user interaction */}
+        {/* DNS prefetch for non-critical analytics domains */}
+        <link rel="dns-prefetch" href="https://www.google-analytics.com" />
+        <link rel="dns-prefetch" href="https://www.facebook.com" />
+        <link rel="dns-prefetch" href="https://vercel.live" />
+
+        {/* Pre-emptive CSS render-blocking prevention script - runs before CSS loads */}
         <script
           dangerouslySetInnerHTML={{
             __html: `
               (function() {
-                var preconnectAnalytics = function() {
-                  var link1 = document.createElement('link');
-                  link1.rel = 'preconnect';
-                  link1.href = 'https://www.googletagmanager.com';
-                  document.head.appendChild(link1);
+                // Monitor for render-blocking CSS and convert to async
+                var processCSS = function() {
+                  var links = document.querySelectorAll('link[rel="stylesheet"], link[data-n-css]');
+                  var processed = false;
                   
-                  var link2 = document.createElement('link');
-                  link2.rel = 'preconnect'; 
-                  link2.href = 'https://connect.facebook.net';
-                  document.head.appendChild(link2);
-                };
-                
-                var events = ['mousedown', 'touchstart', 'keydown'];
-                var addListeners = function() {
-                  events.forEach(function(event) {
-                    document.addEventListener(event, function() {
-                      preconnectAnalytics();
-                      events.forEach(function(e) {
-                        document.removeEventListener(e, arguments.callee);
-                      });
-                    }, { passive: true, once: true });
+                  links.forEach(function(link) {
+                    if (link.href && (
+                      link.href.includes('_next/static/css/') ||
+                      link.href.includes('dc1f36d2e80006fc.css') ||
+                      link.hasAttribute('data-n-css')
+                    )) {
+                      // Convert render-blocking CSS to non-blocking
+                      var originalMedia = link.media || 'all';
+                      link.media = 'print';
+                      link.onload = function() {
+                        link.media = originalMedia;
+                      };
+                      // Fallback timeout
+                      setTimeout(function() {
+                        link.media = originalMedia;
+                      }, 100);
+                      processed = true;
+                    }
                   });
+                  
+                  return processed;
                 };
                 
+                // Run immediately
+                processCSS();
+                
+                // Monitor DOM changes for dynamically added CSS
+                if (typeof MutationObserver !== 'undefined') {
+                  var observer = new MutationObserver(function(mutations) {
+                    var shouldProcess = false;
+                    mutations.forEach(function(mutation) {
+                      if (mutation.type === 'childList') {
+                        mutation.addedNodes.forEach(function(node) {
+                          if (node.tagName === 'LINK' && node.rel === 'stylesheet') {
+                            shouldProcess = true;
+                          }
+                        });
+                      }
+                    });
+                    if (shouldProcess) {
+                      processCSS();
+                    }
+                  });
+                  
+                  observer.observe(document.head, {
+                    childList: true,
+                    subtree: true
+                  });
+                }
+                
+                // Additional check after DOM ready
                 if (document.readyState === 'loading') {
-                  document.addEventListener('DOMContentLoaded', addListeners);
+                  document.addEventListener('DOMContentLoaded', processCSS);
                 } else {
-                  addListeners();
+                  processCSS();
                 }
               })();
             `,
@@ -406,6 +441,7 @@ export default function RootLayout({
         <ServiceWorkerRegistration />
         <WebVitals />
         <Analytics />
+        <PerformanceMonitor />
         {children}
         <VercelAnalytics />
         <SpeedInsights />

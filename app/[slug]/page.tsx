@@ -580,7 +580,7 @@ export default async function DynamicPage({ params }: DynamicPageProps) {
             <h2 className="text-3xl md:text-4xl font-bold mb-6">
               Ready to Start Your {serviceName} Project in {pageData.city}?
             </h2>
-            <p className="text-xl mb-8 text-red-100">
+            <p className="text-xl mb-8 text-red-50">
               {content.cta_text ||
                 `Contact Wild West Construction today for a free consultation and estimate. We're ready to handle your ${serviceName.toLowerCase()} project in ${pageData.city}, Utah.`}
             </p>

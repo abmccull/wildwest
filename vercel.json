@@ -145,6 +145,32 @@
           "value": "public, max-age=31536000, immutable"
         }
       ]
+    },
+    {
+      "source": "/((?!api).*)\.(html|js|css)",
+      "headers": [
+        {
+          "key": "CDN-Cache-Control",
+          "value": "public, s-maxage=31536000, immutable"
+        },
+        {
+          "key": "Vercel-CDN-Cache-Control",
+          "value": "public, s-maxage=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/",
+      "headers": [
+        {
+          "key": "CDN-Cache-Control",
+          "value": "public, s-maxage=60, stale-while-revalidate=300"
+        },
+        {
+          "key": "Vercel-CDN-Cache-Control",
+          "value": "public, s-maxage=60, stale-while-revalidate=300"
+        }
+      ]
     }
   ],
   "rewrites": [
@@ -159,10 +185,24 @@
   ],
   "functions": {
     "app/page.tsx": {
-      "maxDuration": 10
+      "maxDuration": 5
     },
     "app/api/lead/route.ts": {
-      "maxDuration": 10
+      "maxDuration": 10,
+      "runtime": "nodejs18.x",
+      "regions": ["cle1", "iad1", "sfo1"]
+    },
+    "app/api/health/route.ts": {
+      "maxDuration": 5,
+      "runtime": "edge"
+    },
+    "app/sitemap.ts": {
+      "maxDuration": 30,
+      "runtime": "nodejs18.x"
+    },
+    "app/robots.ts": {
+      "maxDuration": 5,
+      "runtime": "edge"
     }
   },
   "crons": []

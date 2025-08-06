@@ -540,7 +540,7 @@ export default function GalleryPage() {
                 <h2 className="text-4xl md:text-5xl font-bold mb-6">
                   Ready to Start Your Project?
                 </h2>
-                <p className="text-xl text-red-100 mb-8 leading-relaxed">
+                <p className="text-xl text-red-50 mb-8 leading-relaxed">
                   Get your free, no-obligation estimate today. Our construction experts will assess your project needs and provide transparent pricing with no hidden fees.
                 </p>
 
