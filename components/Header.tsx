@@ -102,11 +102,11 @@ const Header: React.FC = () => {
           </div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center space-x-8">
+          <nav className="hidden lg:flex items-center space-x-6 xl:space-x-8">
             {navigation.map((item) => (
               <div key={item.label} className="relative group">
                 <button
-                  className="flex items-center space-x-1 text-blue-900 hover:text-red-600 font-medium transition-colors duration-200 whitespace-nowrap"
+                  className="flex items-center space-x-1 px-2 py-1 text-blue-900 hover:text-red-600 font-medium transition-colors duration-200 whitespace-nowrap rounded-md hover:bg-gray-50"
                   onClick={() =>
                     item.hasDropdown
                       ? toggleDropdown(item.label)
@@ -162,7 +162,7 @@ const Header: React.FC = () => {
           </nav>
 
           {/* CTA Button */}
-          <div className="hidden md:flex items-center space-x-4">
+          <div className="hidden md:flex items-center space-x-4 lg:space-x-6">
             <a
               href="/quote"
               className="btn-primary text-sm lg:text-base px-4 py-2 lg:px-6"
@@ -173,6 +173,7 @@ const Header: React.FC = () => {
             <a
               href="tel:+1-801-691-4065"
               data-source="header"
+              data-service-type="general"
               className="text-red-600 hover:text-red-700 font-semibold transition-colors duration-200 text-sm lg:text-base whitespace-nowrap"
             >
               (801) 691-4065
@@ -285,6 +286,7 @@ const Header: React.FC = () => {
                 <a
                   href="tel:+1-801-691-4065"
                   data-source="mobile-menu"
+                  data-service-type="general"
                   className="block text-center text-red-600 font-semibold py-2 px-4 rounded-md hover:bg-gray-50 transition-colors duration-200"
                   onClick={closeMenus}
                 >

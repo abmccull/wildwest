@@ -1,0 +1,23 @@
+
+> wildwest-seo@0.1.0 dev
+> next dev
+
+   ▲ Next.js 15.4.2-canary.31
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.68.52:3000
+   - Environments: .env.local
+   - Experiments (use with caution):
+     ✓ scrollRestoration
+
+ ✓ Starting...
+ ✓ Ready in 1873ms
+ ○ Compiling /services/junk-removal ...
+ ✓ Compiled /services/junk-removal in 544ms (686 modules)
+ GET /services/junk-removal 200 in 973ms
+ GET /services/junk-removal 200 in 63ms
+ GET /services/junk-removal 200 in 65ms
+ ✓ Compiled /services/flooring in 443ms (702 modules)
+ GET /services/flooring 200 in 776ms
+ ✓ Compiled /services/demolition in 115ms (690 modules)
+ GET /services/demolition 200 in 393ms
+ GET /services/junk-removal 200 in 64ms

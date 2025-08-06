@@ -41,33 +41,39 @@ export async function generateMetadata({
   params,
 }: ServicePageProps): Promise<Metadata> {
   const { city, service } = await params;
+  
+  // Convert hyphenated URL format to underscore enum format
+  const serviceEnum = service.replace(/-/g, "_") as ServiceType;
 
-  if (!CITY_DISPLAY_NAMES[city] || !SERVICES.includes(service)) {
+  if (!CITY_DISPLAY_NAMES[city] || !SERVICES.includes(serviceEnum)) {
     return {
       title: "Service Not Found",
       description: "The requested service page was not found.",
     };
   }
 
-  const slug = `${city}-${service}`;
+  const slug = `${city}-${serviceEnum}`;
   const pageData = await getPageBySlug(slug);
 
-  return generateServiceMetadata(city, service, pageData ?? undefined);
+  return generateServiceMetadata(city, serviceEnum, pageData ?? undefined);
 }
 
 export default async function ServicePage({ params }: ServicePageProps) {
   const { city, service } = await params;
 
+  // Convert hyphenated URL format to underscore enum format
+  const serviceEnum = service.replace(/-/g, "_") as ServiceType;
+
   // Validate parameters
-  if (!CITY_DISPLAY_NAMES[city] || !SERVICES.includes(service)) {
+  if (!CITY_DISPLAY_NAMES[city] || !SERVICES.includes(serviceEnum)) {
     notFound();
   }
 
   const displayCity = CITY_DISPLAY_NAMES[city];
-  const serviceName = SERVICE_DISPLAY_NAMES[service];
+  const serviceName = SERVICE_DISPLAY_NAMES[serviceEnum];
 
   // Fetch page data
-  const pageData = await getPageBySlug(`${city}-${service}`);
+  const pageData = await getPageBySlug(`${city}-${serviceEnum}`);
 
   // Track page view if page exists
   if (pageData) {
@@ -78,7 +84,7 @@ export default async function ServicePage({ params }: ServicePageProps) {
   const content: PageContent = (pageData?.content as PageContent) || {};
 
   // Get related services (exclude current service)
-  const relatedServices = SERVICES.filter((s) => s !== service);
+  const relatedServices = SERVICES.filter((s) => s !== serviceEnum);
 
   // Default FAQ data
   const defaultFAQs = [
@@ -101,7 +107,7 @@ export default async function ServicePage({ params }: ServicePageProps) {
   ];
 
   // Schema markup for SEO
-  const serviceSchema = generateServiceSchema(city, service);
+  const serviceSchema = generateServiceSchema(city, serviceEnum);
   const breadcrumbSchema = generateBreadcrumbSchema([
     { name: "Home", url: "https://wildwestslc.com" },
     { name: "Locations", url: "https://wildwestslc.com/locations" },
@@ -238,12 +244,12 @@ export default async function ServicePage({ params }: ServicePageProps) {
                 <div className="prose prose-lg max-w-none text-gray-700">
                   <p className="mb-6">
                     {content.service_description ||
-                      getDefaultServiceDescription(service, displayCity)}
+                      getDefaultServiceDescription(serviceEnum, displayCity)}
                   </p>
 
                   {/* Service Features */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-8">
-                    {getServiceFeatures(service).map((feature, index) => (
+                    {getServiceFeatures(serviceEnum).map((feature, index) => (
                       <div key={index} className="flex items-start space-x-3">
                         <div className="flex-shrink-0">
                           <svg
@@ -283,7 +289,7 @@ export default async function ServicePage({ params }: ServicePageProps) {
                 </h2>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  {getServiceProcess(service).map((step, index) => (
+                  {getServiceProcess(serviceEnum).map((step, index) => (
                     <div key={index} className="bg-gray-50 rounded-lg p-6">
                       <div className="flex items-center mb-4">
                         <div className="w-8 h-8 bg-red-600 text-white rounded-full flex items-center justify-center font-bold text-sm">

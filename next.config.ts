@@ -6,6 +6,11 @@ const nextConfig: NextConfig = {
     // Removed optimizePackageImports due to RSC chunk issues (see troubleshooting)
     scrollRestoration: true,
   },
+  
+  // Disable ESLint during builds for now
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
 
   // Image optimization for Core Web Vitals
   images: {

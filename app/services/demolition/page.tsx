@@ -631,106 +631,41 @@ export default function DemolitionServices() {
           </div>
         </section>
 
-        {/* Pricing/CTA Section */}
+        {/* CTA Section */}
         <section className="py-16 bg-gray-50" id="pricing">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
               <h2 className="text-4xl font-bold text-gray-900 mb-4">
-                Transparent Demolition Pricing
+                Ready to Start Your Demolition Project?
               </h2>
               <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                Get your free estimate today. All pricing includes permits,
+                Get your free estimate today. All services include permits,
                 safety equipment, and complete cleanup.
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-              {/* Interior Package */}
-              <div className="bg-white rounded-lg shadow-construction p-8 text-center">
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">
-                  Interior Demolition
-                </h3>
-                <div className="text-4xl font-bold text-red-600 mb-2">
-                  Starting at
-                </div>
-                <div className="text-3xl font-bold text-gray-900 mb-6">
-                  $2.50/sq ft
-                </div>
-                <ul className="text-left text-gray-700 space-y-3 mb-8">
-                  <li>✓ Wall & partition removal</li>
-                  <li>✓ Flooring teardown</li>
-                  <li>✓ Fixture removal</li>
-                  <li>✓ Debris disposal</li>
-                  <li>✓ Basic site cleanup</li>
-                </ul>
-                <Link href="#quote-form" className="btn-primary w-full">
-                  Get Free Quote
-                </Link>
-              </div>
-
-              {/* Commercial Package */}
-              <div className="bg-white rounded-lg shadow-construction p-8 text-center ring-2 ring-red-600 relative">
-                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-red-600 text-white px-4 py-2 rounded-full text-sm font-bold">
-                  MOST POPULAR
-                </div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">
-                  Commercial Demo
-                </h3>
-                <div className="text-4xl font-bold text-red-600 mb-2">
-                  Starting at
-                </div>
-                <div className="text-3xl font-bold text-gray-900 mb-6">
-                  $4.25/sq ft
-                </div>
-                <ul className="text-left text-gray-700 space-y-3 mb-8">
-                  <li>✓ Complete structure removal</li>
-                  <li>✓ Permit acquisition</li>
-                  <li>✓ Utility disconnection</li>
-                  <li>✓ Environmental compliance</li>
-                  <li>✓ Full debris removal</li>
-                  <li>✓ Site preparation</li>
-                </ul>
-                <Link href="#quote-form" className="btn-primary w-full">
-                  Get Free Quote
-                </Link>
-              </div>
-
-              {/* Emergency Package */}
-              <div className="bg-white rounded-lg shadow-construction p-8 text-center">
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">
-                  Emergency Demo
-                </h3>
-                <div className="text-4xl font-bold text-red-600 mb-2">
-                  Starting at
-                </div>
-                <div className="text-3xl font-bold text-gray-900 mb-6">
-                  $150/hour
-                </div>
-                <ul className="text-left text-gray-700 space-y-3 mb-8">
-                  <li>✓ 24/7 availability</li>
-                  <li>✓ Rapid response team</li>
-                  <li>✓ Safety stabilization</li>
-                  <li>✓ Emergency permits</li>
-                  <li>✓ Insurance coordination</li>
-                  <li>✓ Immediate cleanup</li>
-                  <li>✓ Priority scheduling</li>
-                </ul>
-                <Link href="#quote-form" className="btn-primary w-full">
-                  Get Emergency Quote
-                </Link>
-              </div>
-            </div>
-
-            <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6 text-center">
-              <h3 className="text-lg font-bold text-yellow-800 mb-2">
-                Free Site Assessment & Detailed Estimate
+            <div className="bg-gradient-to-r from-red-50 to-orange-50 border border-red-200 rounded-xl p-8 text-center">
+              <h3 className="text-2xl font-bold text-gray-900 mb-4">
+                Get Your Free Demolition Estimate Today
               </h3>
-              <p className="text-yellow-700">
-                Schedule your free consultation today and receive a
-                comprehensive demolition plan with transparent pricing. No
-                hidden fees, no surprises—just honest pricing for professional
-                work.
+              <p className="text-lg text-gray-700 mb-6">
+                Our demolition experts will assess your project, handle all permits, and provide transparent pricing with no hidden fees. 
+                We specialize in safe, efficient demolition with complete debris removal and site cleanup.
               </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <Link 
+                  href="#quote-form" 
+                  className="inline-block px-8 py-4 bg-red-600 text-white font-bold rounded-lg hover:bg-red-700 transition-colors duration-200 text-center text-lg"
+                >
+                  Get Free Estimate
+                </Link>
+                <a
+                  href="tel:+1-801-691-4065"
+                  className="px-8 py-4 border-2 border-red-600 text-red-600 font-bold rounded-lg hover:bg-red-600 hover:text-white transition-colors duration-200 text-center text-lg"
+                >
+                  Call (801) 691-4065
+                </a>
+              </div>
             </div>
           </div>
         </section>
@@ -1023,7 +958,7 @@ export default function DemolitionServices() {
                     <div className="h-96 animate-pulse bg-gray-200 rounded"></div>
                   }
                 >
-                  <LeadForm variant="default" showProjectDetails={true} />
+                  <LeadForm variant="default" />
                 </Suspense>
               </div>
             </div>

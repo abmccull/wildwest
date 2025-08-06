@@ -9,11 +9,11 @@ import LeadForm from "@/components/LeadForm";
 export const metadata: Metadata = {
   title: "Professional Flooring Services in Utah | Wild West Construction",
   description:
-    "Expert flooring installation, repair, and refinishing services throughout Utah. Hardwood, tile, vinyl, laminate, and carpet installation. Licensed & insured contractors.",
+    "Expert flooring installation, repair, and refinishing services throughout Utah. Hardwood, vinyl, laminate, and LVP flooring specialists. Licensed & insured contractors.",
   openGraph: {
     title: "Professional Flooring Services in Utah | Wild West Construction",
     description:
-      "Expert flooring installation, repair, and refinishing services throughout Utah. Hardwood, tile, vinyl, laminate, and carpet installation. Licensed & insured contractors.",
+      "Expert flooring installation, repair, and refinishing services throughout Utah. Hardwood, vinyl, laminate, and LVP flooring specialists. Licensed & insured contractors.",
     url: "https://wildwestslc.com/services/flooring",
     siteName: "Wild West Construction",
     images: [
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Professional Flooring Services in Utah | Wild West Construction",
     description:
-      "Expert flooring installation, repair, and refinishing services throughout Utah. Hardwood, tile, vinyl, laminate, and carpet installation. Licensed & insured contractors.",
+      "Expert flooring installation, repair, and refinishing services throughout Utah. Hardwood, vinyl, laminate, and LVP flooring specialists. Licensed & insured contractors.",
     images: ["https://wildwestslc.com/images/flooring-hero.jpg"],
   },
   alternates: {
@@ -63,7 +63,7 @@ export default function FlooringServices() {
                 <p className="text-xl text-green-100 mb-8 leading-relaxed">
                   Transform your home or business with expert flooring
                   installation, repair, and refinishing. From hardwood elegance
-                  to durable tile solutions, we deliver quality craftsmanship
+                  to modern LVP solutions, we deliver quality craftsmanship
                   that lasts.
                 </p>
 
@@ -76,6 +76,8 @@ export default function FlooringServices() {
                   </Link>
                   <a
                     href="tel:+1-801-691-4065"
+                    data-source="flooring_hero"
+                    data-service-type="flooring"
                     className="px-8 py-4 border-2 border-white text-white font-bold rounded-lg hover:bg-white hover:text-green-600 transition-colors duration-200 text-center text-lg"
                   >
                     Call (801) 691-4065
@@ -124,7 +126,7 @@ export default function FlooringServices() {
                         d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
                       />
                     </svg>
-                    <span className="text-sm">10-Year Warranty</span>
+                    <span className="text-sm">1 Year Workmanship Warranty</span>
                   </div>
                 </div>
               </div>
@@ -179,11 +181,11 @@ export default function FlooringServices() {
 
               <p className="text-lg text-gray-700 mb-6 leading-relaxed">
                 Our team of certified flooring specialists brings expertise
-                across all major flooring types, from classic hardwood and
-                elegant tile to modern vinyl and cozy carpet. We work with
-                premium materials from trusted manufacturers and employ
-                industry-leading installation techniques to ensure your floors
-                not only look stunning but stand the test of time.
+                across hardwood, laminate, vinyl, and luxury vinyl plank (LVP)
+                flooring. We specialize in hardwood refinishing and floor
+                repairs, working with premium materials from trusted
+                manufacturers. Our industry-leading installation techniques
+                ensure your floors not only look stunning but stand the test of time.
               </p>
 
               <p className="text-lg text-gray-700 mb-6 leading-relaxed">
@@ -249,7 +251,7 @@ export default function FlooringServices() {
                 </ul>
               </div>
 
-              {/* Tile Services */}
+              {/* Floor Repair Services */}
               <div className="bg-white rounded-lg shadow-construction p-6 hover:shadow-xl transition-shadow duration-300">
                 <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
                   <svg
@@ -262,19 +264,25 @@ export default function FlooringServices() {
                       strokeLinecap="round"
                       strokeLinejoin="round"
                       strokeWidth={2}
-                      d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
+                      d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
+                    />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
                     />
                   </svg>
                 </div>
                 <h3 className="text-xl font-bold text-gray-900 mb-3">
-                  Tile & Stone
+                  Floor Repair & Restoration
                 </h3>
                 <ul className="text-gray-700 space-y-2">
-                  <li>• Ceramic & porcelain tile</li>
-                  <li>• Natural stone installation</li>
-                  <li>• Mosaic & decorative tiles</li>
-                  <li>• Bathroom & kitchen tiling</li>
-                  <li>• Grout cleaning & repair</li>
+                  <li>• Hardwood floor repair</li>
+                  <li>• Plank replacement services</li>
+                  <li>• Water damage restoration</li>
+                  <li>• Floor squeaks & settling fixes</li>
+                  <li>• Emergency floor repairs</li>
                 </ul>
               </div>
 
@@ -307,7 +315,7 @@ export default function FlooringServices() {
                 </ul>
               </div>
 
-              {/* Carpet Services */}
+              {/* Hardwood Refinishing Services */}
               <div className="bg-white rounded-lg shadow-construction p-6 hover:shadow-xl transition-shadow duration-300">
                 <div className="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mb-4">
                   <svg
@@ -320,19 +328,19 @@ export default function FlooringServices() {
                       strokeLinecap="round"
                       strokeLinejoin="round"
                       strokeWidth={2}
-                      d="M3 21h18M5 21V7a2 2 0 012-2h10a2 2 0 012 2v14M9 10h6M9 14h6"
+                      d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"
                     />
                   </svg>
                 </div>
                 <h3 className="text-xl font-bold text-gray-900 mb-3">
-                  Carpet Installation
+                  Hardwood Refinishing
                 </h3>
                 <ul className="text-gray-700 space-y-2">
-                  <li>• Residential carpet installation</li>
-                  <li>• Commercial carpeting</li>
-                  <li>• Carpet removal & disposal</li>
-                  <li>• Padding & underlayment</li>
-                  <li>• Custom carpet fitting</li>
+                  <li>• Professional floor sanding</li>
+                  <li>• Custom stain applications</li>
+                  <li>• Polyurethane finishing</li>
+                  <li>• Screen & recoat services</li>
+                  <li>• Historic wood restoration</li>
                 </ul>
               </div>
 
@@ -386,10 +394,10 @@ export default function FlooringServices() {
                   Specialty Services
                 </h3>
                 <ul className="text-gray-700 space-y-2">
-                  <li>• Custom pattern installations</li>
+                  <li>• Custom hardwood installations</li>
                   <li>• Transition strip installation</li>
                   <li>• Floor heating system prep</li>
-                  <li>• Commercial flooring solutions</li>
+                  <li>• Historic hardwood restoration</li>
                   <li>• Emergency floor repairs</li>
                 </ul>
               </div>
@@ -503,7 +511,7 @@ export default function FlooringServices() {
                 </div>
                 <h3 className="text-xl font-bold mb-3">Quality Guarantee</h3>
                 <p className="text-gray-300">
-                  10-year workmanship warranty on all installations. We stand
+                  1 year workmanship warranty plus manufacturer's warranty on all materials. We stand
                   behind our work with comprehensive coverage.
                 </p>
               </div>
@@ -631,12 +639,12 @@ export default function FlooringServices() {
           </div>
         </section>
 
-        {/* Pricing/CTA Section */}
+        {/* CTA Section */}
         <section className="py-16 bg-gray-50" id="pricing">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
               <h2 className="text-4xl font-bold text-gray-900 mb-4">
-                Transparent, Competitive Pricing
+                Ready to Transform Your Floors?
               </h2>
               <p className="text-xl text-gray-600 max-w-3xl mx-auto">
                 Get your free, detailed estimate today. No hidden fees, no
@@ -644,92 +652,28 @@ export default function FlooringServices() {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-              {/* Basic Package */}
-              <div className="bg-white rounded-lg shadow-construction p-8 text-center">
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">
-                  Basic Installation
-                </h3>
-                <div className="text-4xl font-bold text-green-600 mb-2">
-                  Starting at
-                </div>
-                <div className="text-3xl font-bold text-gray-900 mb-6">
-                  $3.50/sq ft
-                </div>
-                <ul className="text-left text-gray-700 space-y-3 mb-8">
-                  <li>✓ Standard material selection</li>
-                  <li>✓ Professional installation</li>
-                  <li>✓ Basic subfloor preparation</li>
-                  <li>✓ 2-year workmanship warranty</li>
-                  <li>✓ Post-installation cleanup</li>
-                </ul>
-                <Link href="#quote-form" className="btn-primary w-full">
-                  Get Free Quote
-                </Link>
-              </div>
-
-              {/* Premium Package */}
-              <div className="bg-white rounded-lg shadow-construction p-8 text-center ring-2 ring-red-600 relative">
-                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-red-600 text-white px-4 py-2 rounded-full text-sm font-bold">
-                  MOST POPULAR
-                </div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">
-                  Premium Installation
-                </h3>
-                <div className="text-4xl font-bold text-green-600 mb-2">
-                  Starting at
-                </div>
-                <div className="text-3xl font-bold text-gray-900 mb-6">
-                  $5.75/sq ft
-                </div>
-                <ul className="text-left text-gray-700 space-y-3 mb-8">
-                  <li>✓ Premium material selection</li>
-                  <li>✓ Expert craftsman installation</li>
-                  <li>✓ Complete subfloor assessment</li>
-                  <li>✓ 5-year workmanship warranty</li>
-                  <li>✓ Furniture moving included</li>
-                  <li>✓ Moisture barrier installation</li>
-                </ul>
-                <Link href="#quote-form" className="btn-primary w-full">
-                  Get Free Quote
-                </Link>
-              </div>
-
-              {/* Luxury Package */}
-              <div className="bg-white rounded-lg shadow-construction p-8 text-center">
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">
-                  Luxury Installation
-                </h3>
-                <div className="text-4xl font-bold text-green-600 mb-2">
-                  Starting at
-                </div>
-                <div className="text-3xl font-bold text-gray-900 mb-6">
-                  $8.25/sq ft
-                </div>
-                <ul className="text-left text-gray-700 space-y-3 mb-8">
-                  <li>✓ Designer material selection</li>
-                  <li>✓ Master craftsman installation</li>
-                  <li>✓ Full structural assessment</li>
-                  <li>✓ 10-year workmanship warranty</li>
-                  <li>✓ White-glove service</li>
-                  <li>✓ Custom finishing options</li>
-                  <li>✓ Priority scheduling</li>
-                </ul>
-                <Link href="#quote-form" className="btn-primary w-full">
-                  Get Free Quote
-                </Link>
-              </div>
-            </div>
-
-            <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6 text-center">
-              <h3 className="text-lg font-bold text-yellow-800 mb-2">
-                Special Offer: Free Estimates & Design Consultation
+            <div className="bg-gradient-to-r from-green-50 to-blue-50 border border-green-200 rounded-xl p-8 text-center">
+              <h3 className="text-2xl font-bold text-gray-900 mb-4">
+                Get Your Free Flooring Estimate Today
               </h3>
-              <p className="text-yellow-700">
-                Schedule your free in-home consultation this month and receive a
-                complimentary design consultation worth $200. Call now or fill
-                out our form to get started!
+              <p className="text-lg text-gray-700 mb-6">
+                Our flooring experts will assess your space, discuss your vision, and provide transparent pricing for your project. 
+                Schedule your consultation now and receive expert guidance on materials, installation, and design options.
               </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <Link 
+                  href="#quote-form" 
+                  className="inline-block px-8 py-4 bg-green-600 text-white font-bold rounded-lg hover:bg-green-700 transition-colors duration-200 text-center text-lg"
+                >
+                  Get Free Estimate
+                </Link>
+                <a
+                  href="tel:+1-801-691-4065"
+                  className="px-8 py-4 border-2 border-green-600 text-green-600 font-bold rounded-lg hover:bg-green-600 hover:text-white transition-colors duration-200 text-center text-lg"
+                >
+                  Call (801) 691-4065
+                </a>
+              </div>
             </div>
           </div>
         </section>
@@ -755,8 +699,8 @@ export default function FlooringServices() {
                 <p className="text-gray-700 leading-relaxed">
                   Installation timeframes vary by project size and flooring
                   type. A typical 1,000 sq ft room takes 2-3 days for hardwood,
-                  1-2 days for vinyl or laminate, and 1 day for carpet. Tile
-                  projects may take 3-5 days including cure time. We provide
+                  1-2 days for vinyl or laminate. Hardwood refinishing typically
+                  takes 3-5 days including cure time for the finish. We provide
                   detailed timelines during your consultation and stick to our
                   commitments.
                 </p>
@@ -768,12 +712,12 @@ export default function FlooringServices() {
                   What&apos;s the best flooring option for high-traffic areas?
                 </h3>
                 <p className="text-gray-700 leading-relaxed">
-                  For high-traffic areas, we recommend luxury vinyl plank (LVP),
-                  porcelain tile, or engineered hardwood with a durable finish.
+                  For high-traffic areas, we recommend luxury vinyl plank (LVP)
+                  or engineered hardwood with a durable aluminum oxide finish.
                   These options offer excellent durability, easy maintenance,
-                  and long-term value. We&apos;ll assess your specific needs and
-                  lifestyle to recommend the perfect solution during your
-                  consultation.
+                  and long-term value. For existing hardwood, refinishing with
+                  a commercial-grade polyurethane adds years of life and
+                  protects against daily wear.
                 </p>
               </div>
 
@@ -798,12 +742,10 @@ export default function FlooringServices() {
                   What warranty do you provide on your flooring work?
                 </h3>
                 <p className="text-gray-700 leading-relaxed">
-                  We offer comprehensive warranties ranging from 2-10 years
-                  depending on the service level selected. Our Premium and
-                  Luxury packages include extended warranties covering both
-                  materials and workmanship. Additionally, most flooring
-                  manufacturers provide separate material warranties ranging
-                  from 15-50 years.
+                  We offer 1 year workmanship warranty plus manufacturer's warranty on all materials.
+                  This comprehensive coverage includes both our installation workmanship and the
+                  manufacturer's material warranties, which typically range from 15-50 years
+                  depending on the product selected.
                 </p>
               </div>
 
@@ -825,15 +767,15 @@ export default function FlooringServices() {
               {/* FAQ Item 6 */}
               <div className="border-b border-gray-200 pb-8">
                 <h3 className="text-xl font-bold text-gray-900 mb-4">
-                  How do I maintain my new floors after installation?
+                  How often should hardwood floors be refinished?
                 </h3>
                 <p className="text-gray-700 leading-relaxed">
-                  We provide detailed care instructions for every flooring type
-                  we install. Generally, regular vacuuming/sweeping, prompt
-                  spill cleanup, and periodic professional cleaning keep floors
-                  looking great. For hardwood, avoid excess moisture and use
-                  manufacturer-approved cleaners. We offer ongoing maintenance
-                  services and are always available for questions.
+                  Most hardwood floors should be refinished every 7-10 years
+                  depending on traffic and care. Signs it's time include deep
+                  scratches, worn finish areas, or water stains that won't come
+                  clean. We can assess your floors and determine if refinishing
+                  or a simple screen and recoat is the best option to restore
+                  their beauty and extend their life.
                 </p>
               </div>
             </div>
@@ -880,11 +822,11 @@ export default function FlooringServices() {
                   <div className="p-4">
                     <h3 className="font-bold text-gray-900 mb-2">
                       {item === 1 && "Luxury Hardwood Installation"}
-                      {item === 2 && "Modern Tile Kitchen Floor"}
+                      {item === 2 && "Hardwood Floor Refinishing"}
                       {item === 3 && "LVP Living Room Transformation"}
-                      {item === 4 && "Commercial Carpet Installation"}
-                      {item === 5 && "Custom Stone Entryway"}
-                      {item === 6 && "Bathroom Tile Renovation"}
+                      {item === 4 && "Engineered Hardwood Installation"}
+                      {item === 5 && "Laminate Flooring Project"}
+                      {item === 6 && "Hardwood Floor Repair"}
                     </h3>
                     <p className="text-sm text-gray-600">
                       Professional installation showcasing our attention to
@@ -1002,6 +944,8 @@ export default function FlooringServices() {
                     href="https://wa.me/18016914065"
                     target="_blank"
                     rel="noopener noreferrer"
+                    data-source="flooring_cta"
+                    data-service-type="flooring"
                     className="px-8 py-4 bg-green-800 text-white font-bold rounded-lg hover:bg-green-900 transition-colors duration-200 text-center text-lg flex items-center justify-center space-x-2"
                   >
                     <svg
@@ -1023,7 +967,7 @@ export default function FlooringServices() {
                     <div className="h-96 animate-pulse bg-gray-200 rounded"></div>
                   }
                 >
-                  <LeadForm variant="default" showProjectDetails={true} />
+                  <LeadForm variant="default" />
                 </Suspense>
               </div>
             </div>
@@ -1042,7 +986,7 @@ export default function FlooringServices() {
             "@type": "LocalBusiness",
             name: "Wild West Construction - Flooring Services",
             description:
-              "Professional flooring installation, repair, and refinishing services throughout Utah. Hardwood, tile, vinyl, laminate, and carpet installation by licensed contractors.",
+              "Professional flooring installation, repair, and refinishing services throughout Utah. Hardwood, vinyl, laminate, and LVP flooring specialists with licensed contractors.",
             url: "https://wildwestslc.com/services/flooring",
             telephone: "+1-801-691-4065",
             email: "info@wildwestslc.com",
@@ -1080,9 +1024,9 @@ export default function FlooringServices() {
                   "@type": "Offer",
                   itemOffered: {
                     "@type": "Service",
-                    name: "Tile & Stone Installation",
+                    name: "Floor Repair & Restoration",
                     description:
-                      "Expert ceramic, porcelain, and natural stone tile installation services.",
+                      "Professional hardwood floor repair, plank replacement, and water damage restoration services.",
                   },
                 },
                 {
@@ -1098,9 +1042,9 @@ export default function FlooringServices() {
                   "@type": "Offer",
                   itemOffered: {
                     "@type": "Service",
-                    name: "Carpet Installation",
+                    name: "Hardwood Floor Refinishing",
                     description:
-                      "Residential and commercial carpet installation and removal services.",
+                      "Professional hardwood floor sanding, staining, and refinishing services to restore beauty and extend floor life.",
                   },
                 },
               ],

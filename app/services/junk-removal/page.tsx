@@ -632,103 +632,41 @@ export default function JunkRemovalServices() {
           </div>
         </section>
 
-        {/* Pricing/CTA Section */}
+        {/* CTA Section */}
         <section className="py-16 bg-gray-50" id="pricing">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
               <h2 className="text-4xl font-bold text-gray-900 mb-4">
-                Simple, Transparent Junk Removal Pricing
+                Ready to Clear Out Your Space?
               </h2>
               <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                No hidden fees, no surprises. Get an instant estimate and book
-                your junk removal today.
+                No hidden fees, no surprises. Get your free estimate and experience
+                stress-free junk removal today.
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-              {/* Small Load */}
-              <div className="bg-white rounded-lg shadow-construction p-8 text-center">
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">
-                  Small Load
-                </h3>
-                <div className="text-4xl font-bold text-blue-600 mb-2">
-                  Starting at
-                </div>
-                <div className="text-3xl font-bold text-gray-900 mb-6">$89</div>
-                <ul className="text-left text-gray-700 space-y-3 mb-8">
-                  <li>✓ Up to 1/4 truck load</li>
-                  <li>✓ Single items or small cleanouts</li>
-                  <li>✓ Free pickup & disposal</li>
-                  <li>✓ Same-day availability</li>
-                  <li>✓ Area cleanup included</li>
-                </ul>
-                <Link href="#quote-form" className="btn-primary w-full">
-                  Book Now
-                </Link>
-              </div>
-
-              {/* Medium Load */}
-              <div className="bg-white rounded-lg shadow-construction p-8 text-center ring-2 ring-blue-600 relative">
-                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-blue-600 text-white px-4 py-2 rounded-full text-sm font-bold">
-                  MOST POPULAR
-                </div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">
-                  Medium Load
-                </h3>
-                <div className="text-4xl font-bold text-blue-600 mb-2">
-                  Starting at
-                </div>
-                <div className="text-3xl font-bold text-gray-900 mb-6">
-                  $189
-                </div>
-                <ul className="text-left text-gray-700 space-y-3 mb-8">
-                  <li>✓ Up to 1/2 truck load</li>
-                  <li>✓ Room cleanouts</li>
-                  <li>✓ Multiple large items</li>
-                  <li>✓ Free estimates</li>
-                  <li>✓ Donation coordination</li>
-                  <li>✓ Eco-friendly disposal</li>
-                </ul>
-                <Link href="#quote-form" className="btn-primary w-full">
-                  Book Now
-                </Link>
-              </div>
-
-              {/* Large Load */}
-              <div className="bg-white rounded-lg shadow-construction p-8 text-center">
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">
-                  Large Load
-                </h3>
-                <div className="text-4xl font-bold text-blue-600 mb-2">
-                  Starting at
-                </div>
-                <div className="text-3xl font-bold text-gray-900 mb-6">
-                  $349
-                </div>
-                <ul className="text-left text-gray-700 space-y-3 mb-8">
-                  <li>✓ Up to full truck load</li>
-                  <li>✓ Whole house cleanouts</li>
-                  <li>✓ Construction debris</li>
-                  <li>✓ Commercial cleanouts</li>
-                  <li>✓ Heavy item specialists</li>
-                  <li>✓ Complete cleanup service</li>
-                  <li>✓ Volume discounts available</li>
-                </ul>
-                <Link href="#quote-form" className="btn-primary w-full">
+            <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-xl p-8 text-center">
+              <h3 className="text-2xl font-bold text-gray-900 mb-4">
+                Get Your Free Junk Removal Estimate Today
+              </h3>
+              <p className="text-lg text-gray-700 mb-6">
+                We handle everything from pickup to disposal, so you can enjoy your clean space. 
+                Our team provides fast, reliable service with eco-friendly disposal practices and same-day availability.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <Link 
+                  href="#quote-form" 
+                  className="inline-block px-8 py-4 bg-blue-600 text-white font-bold rounded-lg hover:bg-blue-700 transition-colors duration-200 text-center text-lg"
+                >
                   Get Free Estimate
                 </Link>
+                <a
+                  href="tel:+1-801-691-4065"
+                  className="px-8 py-4 border-2 border-blue-600 text-blue-600 font-bold rounded-lg hover:bg-blue-600 hover:text-white transition-colors duration-200 text-center text-lg"
+                >
+                  Call (801) 691-4065
+                </a>
               </div>
-            </div>
-
-            <div className="bg-green-50 border border-green-200 rounded-lg p-6 text-center">
-              <h3 className="text-lg font-bold text-green-800 mb-2">
-                Special Offer: Free On-Site Estimates
-              </h3>
-              <p className="text-green-700">
-                Call today for your free, no-obligation estimate. We&apos;ll
-                beat any written competitor quote by 10% and offer same-day
-                service when available.
-              </p>
             </div>
           </div>
         </section>
@@ -1019,7 +957,7 @@ export default function JunkRemovalServices() {
                     <div className="h-96 animate-pulse bg-gray-200 rounded"></div>
                   }
                 >
-                  <LeadForm variant="default" showProjectDetails={true} />
+                  <LeadForm variant="default" />
                 </Suspense>
               </div>
             </div>

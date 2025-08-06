@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
+import { getCurrentPageData } from "@/lib/analytics";
 
 // Google Analytics 4 Configuration
 const GA_MEASUREMENT_ID =
@@ -64,12 +65,17 @@ export const trackLead = (leadData: {
 };
 
 // Phone click tracking
-export const trackPhoneClick = (source: string = "unknown") => {
-  trackEvent("phone_click", {
+export const trackPhoneClick = (source: string = "unknown", serviceType: string = "general") => {
+  const pageData = getCurrentPageData();
+  
+  trackEvent("click_to_call", {
     event_category: "Contact",
     event_label: "Phone Call",
     phone_number: BUSINESS_PHONE,
     source: source,
+    service_type: serviceType,
+    page_location: pageData?.url || window.location.href,
+    page_title: pageData?.title || document.title,
   });
 
   // Facebook Pixel
@@ -77,16 +83,22 @@ export const trackPhoneClick = (source: string = "unknown") => {
     window.fbq("track", "Contact", {
       content_name: "Phone Call",
       source: source,
+      service_type: serviceType,
     });
   }
 };
 
 // WhatsApp click tracking
-export const trackWhatsAppClick = (source: string = "unknown") => {
+export const trackWhatsAppClick = (source: string = "unknown", serviceType: string = "general") => {
+  const pageData = getCurrentPageData();
+  
   trackEvent("whatsapp_click", {
     event_category: "Contact",
     event_label: "WhatsApp",
     source: source,
+    service_type: serviceType,
+    page_location: pageData?.url || window.location.href,
+    page_title: pageData?.title || document.title,
   });
 
   // Facebook Pixel
@@ -94,6 +106,7 @@ export const trackWhatsAppClick = (source: string = "unknown") => {
     window.fbq("track", "Contact", {
       content_name: "WhatsApp",
       source: source,
+      service_type: serviceType,
     });
   }
 };
@@ -217,7 +230,8 @@ export default function Analytics() {
         phoneLinks.forEach((link) => {
           link.addEventListener("click", () => {
             const source = link.getAttribute("data-source") || "website";
-            trackPhoneClick(source);
+            const serviceType = link.getAttribute("data-service-type") || "general";
+            trackPhoneClick(source, serviceType);
           });
         });
       };
@@ -230,7 +244,8 @@ export default function Analytics() {
         whatsappLinks.forEach((link) => {
           link.addEventListener("click", () => {
             const source = link.getAttribute("data-source") || "website";
-            trackWhatsAppClick(source);
+            const serviceType = link.getAttribute("data-service-type") || "general";
+            trackWhatsAppClick(source, serviceType);
           });
         });
       };

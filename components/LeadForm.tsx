@@ -12,68 +12,17 @@ interface LeadFormData {
   name: string;
   phone: string;
   email: string;
-  service: string;
-  city: string;
-  projectDescription: string;
-  timeframe: string;
-  budget: string;
 }
 
 interface LeadFormProps {
   variant?: "default" | "compact" | "sidebar";
-  showProjectDetails?: boolean;
   onSuccess?: () => void;
   className?: string;
 }
 
-const services = [
-  { value: "", label: "Select a Service" },
-  { value: "flooring", label: "Flooring Services" },
-  { value: "demolition", label: "Demolition Services" },
-  { value: "junk_removal", label: "Junk Removal" },
-  { value: "other", label: "Other Services" },
-];
-
-const cities = [
-  { value: "", label: "Select Your City" },
-  { value: "salt-lake-city", label: "Salt Lake City" },
-  { value: "west-valley-city", label: "West Valley City" },
-  { value: "west-jordan", label: "West Jordan" },
-  { value: "sandy", label: "Sandy" },
-  { value: "orem", label: "Orem" },
-  { value: "ogden", label: "Ogden" },
-  { value: "layton", label: "Layton" },
-  { value: "taylorsville", label: "Taylorsville" },
-  { value: "murray", label: "Murray" },
-  { value: "bountiful", label: "Bountiful" },
-  { value: "draper", label: "Draper" },
-  { value: "other", label: "Other Utah City" },
-];
-
-const timeframes = [
-  { value: "", label: "Project Timeframe" },
-  { value: "asap", label: "ASAP" },
-  { value: "1-month", label: "Within 1 Month" },
-  { value: "3-months", label: "Within 3 Months" },
-  { value: "6-months", label: "Within 6 Months" },
-  { value: "1-year", label: "Within 1 Year" },
-  { value: "planning", label: "Just Planning" },
-];
-
-const budgets = [
-  { value: "", label: "Estimated Budget" },
-  { value: "under-5k", label: "Under $5,000" },
-  { value: "5k-15k", label: "$5,000 - $15,000" },
-  { value: "15k-50k", label: "$15,000 - $50,000" },
-  { value: "50k-100k", label: "$50,000 - $100,000" },
-  { value: "100k-250k", label: "$100,000 - $250,000" },
-  { value: "over-250k", label: "Over $250,000" },
-  { value: "discuss", label: "Prefer to Discuss" },
-];
 
 const LeadForm: React.FC<LeadFormProps> = ({
   variant = "default",
-  showProjectDetails = true,
   onSuccess,
   className = "",
 }) => {
@@ -81,11 +30,6 @@ const LeadForm: React.FC<LeadFormProps> = ({
     name: "",
     phone: "",
     email: "",
-    service: "",
-    city: "",
-    projectDescription: "",
-    timeframe: "",
-    budget: "",
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -114,13 +58,6 @@ const LeadForm: React.FC<LeadFormProps> = ({
       newErrors.email = "Please enter a valid email address";
     }
 
-    if (!formData.service) {
-      newErrors.service = "Please select a service";
-    }
-
-    if (!formData.city) {
-      newErrors.city = "Please select your city";
-    }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -180,7 +117,9 @@ const LeadForm: React.FC<LeadFormProps> = ({
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          ...formData,
+          name: formData.name,
+          phone: formData.phone,
+          email: formData.email,
           timestamp: new Date().toISOString(),
           source: "website_form",
         }),
@@ -192,24 +131,17 @@ const LeadForm: React.FC<LeadFormProps> = ({
           name: formData.name,
           email: formData.email,
           phone: formData.phone,
-          service: formData.service as ServiceType,
-          location: formData.city,
+          service: "general" as ServiceType,
+          location: "utah",
           source: "contact-form",
         });
 
-        // Track quote request with additional details
+        // Track quote request with simplified details
         trackQuoteRequest({
-          service: formData.service as ServiceType,
-          location: formData.city,
-          urgency:
-            formData.timeframe === "asap"
-              ? "immediate"
-              : formData.timeframe === "1-month"
-                ? "within_week"
-                : formData.timeframe === "3-months"
-                  ? "within_month"
-                  : "planning_ahead",
-          budget_range: formData.budget,
+          service: "general" as ServiceType,
+          location: "utah",
+          urgency: "planning_ahead",
+          budget_range: "discuss",
           source: "contact-form",
         });
 
@@ -221,11 +153,6 @@ const LeadForm: React.FC<LeadFormProps> = ({
           name: "",
           phone: "",
           email: "",
-          service: "",
-          city: "",
-          projectDescription: "",
-          timeframe: "",
-          budget: "",
         });
         setFormStarted(false); // Reset form tracking state
         onSuccess?.();
@@ -257,8 +184,8 @@ const LeadForm: React.FC<LeadFormProps> = ({
             Get Your Free Quote
           </h3>
           <p className="text-gray-600 text-sm mt-1">
-            Tell us about your project and we&apos;ll get back to you within 24
-            hours.
+            Provide your contact information and we&apos;ll get back to you within 24
+            hours to discuss your project needs.
           </p>
         </div>
 
@@ -277,7 +204,7 @@ const LeadForm: React.FC<LeadFormProps> = ({
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-4">
-          {/* Basic Information */}
+          {/* Contact Information */}
           <div
             className={`grid ${isCompact ? "grid-cols-1" : "grid-cols-1 md:grid-cols-2"} gap-4`}
           >
@@ -322,7 +249,7 @@ const LeadForm: React.FC<LeadFormProps> = ({
                 className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-red-600 focus:border-transparent transition-colors duration-200 ${
                   errors.phone ? "border-red-500" : "border-gray-300"
                 }`}
-                placeholder="(480) 555-0123"
+                placeholder="(801) 555-0123"
               />
               {errors.phone && (
                 <p className="text-red-600 text-xs mt-1">{errors.phone}</p>
@@ -353,142 +280,6 @@ const LeadForm: React.FC<LeadFormProps> = ({
               <p className="text-red-600 text-xs mt-1">{errors.email}</p>
             )}
           </div>
-
-          {/* Service and City */}
-          <div
-            className={`grid ${isCompact ? "grid-cols-1" : "grid-cols-1 md:grid-cols-2"} gap-4`}
-          >
-            {/* Service */}
-            <div>
-              <label
-                htmlFor="service"
-                className="block text-sm font-medium text-gray-700 mb-1"
-              >
-                Service Needed *
-              </label>
-              <select
-                id="service"
-                name="service"
-                value={formData.service}
-                onChange={handleInputChange}
-                className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-red-600 focus:border-transparent transition-colors duration-200 ${
-                  errors.service ? "border-red-500" : "border-gray-300"
-                }`}
-              >
-                {services.map((service) => (
-                  <option key={service.value} value={service.value}>
-                    {service.label}
-                  </option>
-                ))}
-              </select>
-              {errors.service && (
-                <p className="text-red-600 text-xs mt-1">{errors.service}</p>
-              )}
-            </div>
-
-            {/* City */}
-            <div>
-              <label
-                htmlFor="city"
-                className="block text-sm font-medium text-gray-700 mb-1"
-              >
-                Your City *
-              </label>
-              <select
-                id="city"
-                name="city"
-                value={formData.city}
-                onChange={handleInputChange}
-                className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-red-600 focus:border-transparent transition-colors duration-200 ${
-                  errors.city ? "border-red-500" : "border-gray-300"
-                }`}
-              >
-                {cities.map((city) => (
-                  <option key={city.value} value={city.value}>
-                    {city.label}
-                  </option>
-                ))}
-              </select>
-              {errors.city && (
-                <p className="text-red-600 text-xs mt-1">{errors.city}</p>
-              )}
-            </div>
-          </div>
-
-          {/* Project Details (Optional) */}
-          {showProjectDetails && (
-            <>
-              {/* Project Description */}
-              <div>
-                <label
-                  htmlFor="projectDescription"
-                  className="block text-sm font-medium text-gray-700 mb-1"
-                >
-                  Project Description
-                </label>
-                <textarea
-                  id="projectDescription"
-                  name="projectDescription"
-                  value={formData.projectDescription}
-                  onChange={handleInputChange}
-                  rows={3}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-600 focus:border-transparent transition-colors duration-200"
-                  placeholder="Tell us about your project, including any specific requirements or questions..."
-                />
-              </div>
-
-              {/* Timeframe and Budget */}
-              <div
-                className={`grid ${isCompact ? "grid-cols-1" : "grid-cols-1 md:grid-cols-2"} gap-4`}
-              >
-                {/* Timeframe */}
-                <div>
-                  <label
-                    htmlFor="timeframe"
-                    className="block text-sm font-medium text-gray-700 mb-1"
-                  >
-                    Project Timeframe
-                  </label>
-                  <select
-                    id="timeframe"
-                    name="timeframe"
-                    value={formData.timeframe}
-                    onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-600 focus:border-transparent transition-colors duration-200"
-                  >
-                    {timeframes.map((timeframe) => (
-                      <option key={timeframe.value} value={timeframe.value}>
-                        {timeframe.label}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                {/* Budget */}
-                <div>
-                  <label
-                    htmlFor="budget"
-                    className="block text-sm font-medium text-gray-700 mb-1"
-                  >
-                    Estimated Budget
-                  </label>
-                  <select
-                    id="budget"
-                    name="budget"
-                    value={formData.budget}
-                    onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-600 focus:border-transparent transition-colors duration-200"
-                  >
-                    {budgets.map((budget) => (
-                      <option key={budget.value} value={budget.value}>
-                        {budget.label}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              </div>
-            </>
-          )}
 
           {/* Submit Button */}
           <div className="pt-2">

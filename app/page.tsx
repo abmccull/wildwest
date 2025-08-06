@@ -63,6 +63,8 @@ export default function Home() {
                   </Link>
                   <a
                     href="tel:+1-801-691-4065"
+                    data-source="homepage_hero"
+                    data-service-type="general"
                     className="px-8 py-4 border-2 border-white text-white font-bold rounded-lg hover:bg-white hover:text-blue-900 transition-colors duration-200 text-center text-lg"
                   >
                     Call (801) 691-4065
@@ -71,6 +73,8 @@ export default function Home() {
                     href="https://wa.me/18016914065"
                     target="_blank"
                     rel="noopener noreferrer"
+                    data-source="homepage_hero"
+                    data-service-type="general"
                     className="px-8 py-4 bg-green-600 text-white font-bold rounded-lg hover:bg-green-700 transition-colors duration-200 text-center text-lg flex items-center justify-center space-x-2"
                   >
                     <svg
@@ -217,6 +221,8 @@ export default function Home() {
                 Don&apos;t see your city listed?{" "}
                 <a
                   href="tel:+1-801-691-4065"
+                  data-source="homepage_locations"
+                  data-service-type="general"
                   className="text-blue-600 hover:text-blue-700 font-medium"
                 >
                   Call us
@@ -300,6 +306,8 @@ export default function Home() {
                         <p className="font-semibold">Phone</p>
                         <a
                           href="tel:+1-801-691-4065"
+                          data-source="homepage_contact"
+                          data-service-type="general"
                           className="text-red-400 hover:text-red-300"
                         >
                           (801) 691-4065
@@ -366,6 +374,8 @@ export default function Home() {
                         href="https://wa.me/18016914065"
                         target="_blank"
                         rel="noopener noreferrer"
+                        data-source="homepage_contact"
+                        data-service-type="general"
                         className="flex items-center space-x-2 text-green-400 hover:text-green-300 transition-colors"
                       >
                         <svg
@@ -405,6 +415,8 @@ export default function Home() {
               </a>
               <a
                 href="tel:+1-801-691-4065"
+                data-source="homepage_cta"
+                data-service-type="general"
                 className="px-8 py-4 border-2 border-white text-white font-bold rounded-lg hover:bg-white hover:text-red-600 transition-colors duration-200"
               >
                 Call (801) 691-4065

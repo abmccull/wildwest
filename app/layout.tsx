@@ -7,6 +7,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 import WebVitals from "@/components/WebVitals";
 import ServiceWorkerRegistration from "@/components/ServiceWorkerRegistration";
+import Analytics from "@/components/Analytics";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -180,9 +181,8 @@ export default function RootLayout({
                 availableLanguage: "English",
               },
               sameAs: [
-                "https://www.facebook.com/wildwestslc",
-                "https://www.instagram.com/wildwestslc",
-                "https://www.linkedin.com/company/wildwestslc",
+                "https://www.facebook.com/wildwestflooringbrokers/",
+                "https://www.instagram.com/wildwestflooring/",
               ],
               aggregateRating: {
                 "@type": "AggregateRating",
@@ -239,6 +239,7 @@ export default function RootLayout({
 
         <ServiceWorkerRegistration />
         <WebVitals />
+        <Analytics />
         {children}
         <VercelAnalytics />
         <SpeedInsights />

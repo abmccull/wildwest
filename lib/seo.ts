@@ -167,9 +167,8 @@ export function generateLocalBusinessSchema(
       },
     ],
     sameAs: [
-      "https://www.facebook.com/wildwestslc",
-      "https://www.instagram.com/wildwestslc",
-      "https://www.linkedin.com/company/wildwestslc",
+      "https://www.facebook.com/wildwestflooringbrokers/",
+      "https://www.instagram.com/wildwestflooring/",
       "https://www.youtube.com/@wildwestslc",
     ],
     brand: {
@@ -757,8 +756,10 @@ export function generateServicePaths() {
 
   for (const city of Object.keys(CITY_DISPLAY_NAMES)) {
     for (const service of SERVICES) {
+      // Convert underscore to hyphen for URLs
+      const serviceUrl = service.replace(/_/g, "-");
       paths.push({
-        params: { city, service },
+        params: { city, service: serviceUrl },
       });
     }
   }
