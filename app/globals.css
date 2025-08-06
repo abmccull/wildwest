@@ -172,6 +172,54 @@ select {
   background: #264653;
 }
 
+/* Footer Grid Layout Fix */
+.footer-grid {
+  display: grid !important;
+  grid-template-columns: 1fr !important;
+  gap: 2rem !important;
+}
+
+.footer-col-wide {
+  grid-column: span 1;
+}
+
+@media (min-width: 640px) {
+  .footer-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  .footer-col-wide {
+    grid-column: span 2;
+  }
+}
+
+@media (min-width: 1024px) {
+  .footer-grid {
+    grid-template-columns: repeat(4, 1fr) !important;
+  }
+  .footer-col-wide {
+    grid-column: span 1;
+  }
+}
+
+/* Service Cards Grid Fix */
+.service-cards-grid {
+  display: grid !important;
+  grid-template-columns: 1fr !important;
+  gap: 2rem !important;
+}
+
+@media (min-width: 768px) {
+  .service-cards-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .service-cards-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+}
+
 /* Responsive Grid Fixes for Service Cards and Footer */
 @media (min-width: 768px) {
   .md\:grid-cols-2 {
