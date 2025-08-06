@@ -44,3 +44,172 @@
  ✓ Compiled in 60ms (266 modules)
  ✓ Compiled in 69ms (266 modules)
  ✓ Compiled in 63ms (266 modules)
+ ⨯ ./components/Header.tsx
+Error:   [31mx[0m Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+     ,-[[36;1;4m/Users/abmccull/Desktop/wildwest2/wildwest-seo/components/Header.tsx[0m:327:1]
+ [2m324[0m |               </div>
+ [2m325[0m |             </div>
+ [2m326[0m |           </div>
+ [2m327[0m |         )}
+     : [35;1m         ^[0m
+ [2m328[0m |       </div>
+ [2m329[0m |     </header>
+ [2m330[0m |   );
+     `----
+  [31mx[0m Unterminated regexp literal
+     ,-[[36;1;4m/Users/abmccull/Desktop/wildwest2/wildwest-seo/components/Header.tsx[0m:329:1]
+ [2m326[0m |           </div>
+ [2m327[0m |         )}
+ [2m328[0m |       </div>
+ [2m329[0m |     </header>
+     : [35;1m     ^^^^^^^^[0m
+ [2m330[0m |   );
+ [2m331[0m | };
+     `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./components/Header.tsx
+ ⨯ ./components/Header.tsx
+Error:   [31mx[0m Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+     ,-[[36;1;4m/Users/abmccull/Desktop/wildwest2/wildwest-seo/components/Header.tsx[0m:327:1]
+ [2m324[0m |               </div>
+ [2m325[0m |             </div>
+ [2m326[0m |           </div>
+ [2m327[0m |         )}
+     : [35;1m         ^[0m
+ [2m328[0m |       </div>
+ [2m329[0m |     </header>
+ [2m330[0m |   );
+     `----
+  [31mx[0m Unterminated regexp literal
+     ,-[[36;1;4m/Users/abmccull/Desktop/wildwest2/wildwest-seo/components/Header.tsx[0m:329:1]
+ [2m326[0m |           </div>
+ [2m327[0m |         )}
+ [2m328[0m |       </div>
+ [2m329[0m |     </header>
+     : [35;1m     ^^^^^^^^[0m
+ [2m330[0m |   );
+ [2m331[0m | };
+     `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./components/Header.tsx
+ ⨯ ./components/Header.tsx
+Error:   [31mx[0m Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+     ,-[[36;1;4m/Users/abmccull/Desktop/wildwest2/wildwest-seo/components/Header.tsx[0m:327:1]
+ [2m324[0m |               </div>
+ [2m325[0m |             </div>
+ [2m326[0m |           </div>
+ [2m327[0m |         )}
+     : [35;1m         ^[0m
+ [2m328[0m |       </div>
+ [2m329[0m |     </header>
+ [2m330[0m |   );
+     `----
+  [31mx[0m Unterminated regexp literal
+     ,-[[36;1;4m/Users/abmccull/Desktop/wildwest2/wildwest-seo/components/Header.tsx[0m:329:1]
+ [2m326[0m |           </div>
+ [2m327[0m |         )}
+ [2m328[0m |       </div>
+ [2m329[0m |     </header>
+     : [35;1m     ^^^^^^^^[0m
+ [2m330[0m |   );
+ [2m331[0m | };
+     `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./components/Header.tsx
+ ⨯ ./components/Header.tsx
+Error:   [31mx[0m Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+     ,-[[36;1;4m/Users/abmccull/Desktop/wildwest2/wildwest-seo/components/Header.tsx[0m:327:1]
+ [2m324[0m |               </div>
+ [2m325[0m |             </div>
+ [2m326[0m |           </div>
+ [2m327[0m |         )}
+     : [35;1m         ^[0m
+ [2m328[0m |       </div>
+ [2m329[0m |     </header>
+ [2m330[0m |   );
+     `----
+  [31mx[0m Unterminated regexp literal
+     ,-[[36;1;4m/Users/abmccull/Desktop/wildwest2/wildwest-seo/components/Header.tsx[0m:329:1]
+ [2m326[0m |           </div>
+ [2m327[0m |         )}
+ [2m328[0m |       </div>
+ [2m329[0m |     </header>
+     : [35;1m     ^^^^^^^^[0m
+ [2m330[0m |   );
+ [2m331[0m | };
+     `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./components/Header.tsx
+ ⨯ ./components/Header.tsx
+Error:   [31mx[0m Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+     ,-[[36;1;4m/Users/abmccull/Desktop/wildwest2/wildwest-seo/components/Header.tsx[0m:327:1]
+ [2m324[0m |               </div>
+ [2m325[0m |             </div>
+ [2m326[0m |           </div>
+ [2m327[0m |         )}
+     : [35;1m         ^[0m
+ [2m328[0m |       </div>
+ [2m329[0m |     </header>
+ [2m330[0m |   );
+     `----
+  [31mx[0m Unterminated regexp literal
+     ,-[[36;1;4m/Users/abmccull/Desktop/wildwest2/wildwest-seo/components/Header.tsx[0m:329:1]
+ [2m326[0m |           </div>
+ [2m327[0m |         )}
+ [2m328[0m |       </div>
+ [2m329[0m |     </header>
+     : [35;1m     ^^^^^^^^[0m
+ [2m330[0m |   );
+ [2m331[0m | };
+     `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./components/Header.tsx
+ ⨯ ./components/Header.tsx
+Error:   [31mx[0m Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+     ,-[[36;1;4m/Users/abmccull/Desktop/wildwest2/wildwest-seo/components/Header.tsx[0m:327:1]
+ [2m324[0m |               </div>
+ [2m325[0m |             </div>
+ [2m326[0m |           </div>
+ [2m327[0m |         )}
+     : [35;1m         ^[0m
+ [2m328[0m |       </div>
+ [2m329[0m |     </header>
+ [2m330[0m |   );
+     `----
+  [31mx[0m Unterminated regexp literal
+     ,-[[36;1;4m/Users/abmccull/Desktop/wildwest2/wildwest-seo/components/Header.tsx[0m:329:1]
+ [2m326[0m |           </div>
+ [2m327[0m |         )}
+ [2m328[0m |       </div>
+ [2m329[0m |     </header>
+     : [35;1m     ^^^^^^^^[0m
+ [2m330[0m |   );
+ [2m331[0m | };
+     `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./components/Header.tsx
+[?25h

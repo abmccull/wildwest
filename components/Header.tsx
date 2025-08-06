@@ -51,11 +51,8 @@ const navigation: NavigationItem[] = [
     ],
   },
   { label: "About", href: "/about" },
-  { label: "Team", href: "/team" },
   { label: "Blog", href: "/blog" },
   { label: "Gallery", href: "/gallery" },
-  { label: "Testimonials", href: "/testimonials" },
-  { label: "Careers", href: "/careers" },
   { label: "Contact", href: "/#contact" },
 ];
 
@@ -216,71 +213,114 @@ const Header: React.FC = () => {
           </div>
         </div>
 
-        {/* Mobile Navigation */}
+        {/* Mobile Navigation Overlay */}
         {isMobileMenuOpen && (
-          <div className="lg:hidden border-t border-gray-200">
-            <div className="px-2 pt-3 pb-4 space-y-2 bg-white">
-              {navigation.map((item) => (
-                <div key={item.label}>
-                  <button
-                    onClick={() =>
-                      item.hasDropdown
-                        ? toggleDropdown(item.label)
-                        : (window.location.href = item.href)
-                    }
-                    className="w-full flex items-center justify-between text-left px-4 py-3 rounded-md text-base font-medium text-blue-900 hover:text-red-600 hover:bg-gray-50 transition-colors duration-200"
-                  >
-                    <span>{item.label}</span>
-                    {item.hasDropdown && (
-                      <svg
-                        className={`w-4 h-4 transform transition-transform duration-200 ${
-                          openDropdown === item.label ? "rotate-180" : ""
-                        }`}
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M19 9l-7 7-7-7"
-                        />
-                      </svg>
-                    )}
-                  </button>
-
-                  {/* Mobile Dropdown */}
-                  {item.hasDropdown &&
-                    item.dropdownItems &&
-                    openDropdown === item.label && (
-                      <div className="ml-6 mt-1 space-y-1">
-                        {item.dropdownItems.map((dropdownItem) => (
-                          <a
-                            key={dropdownItem.label}
-                            href={dropdownItem.href}
-                            className="block px-4 py-2 rounded-md text-sm text-gray-700 hover:text-red-600 hover:bg-gray-50 transition-colors duration-200"
-                            onClick={closeMenus}
-                          >
-                            {dropdownItem.label}
-                          </a>
-                        ))}
-                      </div>
-                    )}
-                </div>
-              ))}
-
-              {/* Mobile Phone */}
-              <div className="border-t border-gray-200 mt-6 pt-4 px-2">
-                <a
-                  href="tel:+1-801-691-4065"
-                  data-source="mobile-menu"
-                  data-service-type="general"
-                  className="block text-center text-red-600 font-semibold py-2 px-4 rounded-md hover:bg-gray-50 transition-colors duration-200"
+          <div className="lg:hidden fixed inset-0 z-50">
+            {/* Background overlay */}
+            <div 
+              className="fixed inset-0 bg-black bg-opacity-50"
+              onClick={toggleMobileMenu}
+            />
+            
+            {/* Slide-out menu */}
+            <div className="fixed left-0 top-0 bottom-0 w-80 max-w-full bg-white shadow-2xl transform transition-transform duration-300 ease-in-out">
+              {/* Menu header */}
+              <div className="flex justify-between items-center p-4 border-b border-gray-200">
+                <Link
+                  href="/"
+                  className="flex items-center space-x-2"
                   onClick={closeMenus}
                 >
-                  Call: (801) 691-4065
-                </a>
+                  <div className="w-10 h-10 bg-gradient-to-br from-desert-red to-mustang-yellow rounded-lg flex items-center justify-center shadow-western">
+                    <span className="text-white font-bold text-lg">W</span>
+                  </div>
+                  <span className="text-lg font-bold text-blue-900">Wild West</span>
+                </Link>
+                <button
+                  onClick={toggleMobileMenu}
+                  className="p-2 rounded-md text-gray-500 hover:text-gray-700 hover:bg-gray-100"
+                >
+                  <svg
+                    className="w-6 h-6"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                </button>
+              </div>
+              
+              {/* Menu items */}
+              <div className="overflow-y-auto h-full pb-24">
+                <div className="px-2 pt-3 pb-4 space-y-1">
+                  {navigation.map((item) => (
+                    <div key={item.label}>
+                      <button
+                        onClick={() =>
+                          item.hasDropdown
+                            ? toggleDropdown(item.label)
+                            : (window.location.href = item.href)
+                        }
+                        className="w-full flex items-center justify-between text-left px-4 py-3 rounded-md text-base font-medium text-blue-900 hover:text-red-600 hover:bg-gray-50 transition-colors duration-200"
+                      >
+                        <span>{item.label}</span>
+                        {item.hasDropdown && (
+                          <svg
+                            className={`w-4 h-4 transform transition-transform duration-200 ${
+                              openDropdown === item.label ? "rotate-180" : ""
+                            }`}
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M19 9l-7 7-7-7"
+                            />
+                          </svg>
+                        )}
+                      </button>
+
+                      {/* Mobile Dropdown */}
+                      {item.hasDropdown &&
+                        item.dropdownItems &&
+                        openDropdown === item.label && (
+                          <div className="ml-4 mt-1 space-y-1 border-l-2 border-gray-200 pl-4">
+                            {item.dropdownItems.map((dropdownItem) => (
+                              <a
+                                key={dropdownItem.label}
+                                href={dropdownItem.href}
+                                className="block px-4 py-2 rounded-md text-sm text-gray-700 hover:text-red-600 hover:bg-gray-50 transition-colors duration-200"
+                                onClick={closeMenus}
+                              >
+                                {dropdownItem.label}
+                              </a>
+                            ))}
+                          </div>
+                        )}
+                    </div>
+                  ))}
+
+                  {/* Mobile Phone */}
+                  <div className="border-t border-gray-200 mt-6 pt-4 px-2">
+                    <a
+                      href="tel:+1-801-691-4065"
+                      data-source="mobile-menu"
+                      data-service-type="general"
+                      className="block text-center text-white bg-red-600 hover:bg-red-700 font-semibold py-3 px-4 rounded-md transition-colors duration-200"
+                      onClick={closeMenus}
+                    >
+                      Call: (801) 691-4065
+                    </a>
+                </div>
               </div>
             </div>
           </div>
