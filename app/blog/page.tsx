@@ -61,7 +61,7 @@ async function getBlogPosts(page = 1, category?: string, search?: string) {
     const { data: posts, error } = await supabase.rpc("get_blog_posts", {
       page_num: page,
       page_size: 12,
-      category_slug: category || null,
+      filter_category_slug: category || null,
       search_term: search || null,
     });
 
@@ -72,7 +72,7 @@ async function getBlogPosts(page = 1, category?: string, search?: string) {
 
     // Get total count for pagination
     const { data: totalCount } = await supabase.rpc("get_blog_posts_count", {
-      category_slug: category || null,
+      filter_category_slug: category || null,
       search_term: search || null,
     });
 
