@@ -3,31 +3,43 @@
 import { useEffect } from "react";
 
 /**
- * Advanced CSS Optimizer Component
- * Implements critical CSS loading strategy to eliminate render-blocking CSS
- * and improve LCP/FCP performance metrics
+ * Enhanced CSS Optimizer Component
+ * Aggressively eliminates render-blocking CSS and optimizes resource loading
+ * Targets Core Web Vitals: LCP < 2.5s, FCP < 1.8s, CLS < 0.1
  */
 const CSSOptimizer: React.FC = () => {
   useEffect(() => {
-    // Advanced CSS loading strategy to eliminate render-blocking CSS
+    // Aggressive CSS optimization to eliminate ALL render-blocking
     const loadCSSAsynchronously = () => {
       // Find ALL stylesheets, including render-blocking ones
       const allStylesheets = document.querySelectorAll('link[rel="stylesheet"], link[data-n-css]');
       const cssFiles: string[] = [];
       
-      // Handle existing render-blocking stylesheets
+      // Aggressively handle ALL stylesheets to prevent render-blocking
       allStylesheets.forEach((link: any) => {
-        if (link.href && (
-          link.href.includes('_next/static/css/') || 
-          link.href.includes('dc1f36d2e80006fc.css') ||
-          link.hasAttribute('data-n-css')
-        )) {
+        if (link.href && !link.dataset.cssOptimized) {
           cssFiles.push(link.href);
-          // Immediately disable render-blocking behavior
-          link.media = 'print';
-          link.onload = function() {
-            link.media = 'all';
+          
+          // Mark as optimized to prevent reprocessing
+          link.dataset.cssOptimized = 'true';
+          
+          // Clone the link for async loading
+          const asyncLink = link.cloneNode() as HTMLLinkElement;
+          asyncLink.media = 'print';
+          asyncLink.onload = function() {
+            asyncLink.media = 'all';
+            asyncLink.onload = null;
           };
+          
+          // Replace original with async version
+          link.parentNode?.replaceChild(asyncLink, link);
+          
+          // Ensure media is set after next frame
+          requestAnimationFrame(() => {
+            if (asyncLink.media === 'print') {
+              asyncLink.media = 'all';
+            }
+          });
         }
       });
       
@@ -63,33 +75,49 @@ const CSSOptimizer: React.FC = () => {
         });
       }
       
-      // Async load strategy for each discovered CSS file
-      cssFiles.forEach((cssUrl) => {
-        // Create preload link for faster fetch
-        const preloadLink = document.createElement('link');
-        preloadLink.rel = 'preload';
-        preloadLink.as = 'style';
-        preloadLink.href = cssUrl;
-        preloadLink.crossOrigin = 'anonymous';
+      // Enhanced async loading with priority hints
+      cssFiles.forEach((cssUrl, index) => {
+        // Skip if already has a preload
+        const existingPreload = document.querySelector(`link[rel="preload"][href="${cssUrl}"]`);
+        if (!existingPreload) {
+          // Create high-priority preload for critical CSS
+          const preloadLink = document.createElement('link');
+          preloadLink.rel = 'preload';
+          preloadLink.as = 'style';
+          preloadLink.href = cssUrl;
+          preloadLink.crossOrigin = 'anonymous';
+          
+          // Add fetchpriority for critical CSS (first file)
+          if (index === 0) {
+            (preloadLink as any).fetchPriority = 'high';
+          }
+          
+          document.head.insertBefore(preloadLink, document.head.firstChild);
+        }
         
-        // Create the actual stylesheet link
-        const stylesheet = document.createElement('link');
-        stylesheet.rel = 'stylesheet';
-        stylesheet.href = cssUrl;
-        stylesheet.media = 'print'; // Start as print media to avoid render blocking
-        
-        // Convert to screen media once loaded
-        stylesheet.onload = function() {
-          stylesheet.media = 'all';
-        };
-        
-        // Fallback for browsers that don't support onload
-        setTimeout(() => {
-          stylesheet.media = 'all';
-        }, 100);
-        
-        document.head.appendChild(preloadLink);
-        document.head.appendChild(stylesheet);
+        // Check if stylesheet already exists
+        const existingStylesheet = document.querySelector(`link[rel="stylesheet"][href="${cssUrl}"]`);
+        if (!existingStylesheet) {
+          // Create async stylesheet
+          const stylesheet = document.createElement('link');
+          stylesheet.rel = 'stylesheet';
+          stylesheet.href = cssUrl;
+          stylesheet.media = 'print';
+          (stylesheet as any).dataset.cssOptimized = 'true';
+          
+          // Progressive loading
+          stylesheet.onload = function() {
+            stylesheet.media = 'all';
+            stylesheet.onload = null;
+          };
+          
+          // Immediate fallback using requestAnimationFrame
+          requestAnimationFrame(() => {
+            stylesheet.media = 'all';
+          });
+          
+          document.head.appendChild(stylesheet);
+        }
       });
       
       // Performance logging in development
@@ -98,29 +126,32 @@ const CSSOptimizer: React.FC = () => {
       }
     };
 
-    // Optimize critical rendering path - run immediately and aggressively
+    // Ultra-aggressive critical rendering path optimization
     const optimizeCriticalRenderingPath = () => {
-      // Run CSS optimization immediately to prevent any render blocking
+      // Run multiple times to catch all CSS
       loadCSSAsynchronously();
       
-      // Also run after requestAnimationFrame to catch any late-loading CSS
+      // Use microtask to run ASAP
+      Promise.resolve().then(() => loadCSSAsynchronously());
+      
+      // Run after next frame
       if ('requestAnimationFrame' in window) {
         requestAnimationFrame(() => {
           loadCSSAsynchronously();
+          // Double-check after animation frame
+          requestAnimationFrame(() => loadCSSAsynchronously());
         });
       }
       
-      // Additional check after idle callback for any remaining CSS
+      // Run when idle
       if ('requestIdleCallback' in window) {
         requestIdleCallback(() => {
           loadCSSAsynchronously();
-        }, { timeout: 2000 });
-      } else {
-        // Fallback for browsers without requestIdleCallback
-        setTimeout(() => {
-          loadCSSAsynchronously();
-        }, 50);
+        }, { timeout: 500 });
       }
+      
+      // Final check after short delay
+      setTimeout(() => loadCSSAsynchronously(), 10);
     };
 
     // Optimize font loading for performance
@@ -257,8 +288,11 @@ const CSSOptimizer: React.FC = () => {
       }, 1000);
     };
 
-    // Run CSS optimization ASAP - don't wait for DOM ready
+    // Execute optimizations immediately and repeatedly
     optimizeCriticalRenderingPath();
+    
+    // Also run on micro-task to catch early CSS
+    queueMicrotask(() => optimizeCriticalRenderingPath());
 
     // Run full initialization based on document ready state
     if (document.readyState === 'loading') {
@@ -266,6 +300,11 @@ const CSSOptimizer: React.FC = () => {
     } else {
       initialize();
     }
+    
+    // Additional optimization on load event
+    window.addEventListener('load', () => {
+      optimizeCriticalRenderingPath();
+    }, { once: true })
 
     // Cleanup function
     return () => {

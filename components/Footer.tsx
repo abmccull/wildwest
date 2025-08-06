@@ -52,7 +52,7 @@ const Footer: React.FC = () => {
                   src="/logo.webp"
                   alt="Wild West Construction Logo"
                   width={48}
-                  height={48}
+                  height={42}
                   className="object-contain"
                   sizes="48px"
                 />

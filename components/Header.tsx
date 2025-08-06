@@ -90,8 +90,8 @@ const Header: React.FC = () => {
                 <Image
                   src="/logo.webp"
                   alt="Wild West Construction Logo"
-                  width={48}
-                  height={48}
+                  width={40}
+                  height={35}
                   className="object-contain"
                   priority
                   sizes="40px"
@@ -243,7 +243,7 @@ const Header: React.FC = () => {
                       src="/logo.webp"
                       alt="Wild West Construction Logo"
                       width={40}
-                      height={40}
+                      height={35}
                       className="object-contain"
                       sizes="40px"
                     />

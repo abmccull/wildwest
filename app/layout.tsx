@@ -131,99 +131,109 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://www.facebook.com" />
         <link rel="dns-prefetch" href="https://vercel.live" />
 
-        {/* Pre-emptive CSS render-blocking prevention script - runs before CSS loads */}
+        {/* Advanced render-blocking CSS prevention and optimization */}
         <script
           dangerouslySetInnerHTML={{
             __html: `
               (function() {
-                // Check if we should apply CSS optimizations
-                var shouldOptimizeCSS = function() {
-                  // Only apply aggressive optimizations on mobile or slower connections
-                  var isMobile = window.innerWidth <= 768;
-                  var isSlowConnection = false;
-                  
-                  // Check connection speed if available
-                  if ('connection' in navigator) {
-                    var connection = navigator.connection;
-                    isSlowConnection = connection.effectiveType === '2g' || 
-                                     connection.effectiveType === 'slow-2g' ||
-                                     (connection.downlink && connection.downlink < 1.5);
-                  }
-                  
-                  // Apply optimizations if mobile or slow connection
-                  return isMobile || isSlowConnection;
-                };
+                // Enhanced CSS optimization - always apply to eliminate render-blocking
+                var criticalCSSApplied = false;
                 
-                // Monitor for render-blocking CSS and convert to async
+                // Immediately process all CSS to prevent render-blocking
                 var processCSS = function() {
-                  if (!shouldOptimizeCSS()) {
-                    return false; // Skip optimization on desktop with good connections
-                  }
-                  
                   var links = document.querySelectorAll('link[rel="stylesheet"], link[data-n-css]');
-                  var processed = false;
+                  var processedCount = 0;
                   
                   links.forEach(function(link) {
-                    if (link.href && (
-                      link.href.includes('_next/static/css/') ||
-                      link.href.includes('dc1f36d2e80006fc.css') ||
-                      link.hasAttribute('data-n-css')
-                    )) {
-                      // Convert render-blocking CSS to non-blocking
+                    if (link.href && !link.dataset.optimized) {
+                      // Mark as optimized to prevent reprocessing
+                      link.dataset.optimized = 'true';
+                      
+                      // Convert ALL CSS to non-blocking by default
                       var originalMedia = link.media || 'all';
+                      
+                      // Use print media trick to prevent render-blocking
                       link.media = 'print';
+                      
+                      // Restore media type when loaded
                       link.onload = function() {
                         link.media = originalMedia;
+                        link.onload = null;
                       };
-                      // Shorter timeout for mobile optimization
-                      setTimeout(function() {
+                      
+                      // Fallback for browsers that don't fire onload
+                      requestAnimationFrame(function() {
                         link.media = originalMedia;
-                      }, 50);
-                      processed = true;
+                      });
+                      
+                      processedCount++;
                     }
                   });
                   
-                  return processed;
+                  return processedCount > 0;
                 };
                 
-                // Run immediately
+                // Preload critical CSS files for faster loading
+                var preloadCSS = function(href) {
+                  var preload = document.createElement('link');
+                  preload.rel = 'preload';
+                  preload.as = 'style';
+                  preload.href = href;
+                  document.head.appendChild(preload);
+                };
+                
+                // Process immediately
                 processCSS();
                 
-                // Monitor DOM changes for dynamically added CSS
+                // Monitor for new CSS files
                 if (typeof MutationObserver !== 'undefined') {
                   var observer = new MutationObserver(function(mutations) {
-                    var shouldProcess = false;
                     mutations.forEach(function(mutation) {
                       if (mutation.type === 'childList') {
                         mutation.addedNodes.forEach(function(node) {
-                          if (node.tagName === 'LINK' && node.rel === 'stylesheet') {
-                            shouldProcess = true;
+                          if (node.nodeType === 1 && node.tagName === 'LINK' && 
+                              (node.rel === 'stylesheet' || node.dataset.nCss)) {
+                            // Process new CSS immediately
+                            setTimeout(function() {
+                              if (!node.dataset.optimized) {
+                                node.dataset.optimized = 'true';
+                                var originalMedia = node.media || 'all';
+                                node.media = 'print';
+                                node.onload = function() {
+                                  node.media = originalMedia;
+                                  node.onload = null;
+                                };
+                                requestAnimationFrame(function() {
+                                  node.media = originalMedia;
+                                });
+                              }
+                            }, 0);
                           }
                         });
                       }
                     });
-                    if (shouldProcess) {
-                      processCSS();
-                    }
                   });
                   
-                  observer.observe(document.head, {
+                  observer.observe(document.documentElement, {
                     childList: true,
                     subtree: true
                   });
                 }
                 
-                // Additional check after DOM ready
+                // Process on various load states
                 if (document.readyState === 'loading') {
                   document.addEventListener('DOMContentLoaded', processCSS);
-                } else {
-                  processCSS();
                 }
                 
-                // Re-evaluate on resize (mobile/desktop switch)
-                window.addEventListener('resize', function() {
-                  setTimeout(processCSS, 100);
-                });
+                // Also process after page load
+                window.addEventListener('load', processCSS);
+                
+                // Process CSS as soon as possible
+                if (typeof requestIdleCallback !== 'undefined') {
+                  requestIdleCallback(processCSS, { timeout: 50 });
+                } else {
+                  setTimeout(processCSS, 0);
+                }
               })();
             `,
           }}
@@ -268,22 +278,31 @@ export default function RootLayout({
 
         {/* CSS loading optimization will be handled by CSSOptimizer component */}
 
-        {/* Comprehensive critical CSS for above-the-fold content - prevents render blocking and FOUC */}
+        {/* Enhanced critical CSS with layout stability fixes to prevent CLS */}
         <style
           dangerouslySetInnerHTML={{
             __html: `
-            /* Reset and base styles */
+            /* Reset and base styles with layout stability */
             *,::before,::after{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}
-            html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif}
-            body{margin:0;line-height:inherit;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;background-color:#ffffff;color:#111827}
+            html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif;scroll-behavior:smooth}
+            body{margin:0;line-height:inherit;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;background-color:#ffffff;color:#111827;min-height:100vh}
+            
+            /* Prevent layout shifts with explicit dimensions */
+            img,video,canvas,svg{display:block;max-width:100%;height:auto}
+            img[width][height]{aspect-ratio:attr(width)/attr(height)}
+            
+            /* Font loading optimization */
+            @font-face{font-family:'Inter';font-style:normal;font-weight:400 700;font-display:swap;src:local('Inter'),url('https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfMZhrib2Bg-4.woff2') format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
 
-            /* Header critical styles */
+            /* Header critical styles with explicit height to prevent CLS */
+            header{min-height:64px}
             .sticky{position:-webkit-sticky;position:sticky}
             .top-0{top:0px}
             .z-50{z-index:50}
             .z-10{z-index:10}
             .bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity))}
             .shadow-construction{--tw-shadow:0 10px 15px -3px rgb(38 70 83 / 0.1), 0 4px 6px -2px rgb(38 70 83 / 0.05);box-shadow:var(--tw-shadow)}
+            .h-16{height:4rem}
             
             /* Layout utilities */
             .max-w-7xl{max-width:80rem}
@@ -405,8 +424,20 @@ export default function RootLayout({
             .animate-pulse{animation:pulse 2s cubic-bezier(.4,0,.6,1) infinite}
             @keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
             
-            /* Hide elements initially to prevent FOUC */
+            /* Layout stability and skeleton screens */
             .bg-gray-200{background-color:#e5e7eb}
+            .service-cards-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:2rem;min-height:400px}
+            
+            /* Prevent CLS for dynamic content */
+            [data-lazy-component]{min-height:200px}
+            .component-loaded{min-height:auto}
+            
+            /* Skeleton loading states */
+            .skeleton{background:linear-gradient(90deg,#f0f0f0 25%,#e0e0e0 50%,#f0f0f0 75%);background-size:200% 100%;animation:skeleton-loading 1.5s ease-in-out infinite}
+            @keyframes skeleton-loading{0%{background-position:200% 0}100%{background-position:-200% 0}}
+            
+            /* Prevent button layout shifts */
+            a[href^="tel:"],a[href^="https://wa.me/"]{min-width:160px;display:inline-flex;align-items:center;justify-content:center}
           `,
           }}
         />
