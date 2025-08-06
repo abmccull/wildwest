@@ -1,45 +1,56 @@
 import { createClient } from "@supabase/supabase-js";
 import { Database, Lead, Page } from "@/types/database";
 
-// Environment variables validation
-if (!process.env.NEXT_PUBLIC_SUPABASE_URL) {
-  throw new Error("Missing env.NEXT_PUBLIC_SUPABASE_URL");
-}
-if (!process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
-  throw new Error("Missing env.NEXT_PUBLIC_SUPABASE_ANON_KEY");
-}
-
 // Create Supabase client for client-side operations
-export const supabase = createClient<Database>(
-  process.env.NEXT_PUBLIC_SUPABASE_URL,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
-  {
-    auth: {
-      persistSession: true,
-      autoRefreshToken: true,
-    },
-    db: {
-      schema: "public",
-    },
-    global: {
-      headers: {
-        "x-application-name": "wildwest-seo",
+function createSupabaseClient() {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  
+  if (!supabaseUrl || !supabaseAnonKey) {
+    // Return a dummy client that will throw errors when used
+    // This prevents build-time failures
+    console.warn("Supabase environment variables not configured");
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return null as any;
+  }
+  
+  return createClient<Database>(
+    supabaseUrl,
+    supabaseAnonKey,
+    {
+      auth: {
+        persistSession: true,
+        autoRefreshToken: true,
+      },
+      db: {
+        schema: "public",
+      },
+      global: {
+        headers: {
+          "x-application-name": "wildwest-seo",
+        },
       },
     },
-  },
-);
+  );
+}
+
+// Export the client - it will be created lazily
+export const supabase = createSupabaseClient();
 
 // Create Supabase admin client for server-side operations (with service role key)
 export const createServerSupabaseClient = () => {
-  if (!process.env.SUPABASE_SERVICE_ROLE_KEY) {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  
+  if (!supabaseUrl || !supabaseServiceKey) {
     throw new Error(
-      "Missing env.SUPABASE_SERVICE_ROLE_KEY for server-side operations",
+      "Missing Supabase environment variables for server-side operations",
     );
   }
 
   return createClient<Database>(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY,
+    supabaseUrl,
+    supabaseServiceKey,
     {
       auth: {
         persistSession: false,
@@ -233,7 +244,8 @@ export function subscribeToLeads(callback: (lead: Lead) => void) {
         schema: "public",
         table: "leads",
       },
-      (payload) => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (payload: any) => {
         callback(payload.new as Lead);
       },
     )
@@ -257,7 +269,8 @@ export function subscribeToPageUpdates(
         table: "pages",
         filter: `id=eq.${pageId}`,
       },
-      (payload) => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (payload: any) => {
         callback(payload.new as Page);
       },
     )

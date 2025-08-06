@@ -1,11 +1,6 @@
 import { createClient } from "@supabase/supabase-js";
 import { NextRequest, NextResponse } from "next/server";
 
-// Initialize Supabase client
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
-const supabase = createClient(supabaseUrl, supabaseServiceKey);
-
 interface LeadData {
   name: string;
   email: string;
@@ -89,6 +84,22 @@ function validateLeadData(data: unknown): {
 
 export async function POST(request: NextRequest) {
   try {
+    // Initialize Supabase client
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+    
+    if (!supabaseUrl || !supabaseServiceKey) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: "Service configuration error",
+        },
+        { status: 503 },
+      );
+    }
+    
+    const supabase = createClient(supabaseUrl, supabaseServiceKey);
+    
     // Parse request body
     const body = await request.json();
 

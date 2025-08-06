@@ -1,11 +1,6 @@
 import { createClient } from "@supabase/supabase-js";
 import { MetadataRoute } from "next";
 
-// Initialize Supabase client
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
-const supabase = createClient(supabaseUrl, supabaseServiceKey);
-
 interface PageData {
   slug: string;
   city: string;
@@ -18,6 +13,17 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://wildwestslc.com";
 
   try {
+    // Initialize Supabase client
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+    
+    if (!supabaseUrl || !supabaseServiceKey) {
+      console.warn("Supabase environment variables not configured - using fallback sitemap");
+      return getEnhancedBasicSitemap(baseUrl);
+    }
+    
+    const supabase = createClient(supabaseUrl, supabaseServiceKey);
+    
     // Fetch all published pages from Supabase
     const { data: pages, error } = await supabase
       .from("pages")
