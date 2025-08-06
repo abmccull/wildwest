@@ -67,7 +67,7 @@ CREATE TRIGGER calculate_blog_post_reading_time
 CREATE OR REPLACE FUNCTION get_blog_posts(
     page_num INTEGER DEFAULT 1,
     page_size INTEGER DEFAULT 10,
-    category_slug TEXT DEFAULT NULL,
+    filter_category_slug TEXT DEFAULT NULL,
     search_term TEXT DEFAULT NULL
 )
 RETURNS TABLE (
@@ -108,7 +108,7 @@ BEGIN
     FROM blog_posts p
     JOIN blog_categories c ON p.category_id = c.id
     WHERE p.published = true
-    AND (category_slug IS NULL OR c.slug = category_slug)
+    AND (filter_category_slug IS NULL OR c.slug = filter_category_slug)
     AND (search_term IS NULL OR 
          p.title ILIKE '%' || search_term || '%' OR 
          p.excerpt ILIKE '%' || search_term || '%' OR 
@@ -121,7 +121,7 @@ $$ LANGUAGE plpgsql;
 
 -- Function to get blog post count for pagination
 CREATE OR REPLACE FUNCTION get_blog_posts_count(
-    category_slug TEXT DEFAULT NULL,
+    filter_category_slug TEXT DEFAULT NULL,
     search_term TEXT DEFAULT NULL
 )
 RETURNS BIGINT AS $$
@@ -131,7 +131,7 @@ BEGIN
         FROM blog_posts p
         JOIN blog_categories c ON p.category_id = c.id
         WHERE p.published = true
-        AND (category_slug IS NULL OR c.slug = category_slug)
+        AND (filter_category_slug IS NULL OR c.slug = filter_category_slug)
         AND (search_term IS NULL OR 
              p.title ILIKE '%' || search_term || '%' OR 
              p.excerpt ILIKE '%' || search_term || '%' OR 
