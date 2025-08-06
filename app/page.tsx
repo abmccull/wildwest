@@ -5,7 +5,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import LeadForm from "@/components/LeadForm";
 
-// Lazy load non-critical components for better performance
+// Lazy load non-critical components with loading boundary
 const ServiceCard = lazy(() => import("@/components/ServiceCard"));
 
 import { SERVICES, SERVICE_DISPLAY_NAMES } from "@/types/database";
@@ -38,19 +38,19 @@ export default function Home() {
       <Header />
 
       <main id="main-content">
-        {/* Hero Section */}
-        <section className="bg-gradient-to-r from-blue-900 to-blue-700 text-white py-20">
+        {/* Hero Section with fixed dimensions to prevent CLS */}
+        <section className="bg-gradient-to-r from-blue-900 to-blue-700 text-white py-20 min-h-[600px]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-              {/* Hero Content */}
-              <div>
-                <h1 className="text-5xl md:text-6xl font-bold mb-6 leading-tight">
+              {/* Hero Content with stable layout */}
+              <div className="min-h-[400px]">
+                <h1 className="text-5xl md:text-6xl font-bold mb-6 leading-tight min-h-[120px]">
                   Utah&apos;s Premier
                   <span className="block text-red-400">
                     Construction Experts
                   </span>
                 </h1>
-                <p className="text-xl text-blue-100 mb-8 leading-relaxed">
+                <p className="text-xl text-blue-100 mb-8 leading-relaxed min-h-[90px]">
                   Wild West Construction delivers exceptional flooring,
                   demolition, and junk removal services throughout Utah.
                   Licensed, insured, and locally owned - we&apos;re your trusted
@@ -138,14 +138,16 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* Hero Form */}
+              {/* Hero Form with fixed dimensions to prevent CLS */}
               <div
                 id="quote-form"
-                className="bg-white rounded-lg shadow-2xl p-1"
+                className="bg-white rounded-lg shadow-2xl p-1 min-h-[400px]"
               >
                 <Suspense
                   fallback={
-                    <div className="h-96 animate-pulse bg-gray-200 rounded"></div>
+                    <div className="h-[400px] animate-pulse bg-gray-200 rounded flex items-center justify-center">
+                      <span className="text-gray-500">Loading form...</span>
+                    </div>
                   }
                 >
                   <LeadForm variant="compact" />
@@ -155,8 +157,8 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Services Overview */}
-        <section id="below-fold" className="py-16 bg-white">
+        {/* Services Overview with stable layout */}
+        <section id="below-fold" className="py-16 bg-white min-h-[600px]" data-below-fold="true">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
               <h2 className="text-4xl font-bold text-gray-900 mb-4">
@@ -169,10 +171,23 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="service-cards-grid">
+            <div className="service-cards-grid min-h-[400px]">
               <Suspense
                 fallback={
-                  <div className="h-96 animate-pulse bg-gray-200 rounded-lg"></div>
+                  <>
+                    {[1, 2, 3].map((i) => (
+                      <div
+                        key={i}
+                        className="h-[350px] animate-pulse bg-gray-200 rounded-lg flex flex-col p-6"
+                      >
+                        <div className="h-12 bg-gray-300 rounded mb-4"></div>
+                        <div className="h-4 bg-gray-300 rounded mb-2"></div>
+                        <div className="h-4 bg-gray-300 rounded mb-2 w-3/4"></div>
+                        <div className="flex-grow"></div>
+                        <div className="h-10 bg-gray-300 rounded"></div>
+                      </div>
+                    ))}
+                  </>
                 }
               >
                 {SERVICES.map((service) => (
@@ -190,8 +205,8 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Cities We Serve */}
-        <section className="py-16 bg-gray-50">
+        {/* Cities We Serve with optimized layout */}
+        <section className="py-16 bg-gray-50 min-h-[500px]" data-below-fold="true">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
               <h2 className="text-4xl font-bold text-gray-900 mb-4">

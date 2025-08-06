@@ -10,6 +10,8 @@ import ServiceWorkerRegistration from "@/components/ServiceWorkerRegistration";
 import Analytics from "@/components/AnalyticsOptimized";
 import CSSOptimizer from "@/components/CSSOptimizer";
 import PerformanceMonitor from "@/components/PerformanceMonitor";
+import PerformanceOptimizer from "@/components/PerformanceOptimizer";
+import ResourceLoader from "@/components/ResourceLoader";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -113,7 +115,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.className} ${inter.variable}`}>
       <head>
-        {/* Critical Performance Resource Hints - immediate preconnect for fonts */}
+        {/* Optimized resource hints with priority ordering */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
           rel="preconnect"
@@ -121,12 +123,19 @@ export default function RootLayout({
           crossOrigin="anonymous"
         />
         
-        {/* Analytics domains - preconnect for critical third-party origins */}
-        <link rel="preconnect" href="https://www.googletagmanager.com" />
-        <link rel="preconnect" href="https://connect.facebook.net" />
-        <link rel="preconnect" href="https://vitals.vercel-insights.com" />
+        {/* Preload critical font files directly */}
+        <link
+          rel="preload"
+          as="font"
+          type="font/woff2"
+          href="https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfMZhrib2Bg-4.woff2"
+          crossOrigin="anonymous"
+        />
         
-        {/* DNS prefetch for non-critical analytics domains */}
+        {/* Defer analytics connections to after initial render */}
+        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+        <link rel="dns-prefetch" href="https://connect.facebook.net" />
+        <link rel="dns-prefetch" href="https://vitals.vercel-insights.com" />
         <link rel="dns-prefetch" href="https://www.google-analytics.com" />
         <link rel="dns-prefetch" href="https://www.facebook.com" />
         <link rel="dns-prefetch" href="https://vercel.live" />
@@ -273,8 +282,13 @@ export default function RootLayout({
           color="#1e3a8a"
         />
 
-        {/* Open Graph optimized images */}
-        <link rel="preload" href="/images/og-image.jpg" as="image" />
+        {/* Preload critical above-the-fold images */}
+        <link
+          rel="preload"
+          href="/logo.webp"
+          as="image"
+          type="image/webp"
+        />
 
         {/* CSS loading optimization will be handled by CSSOptimizer component */}
 
@@ -497,6 +511,8 @@ export default function RootLayout({
         </a>
 
         <CSSOptimizer />
+        <PerformanceOptimizer />
+        <ResourceLoader />
         <ServiceWorkerRegistration />
         <WebVitals />
         <Analytics />
