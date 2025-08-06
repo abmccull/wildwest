@@ -536,7 +536,7 @@ export default function TestimonialsPage() {
 
             <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
               <a
-                href="https://www.google.com/search?q=wild+west+construction+utah+reviews"
+                href="https://g.page/r/CXwEy68D9uasEAE/review"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="px-8 py-4 bg-white text-green-600 font-bold rounded-lg hover:bg-gray-100 transition-colors duration-200 flex items-center justify-center space-x-2"
