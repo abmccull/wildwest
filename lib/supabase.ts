@@ -4,8 +4,21 @@ import { Database, Lead, Page } from "@/types/database";
 // Validate and clean environment variables
 function cleanEnvVar(value: string | undefined): string | undefined {
   if (!value) return undefined;
-  // Remove any trailing newlines or whitespace
-  return value.trim().replace(/[\n\r]+/g, '');
+  
+  // Clean the value
+  let cleaned = value.trim().replace(/[\n\r]+/g, '');
+  
+  // Handle case where the value includes the variable name (e.g., "VARNAME=value")
+  // This can happen with certain environment loading mechanisms
+  if (cleaned.includes('=')) {
+    const parts = cleaned.split('=');
+    // If it looks like VARNAME=value, take everything after the first =
+    if (parts.length >= 2 && parts[0].match(/^[A-Z_]+$/)) {
+      cleaned = parts.slice(1).join('=');
+    }
+  }
+  
+  return cleaned;
 }
 
 // Create Supabase client for client-side operations
