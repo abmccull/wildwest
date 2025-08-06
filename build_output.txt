@@ -1,0 +1,98 @@
+
+> wildwest-seo@0.1.0 prebuild
+> npm run validate:env
+
+
+> wildwest-seo@0.1.0 validate:env
+> npx tsx scripts/validate-env.ts
+
+[34mEnvironment Variable Validator[0m
+==================================================
+[dotenv@17.2.1] injecting env (15) from .env.local -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+
+[34mValidating: .env.local[0m
+==================================================
+[32m✓ Environment file is valid[0m
+
+[dotenv@17.2.1] injecting env (0) from .env.production -- tip: ⚙️  specify custom .env file path with { path: '/custom/path/.env' }
+
+[34mValidating: .env.production[0m
+==================================================
+[32m✓ Environment file is valid[0m
+
+[dotenv@17.2.1] injecting env (2) from .env.production.local -- tip: 🔐 prevent committing .env to code: https://dotenvx.com/precommit
+
+[34mValidating: .env.production.local[0m
+==================================================
+[32m✓ Environment file is valid[0m
+
+==================================================
+[32m✓ All environment files validated successfully![0m
+[34mReady for deployment.[0m
+
+> wildwest-seo@0.1.0 build
+> next build
+
+   ▲ Next.js 15.4.2-canary.31
+   - Environments: .env.production.local, .env.local, .env.production
+   - Experiments (use with caution):
+     ✓ scrollRestoration
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully in 0ms
+   Skipping linting
+   Checking validity of types ...
+   Collecting page data ...
+   Generating static pages (0/1027) ...
+   Generating static pages (256/1027) 
+   Generating static pages (513/1027) 
+   Generating static pages (770/1027) 
+ ✓ Generating static pages (1027/1027)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                                     Size  First Load JS  Revalidate  Expire
+┌ ○ /                                          218 B         116 kB
+├ ○ /_not-found                                994 B         103 kB
+├ ● /[slug]                                    218 B         116 kB          1h      1y
+├   ├ /sandy-construction-services                                           1h      1y
+├   ├ /herriman-junk-removal                                                 1h      1y
+├   ├ /salt-lake-city-construction-services                                  1h      1y
+├   └ [+997 more paths]
+├ ○ /about                                     218 B         116 kB
+├ ○ /admin                                   2.28 kB         107 kB
+├ ○ /admin/leads                             3.15 kB         108 kB
+├ ƒ /api/admin/dashboard                       140 B         102 kB
+├ ƒ /api/admin/leads                           140 B         102 kB
+├ ƒ /api/admin/leads/export                    140 B         102 kB
+├ ƒ /api/health                                140 B         102 kB
+├ ƒ /api/lead                                  140 B         102 kB
+├ ƒ /blog                                    2.12 kB         115 kB
+├ ƒ /blog/[slug]                             1.51 kB         114 kB
+├ ○ /careers                                   218 B         116 kB
+├ ○ /faq                                       767 B         113 kB
+├ ○ /gallery                                   218 B         116 kB
+├ ● /locations/[city]                          218 B         116 kB
+├ ● /locations/[city]/[service]                218 B         116 kB
+├ ○ /privacy-policy                            179 B         113 kB
+├ ○ /robots.txt                                140 B         102 kB
+├ ○ /services/demolition                       218 B         116 kB
+├ ○ /services/flooring                         218 B         116 kB
+├ ○ /services/junk-removal                     218 B         116 kB
+├ ○ /sitemap.xml                               140 B         102 kB
+├ ○ /team                                      218 B         116 kB
+├ ○ /terms                                     179 B         113 kB
+├ ○ /test                                      161 B         105 kB
+└ ○ /testimonials                              193 B         116 kB
++ First Load JS shared by all                 102 kB
+  ├ chunks/258-cb11b89c5296ba13.js           45.6 kB
+  ├ chunks/4bd1b696-aed828cbe02c48d3.js      54.1 kB
+  └ other shared chunks (total)              1.92 kB
+
+
+ƒ Middleware                                 33.3 kB
+
+○  (Static)   prerendered as static content
+●  (SSG)      prerendered as static HTML (uses generateStaticParams)
+ƒ  (Dynamic)  server-rendered on demand
+

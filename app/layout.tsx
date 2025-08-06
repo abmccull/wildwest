@@ -30,6 +30,10 @@ export const metadata: Metadata = {
   authors: [{ name: "Wild West Construction" }],
   creator: "Wild West Construction",
   publisher: "Wild West Construction",
+  viewport: {
+    width: "device-width",
+    initialScale: 1,
+  },
   formatDetection: {
     email: false,
     address: false,
@@ -92,7 +96,9 @@ export const metadata: Metadata = {
     },
   },
   verification: {
-    google: "google-site-verification-code", // Replace with actual Google verification code
+    // TODO: Replace with actual Google Search Console verification code
+    // Get your verification code from: https://search.google.com/search-console
+    // google: "your-google-verification-code-here",
   },
 };
 
@@ -113,8 +119,10 @@ export default function RootLayout({
         />
         <link rel="preconnect" href="https://www.google-analytics.com" />
         <link rel="preconnect" href="https://www.googletagmanager.com" />
-        <link rel="dns-prefetch" href="https://connect.facebook.net" />
-        <link rel="dns-prefetch" href="https://www.facebook.com" />
+        <link rel="preconnect" href="https://connect.facebook.net" />
+        <link rel="preconnect" href="https://www.facebook.com" />
+        <link rel="dns-prefetch" href="https://vitals.vercel-insights.com" />
+        <link rel="dns-prefetch" href="https://vercel.live" />
 
         {/* PWA Manifest */}
         <link rel="manifest" href="/manifest.json" />
@@ -153,19 +161,11 @@ export default function RootLayout({
         {/* Open Graph optimized images */}
         <link rel="preload" href="/images/og-image.jpg" as="image" />
 
-        {/* Critical CSS inlined for above-the-fold content */}
+        {/* Critical CSS for layout shift prevention */}
         <style
           dangerouslySetInnerHTML={{
             __html: `
-            .hero-gradient { background: linear-gradient(to right, #1e3a8a, #1d4ed8); }
-            .btn-primary { 
-              background: #dc2626; 
-              color: white; 
-              padding: 0.75rem 2rem; 
-              border-radius: 0.5rem; 
-              transition: all 0.2s; 
-            }
-            .btn-primary:hover { background: #b91c1c; transform: translateY(-2px); }
+            .btn-primary{background:#dc2626;color:#fff;padding:.75rem 2rem;border-radius:.5rem}
           `,
           }}
         />
@@ -215,44 +215,7 @@ export default function RootLayout({
         />
       </head>
       <body className="antialiased bg-white text-gray-900">
-        {/* Google Analytics - Use environment variable or placeholder */}
-        <Script
-          src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || "GA_MEASUREMENT_ID"}`}
-          strategy="afterInteractive"
-        />
-        <Script id="google-analytics" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', '${process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || "GA_MEASUREMENT_ID"}');
-          `}
-        </Script>
 
-        {/* Facebook Pixel - Use environment variable or placeholder */}
-        <Script id="facebook-pixel" strategy="afterInteractive">
-          {`
-            !function(f,b,e,v,n,t,s)
-            {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-            n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-            if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-            n.queue=[];t=b.createElement(e);t.async=!0;
-            t.src=v;s=b.getElementsByTagName(e)[0];
-            s.parentNode.insertBefore(t,s)}(window, document,'script',
-            'https://connect.facebook.net/en_US/fbevents.js');
-            fbq('init', '${process.env.NEXT_PUBLIC_FACEBOOK_PIXEL_ID || "FACEBOOK_PIXEL_ID"}');
-            fbq('track', 'PageView');
-          `}
-        </Script>
-        <noscript>
-          <Image
-            height={1}
-            width={1}
-            style={{ display: "none" }}
-            src={`https://www.facebook.com/tr?id=${process.env.NEXT_PUBLIC_FACEBOOK_PIXEL_ID || "FACEBOOK_PIXEL_ID"}&ev=PageView&noscript=1`}
-            alt=""
-          />
-        </noscript>
 
         <ServiceWorkerRegistration />
         <WebVitals />

@@ -78,11 +78,11 @@ export default async function CityHubPage({ params }: CityHubPageProps) {
   // Schema markup for SEO
   const localBusinessSchema = generateLocalBusinessSchema(city, SERVICES);
   const breadcrumbSchema = generateBreadcrumbSchema([
-    { name: "Home", url: "https://wildwestconstruction.com" },
-    { name: "Locations", url: "https://wildwestconstruction.com/locations" },
+    { name: "Home", url: "https://wildwestslc.com" },
+    { name: "Locations", url: "https://wildwestslc.com/locations" },
     {
       name: displayCity,
-      url: `https://wildwestconstruction.com/locations/${city}`,
+      url: `https://wildwestslc.com/locations/${city}`,
     },
   ]);
 

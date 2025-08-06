@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
+import Script from "next/script";
 import { getCurrentPageData } from "@/lib/analytics";
 
 // Google Analytics 4 Configuration
@@ -162,67 +163,50 @@ export const trackQuoteRequest = (
   }
 };
 
+// Debounce utility function
+const debounce = (func: Function, wait: number) => {
+  let timeout: NodeJS.Timeout;
+  return function executedFunction(...args: any[]) {
+    const later = () => {
+      clearTimeout(timeout);
+      func(...args);
+    };
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+  };
+};
+
 // Main Analytics component
 export default function Analytics() {
   const pathname = usePathname();
 
   useEffect(() => {
-    // Initialize Google Analytics 4
+    // Initialize Google Analytics 4 with manual configuration
     if (typeof window !== "undefined") {
-      // Load Google Analytics script
-      const script1 = document.createElement("script");
-      script1.async = true;
-      script1.src = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`;
-      document.head.appendChild(script1);
+      // Initialize gtag manually (script is loaded via Script components)
+      window.dataLayer = window.dataLayer || [];
+      function gtag(...args: any[]) {
+        window.dataLayer.push(arguments);
+      }
+      window.gtag = gtag;
+      
+      gtag('js', new Date());
+      gtag('config', GA_MEASUREMENT_ID, {
+        send_page_view: false, // We'll handle this manually
+        custom_map: {
+          'custom_parameter_1': 'lead_source',
+          'custom_parameter_2': 'service_type',
+          'custom_parameter_3': 'location'
+        }
+      });
 
-      // Initialize gtag
-      const script2 = document.createElement("script");
-      script2.innerHTML = `
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', '${GA_MEASUREMENT_ID}', {
-          send_page_view: false, // We'll handle this manually
-          custom_map: {
-            'custom_parameter_1': 'lead_source',
-            'custom_parameter_2': 'service_type',
-            'custom_parameter_3': 'location'
-          }
-        });
-
-        // Enhanced ecommerce and conversion tracking
-        gtag('config', '${GA_MEASUREMENT_ID}', {
-          custom_map: {
-            'custom_parameter_lead_value': 'lead_value',
-            'custom_parameter_service': 'service_requested'
-          }
-        });
-      `;
-      document.head.appendChild(script2);
-
-      // Load Facebook Pixel
-      const fbScript = document.createElement("script");
-      fbScript.innerHTML = `
-        !function(f,b,e,v,n,t,s)
-        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-        n.queue=[];t=b.createElement(e);t.async=!0;
-        t.src=v;s=b.getElementsByTagName(e)[0];
-        s.parentNode.insertBefore(t,s)}(window, document,'script',
-        'https://connect.facebook.net/en_US/fbevents.js');
-        fbq('init', '${FACEBOOK_PIXEL_ID}');
-        fbq('track', 'PageView');
-      `;
-      document.head.appendChild(fbScript);
-
-      // Add noscript fallback for Facebook Pixel
-      const noscript = document.createElement("noscript");
-      noscript.innerHTML = `
-        <img height="1" width="1" style="display:none"
-          src="https://www.facebook.com/tr?id=${FACEBOOK_PIXEL_ID}&ev=PageView&noscript=1" />
-      `;
-      document.body.appendChild(noscript);
+      // Enhanced ecommerce and conversion tracking
+      gtag('config', GA_MEASUREMENT_ID, {
+        custom_map: {
+          'custom_parameter_lead_value': 'lead_value',
+          'custom_parameter_service': 'service_requested'
+        }
+      });
 
       // Set up phone number click tracking
       const addPhoneTracking = () => {
@@ -261,10 +245,14 @@ export default function Analytics() {
         addWhatsAppTracking();
       }
 
-      // Re-run tracking setup when content changes (for SPA navigation)
-      const observer = new MutationObserver(() => {
+      // Re-run tracking setup when content changes (for SPA navigation) with debouncing
+      const debouncedTrackingUpdate = debounce(() => {
         addPhoneTracking();
         addWhatsAppTracking();
+      }, 100); // 100ms debounce
+
+      const observer = new MutationObserver(() => {
+        debouncedTrackingUpdate();
       });
 
       observer.observe(document.body, {
@@ -285,7 +273,42 @@ export default function Analytics() {
     }
   }, [pathname]);
 
-  return null; // This component doesn't render anything visible
+  return (
+    <>
+      {/* Google Analytics Script */}
+      <Script
+        src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
+        strategy="afterInteractive"
+      />
+      
+      {/* Facebook Pixel Script */}
+      <Script id="facebook-pixel" strategy="afterInteractive">
+        {`
+          !function(f,b,e,v,n,t,s)
+          {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+          n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+          if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+          n.queue=[];t=b.createElement(e);t.async=!0;
+          t.src=v;s=b.getElementsByTagName(e)[0];
+          s.parentNode.insertBefore(t,s)}(window, document,'script',
+          'https://connect.facebook.net/en_US/fbevents.js');
+          fbq('init', '${FACEBOOK_PIXEL_ID}');
+          fbq('track', 'PageView');
+        `}
+      </Script>
+      
+      {/* Facebook Pixel noscript fallback */}
+      <noscript>
+        <img 
+          height="1" 
+          width="1" 
+          style={{ display: 'none' }}
+          src={`https://www.facebook.com/tr?id=${FACEBOOK_PIXEL_ID}&ev=PageView&noscript=1`}
+          alt=""
+        />
+      </noscript>
+    </>
+  );
 }
 
 // TypeScript declarations for global analytics objects

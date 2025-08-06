@@ -25,16 +25,27 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
     
     // Fetch all published pages from Supabase
-    const { data: pages, error } = await supabase
+    const { data: pages, error: pagesError } = await supabase
       .from("pages")
       .select("slug, city, service, updated_at, published")
       .eq("published", true)
       .order("updated_at", { ascending: false });
 
-    if (error) {
-      console.error("Error fetching pages for sitemap:", error);
-      // Return enhanced basic sitemap if database query fails
-      return getEnhancedBasicSitemap(baseUrl);
+    // Fetch all published blog posts
+    const { data: blogPosts, error: blogError } = await supabase
+      .from("blog_posts")
+      .select("slug, updated_at, published")
+      .eq("published", true)
+      .order("updated_at", { ascending: false });
+
+    if (pagesError) {
+      console.error("Error fetching pages for sitemap:", pagesError);
+      // Continue without pages data but don't fail completely
+    }
+
+    if (blogError) {
+      console.error("Error fetching blog posts for sitemap:", blogError);
+      // Continue without blog data but don't fail completely
     }
 
     // Create sitemap entries with enhanced priorities
@@ -73,21 +84,51 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         priority: 0.8,
       },
       {
+        url: `${baseUrl}/team`,
+        lastModified: new Date(),
+        changeFrequency: "monthly",
+        priority: 0.8,
+      },
+      {
         url: `${baseUrl}/contact`,
         lastModified: new Date(),
         changeFrequency: "monthly",
         priority: 0.8,
       },
-      // Blog/content pages
+      // Content and support pages
       {
         url: `${baseUrl}/blog`,
         lastModified: new Date(),
         changeFrequency: "weekly",
         priority: 0.7,
       },
+      {
+        url: `${baseUrl}/faq`,
+        lastModified: new Date(),
+        changeFrequency: "monthly",
+        priority: 0.7,
+      },
+      {
+        url: `${baseUrl}/testimonials`,
+        lastModified: new Date(),
+        changeFrequency: "weekly",
+        priority: 0.7,
+      },
+      {
+        url: `${baseUrl}/gallery`,
+        lastModified: new Date(),
+        changeFrequency: "weekly",
+        priority: 0.7,
+      },
+      {
+        url: `${baseUrl}/careers`,
+        lastModified: new Date(),
+        changeFrequency: "monthly",
+        priority: 0.7,
+      },
       // Footer pages - lower priority but important for completeness
       {
-        url: `${baseUrl}/privacy`,
+        url: `${baseUrl}/privacy-policy`,
         lastModified: new Date(),
         changeFrequency: "yearly",
         priority: 0.3,
@@ -156,6 +197,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       });
     }
 
+    // Add blog posts from database
+    if (blogPosts && blogPosts.length > 0) {
+      blogPosts.forEach((post: { slug: string; updated_at: string }) => {
+        sitemapEntries.push({
+          url: `${baseUrl}/blog/${post.slug}`,
+          lastModified: new Date(post.updated_at),
+          changeFrequency: "monthly",
+          priority: 0.6,
+        });
+      });
+    }
+
     // Sort by priority (highest first) for better crawling
     return sitemapEntries.sort((a, b) => (b.priority || 0) - (a.priority || 0));
   } catch (error) {
@@ -201,10 +254,46 @@ function getEnhancedBasicSitemap(baseUrl: string): MetadataRoute.Sitemap {
       priority: 0.8,
     },
     {
+      url: `${baseUrl}/team`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
       url: `${baseUrl}/contact`,
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/blog`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.7,
+    },
+    {
+      url: `${baseUrl}/faq`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.7,
+    },
+    {
+      url: `${baseUrl}/testimonials`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.7,
+    },
+    {
+      url: `${baseUrl}/gallery`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.7,
+    },
+    {
+      url: `${baseUrl}/careers`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.7,
     },
     // Main service pages
     ...services.map((service) => ({
@@ -222,10 +311,16 @@ function getEnhancedBasicSitemap(baseUrl: string): MetadataRoute.Sitemap {
     })),
     // Footer pages
     {
-      url: `${baseUrl}/privacy`,
+      url: `${baseUrl}/privacy-policy`,
       lastModified: new Date(),
       changeFrequency: "yearly" as const,
       priority: 0.3,
+    },
+    {
+      url: `${baseUrl}/license`,
+      lastModified: new Date(),
+      changeFrequency: "yearly" as const,
+      priority: 0.4,
     },
     {
       url: `${baseUrl}/terms`,

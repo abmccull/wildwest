@@ -55,6 +55,7 @@ const Footer: React.FC = () => {
                   width={48}
                   height={48}
                   className="object-contain"
+                  sizes="48px"
                 />
               </div>
               <div>

@@ -94,6 +94,7 @@ const Header: React.FC = () => {
                   height={48}
                   className="object-contain"
                   priority
+                  sizes="(max-width: 768px) 40px, 48px"
                 />
               </div>
               <div className="hidden sm:block">
@@ -244,6 +245,7 @@ const Header: React.FC = () => {
                       width={40}
                       height={40}
                       className="object-contain"
+                      sizes="40px"
                     />
                   </div>
                   <span className="text-lg font-bold text-blue-900">Wild West</span>
