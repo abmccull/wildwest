@@ -93,6 +93,28 @@ body {
   @apply py-16 px-4 sm:px-6 lg:px-8;
 }
 
+/* Ensure form inputs are interactive */
+input, textarea, select, button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+input:focus, textarea:focus, select:focus {
+  outline: none;
+}
+
+/* Ensure inputs are not blocked by any overlays */
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="number"],
+textarea,
+select {
+  position: relative;
+  z-index: 10;
+}
+
 /* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 8px;

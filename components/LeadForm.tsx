@@ -46,21 +46,48 @@ const LeadForm: React.FC<LeadFormProps> = ({
 
     if (!formData.phone.trim()) {
       newErrors.phone = "Phone number is required";
-    } else if (
-      !/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/.test(formData.phone)
-    ) {
-      newErrors.phone = "Please enter a valid phone number";
+    } else {
+      // Remove formatting to check if we have exactly 10 digits
+      const digitsOnly = formData.phone.replace(/\D/g, '');
+      if (digitsOnly.length !== 10) {
+        newErrors.phone = "Please enter a valid 10-digit phone number";
+      }
     }
 
     if (!formData.email.trim()) {
       newErrors.email = "Email is required";
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = "Please enter a valid email address";
+    } else {
+      // More comprehensive email validation
+      const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      if (!emailRegex.test(formData.email.toLowerCase())) {
+        newErrors.email = "Please enter a valid email address (e.g., name@example.com)";
+      }
     }
 
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
+  };
+
+  // Format phone number as user types
+  const formatPhoneNumber = (value: string): string => {
+    // Remove all non-digit characters
+    const phoneNumber = value.replace(/\D/g, '');
+    
+    // Limit to 10 digits
+    const truncated = phoneNumber.slice(0, 10);
+    
+    // Format as xxx-xxx-xxxx
+    if (truncated.length >= 6) {
+      return `${truncated.slice(0, 3)}-${truncated.slice(3, 6)}-${truncated.slice(6)}`;
+    } else if (truncated.length >= 3) {
+      return `${truncated.slice(0, 3)}-${truncated.slice(3)}`;
+    }
+    return truncated;
+  };
+
+  const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
+    console.log('Input focused:', e.target.name);
   };
 
   const handleInputChange = (
@@ -79,9 +106,15 @@ const LeadForm: React.FC<LeadFormProps> = ({
     // Track field focus
     trackFormInteraction("lead_form", "field_focus", name);
 
+    // Format phone number if it's the phone field
+    let processedValue = value;
+    if (name === 'phone') {
+      processedValue = formatPhoneNumber(value);
+    }
+
     setFormData((prev) => ({
       ...prev,
-      [name]: value,
+      [name]: processedValue,
     }));
 
     // Clear error for this field
@@ -117,9 +150,9 @@ const LeadForm: React.FC<LeadFormProps> = ({
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          name: formData.name,
-          phone: formData.phone,
-          email: formData.email,
+          name: formData.name.trim(),
+          phone: formData.phone.replace(/\D/g, ''), // Send only digits to backend
+          email: formData.email.trim().toLowerCase(),
           timestamp: new Date().toISOString(),
           source: "website_form",
         }),
@@ -174,7 +207,8 @@ const LeadForm: React.FC<LeadFormProps> = ({
 
   return (
     <div
-      className={`bg-white rounded-lg shadow-construction border border-gray-200 ${className}`}
+      className={`bg-white rounded-lg shadow-construction border border-gray-200 relative ${className}`}
+      style={{ position: 'relative', zIndex: 1 }}
     >
       <div className={`${isCompact ? "p-4" : "p-6"}`}>
         {/* Header */}
@@ -225,10 +259,14 @@ const LeadForm: React.FC<LeadFormProps> = ({
                 name="name"
                 value={formData.name}
                 onChange={handleInputChange}
+                onFocus={handleFocus}
                 className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-red-600 focus:border-transparent transition-colors duration-200 ${
                   errors.name ? "border-red-500" : "border-gray-300"
                 }`}
                 placeholder="John Smith"
+                autoComplete="name"
+                required
+                disabled={isSubmitting}
               />
               {errors.name && (
                 <p className="text-red-600 text-xs mt-1">{errors.name}</p>
@@ -249,10 +287,15 @@ const LeadForm: React.FC<LeadFormProps> = ({
                 name="phone"
                 value={formData.phone}
                 onChange={handleInputChange}
+                onFocus={handleFocus}
                 className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-red-600 focus:border-transparent transition-colors duration-200 ${
                   errors.phone ? "border-red-500" : "border-gray-300"
                 }`}
-                placeholder="(801) 555-0123"
+                placeholder="801-555-0123"
+                maxLength={12}
+                autoComplete="tel"
+                required
+                disabled={isSubmitting}
               />
               {errors.phone && (
                 <p className="text-red-600 text-xs mt-1">{errors.phone}</p>
@@ -274,10 +317,14 @@ const LeadForm: React.FC<LeadFormProps> = ({
               name="email"
               value={formData.email}
               onChange={handleInputChange}
+              onFocus={handleFocus}
               className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-red-600 focus:border-transparent transition-colors duration-200 ${
                 errors.email ? "border-red-500" : "border-gray-300"
               }`}
               placeholder="john@example.com"
+              autoComplete="email"
+              required
+              disabled={isSubmitting}
             />
             {errors.email && (
               <p className="text-red-600 text-xs mt-1">{errors.email}</p>
