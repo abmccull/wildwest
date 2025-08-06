@@ -66,12 +66,6 @@ const faqs = [
       "We understand that home improvement projects can be disruptive. We offer flexible scheduling including evening and weekend work when possible. We'll work with you to minimize disruption to your daily routine and complete projects efficiently.",
   },
   {
-    id: 11,
-    question: "Do you handle permits and inspections?",
-    answer:
-      "For most projects, permit requirements vary by location and project scope. We can help determine what permits are needed and assist with the application process. In most cases, permits are the homeowner's responsibility, but we're happy to guide you through the process.",
-  },
-  {
     id: 12,
     question: "What happens if there are unexpected issues during the project?",
     answer:

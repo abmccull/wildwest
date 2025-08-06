@@ -76,7 +76,7 @@ export const SERVICE_KEYWORDS: Record<ServiceType, string[]> = {
     "commercial building demolition",
     "residential demolition",
     "selective demolition services",
-    "demolition permit",
+    "demolition planning",
     "concrete demolition",
     "structural demolition contractors",
     "demolition cost",
@@ -249,7 +249,7 @@ export const SERVICE_DESCRIPTIONS: Record<
       "Site cleanup included",
     ],
     process: [
-      "Site assessment and permit acquisition",
+      "Site assessment and project planning",
       "Utility disconnection coordination",
       "Safety preparation and containment",
       "Systematic demolition execution",

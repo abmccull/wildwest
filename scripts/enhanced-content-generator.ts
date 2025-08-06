@@ -51,12 +51,12 @@ export const CITY_DATA: Record<
       dryClimate: boolean;
       seasonalConsiderations: string[];
     };
-    permitting: {
-      department: string;
-      avgProcessingTime: string;
-      commonRequirements: string[];
-      fees: string;
-    };
+    // permitting: {
+    //   department: string;
+    //   avgProcessingTime: string;
+    //   commonRequirements: string[];
+    //   fees: string;
+    // };
   }
 > = {
   "Salt Lake City": {
@@ -100,15 +100,15 @@ export const CITY_DATA: Record<
         "Winter: Indoor projects preferred due to snow",
       ],
     },
-    permitting: {
-      department: "Salt Lake City Building Services",
-      avgProcessingTime: "3-5 business days",
-      commonRequirements: [
-        "Structural plans for load-bearing wall removal",
-        "Electrical permits for demolition",
-      ],
-      fees: "$50-$200 depending on scope",
-    },
+    // permitting: {
+    //   department: "Salt Lake City Building Services",
+    //   avgProcessingTime: "3-5 business days",
+    //   commonRequirements: [
+    //     "Structural plans for load-bearing wall removal",
+    //     "Electrical permits for demolition",
+    //   ],
+    //   fees: "$50-$200 depending on scope",
+    // },
   },
   "West Valley City": {
     neighborhoods: [
@@ -142,15 +142,15 @@ export const CITY_DATA: Record<
         "Good year-round access for service calls",
       ],
     },
-    permitting: {
-      department: "West Valley City Planning & Zoning",
-      avgProcessingTime: "2-4 business days",
-      commonRequirements: [
-        "Building permit for structural changes",
-        "Utility location requirements",
-      ],
-      fees: "$40-$150 depending on project",
-    },
+    // permitting: {
+    //   department: "West Valley City Planning & Zoning",
+    //   avgProcessingTime: "2-4 business days",
+    //   commonRequirements: [
+    //     "Building permit for structural changes",
+    //     "Utility location requirements",
+    //   ],
+    //   fees: "$40-$150 depending on project",
+    // },
   },
   "West Jordan": {
     neighborhoods: [
@@ -179,15 +179,15 @@ export const CITY_DATA: Record<
         "Less extreme temperature variations",
       ],
     },
-    permitting: {
-      department: "West Jordan Community Development",
-      avgProcessingTime: "3-5 business days",
-      commonRequirements: [
-        "HOA approval in many neighborhoods",
-        "Setback requirements",
-      ],
-      fees: "$60-$180 depending on scope",
-    },
+    // permitting: {
+    //   department: "West Jordan Community Development",
+    //   avgProcessingTime: "3-5 business days",
+    //   commonRequirements: [
+    //     "HOA approval in many neighborhoods",
+    //     "Setback requirements",
+    //   ],
+    //   fees: "$60-$180 depending on scope",
+    // },
   },
   Sandy: {
     neighborhoods: [
@@ -226,15 +226,15 @@ export const CITY_DATA: Record<
         "Excellent drainage due to slope",
       ],
     },
-    permitting: {
-      department: "Sandy City Building Department",
-      avgProcessingTime: "3-7 business days",
-      commonRequirements: [
-        "Geotechnical reports for hillside properties",
-        "Fire safety requirements",
-      ],
-      fees: "$75-$250 depending on complexity",
-    },
+    // permitting: {
+    //   department: "Sandy City Building Department",
+    //   avgProcessingTime: "3-7 business days",
+    //   commonRequirements: [
+    //     "Geotechnical reports for hillside properties",
+    //     "Fire safety requirements",
+    //   ],
+    //   fees: "$75-$250 depending on complexity",
+    // },
   },
   Murray: {
     neighborhoods: [
@@ -263,15 +263,15 @@ export const CITY_DATA: Record<
         "Established neighborhoods with mature landscaping",
       ],
     },
-    permitting: {
-      department: "Murray City Building Division",
-      avgProcessingTime: "2-4 business days",
-      commonRequirements: [
-        "Tree preservation in some areas",
-        "Parking requirements",
-      ],
-      fees: "$50-$175 depending on project",
-    },
+    // permitting: {
+    //   department: "Murray City Building Division",
+    //   avgProcessingTime: "2-4 business days",
+    //   commonRequirements: [
+    //     "Tree preservation in some areas",
+    //     "Parking requirements",
+    //   ],
+    //   fees: "$50-$175 depending on project",
+    // },
   },
   // Additional cities follow same pattern...
 };
@@ -415,7 +415,7 @@ export const ENHANCED_SERVICE_DATA: Record<
       high: "$15,000-50,000+ (whole house, commercial buildings)",
       factors: [
         "Hazardous material abatement (asbestos/lead)",
-        "Permit costs ($200-2,000 depending on scope)",
+        "Project planning and coordination ($200-2,000 depending on scope)",
         "Utility disconnection fees",
         "Debris disposal ($300-800 per dumpster load)",
         "Access difficulty (narrow lots, slopes)",
@@ -436,7 +436,7 @@ export const ENHANCED_SERVICE_DATA: Record<
       premium: ["Hydraulic excavators", "Concrete crushers"],
     },
     installation_timeline: {
-      prep: "1-3 days (permits, utility disconnection)",
+      prep: "1-3 days (project coordination, utility disconnection)",
       installation: "1-5 days (depending on scope)",
       cleanup: "1-2 days (debris removal, site restoration)",
       total: "3-10 days for typical projects",
@@ -472,14 +472,14 @@ export const ENHANCED_SERVICE_DATA: Record<
         "Utility disconnection",
       ],
       cost_comparison:
-        "Professional required for permits and safety - not a DIY-friendly service",
+        "Professional required for safety and proper coordination - not a DIY-friendly service",
     },
   },
   junk_removal: {
     utah_considerations: [
       "High elevation and dry climate preserve items longer (good for donations)",
       "Seasonal equipment storage common (skis, bikes, camping gear)",
-      "Large Mormon families often have extensive household cleanouts",
+      "Large families often have extensive household cleanouts",
       "Basement storage common due to full basements in most Utah homes",
       "Outdoor recreational equipment disposal (trampolines, swing sets, hot tubs)",
       "Construction debris from frequent home additions and remodels",
@@ -658,8 +658,8 @@ export function generateEnhancedContent(
         content: generateCostSection(service, city),
       },
       {
-        title: `${city} Building Codes & Permit Requirements`,
-        content: generatePermitSection(service, city),
+        title: `${city} Project Planning & Building Considerations`,
+        content: generateProjectPlanningSection(service, city),
       },
       {
         title: `Best Time for ${serviceDisplay} Projects in Utah`,
@@ -702,7 +702,7 @@ function generateServiceDescription(
   }
 
   const serviceDisplay = service.replace("_", " ");
-  return `Professional ${serviceDisplay} services designed specifically for Utah homes and businesses. Based in Murray, we serve ${city} with expertise in local building conditions, climate considerations, and permit requirements. ${considerations}`;
+  return `Professional ${serviceDisplay} services designed specifically for Utah homes and businesses. Based in Murray, we serve ${city} with expertise in local building conditions, climate considerations, and project coordination requirements. ${considerations}`;
 }
 
 function generateCityDescription(city: string, service: ServiceType): string {
@@ -721,7 +721,7 @@ function generateFeatures(service: ServiceType, city: string): string[] {
     "Licensed and insured Utah contractors",
     "Free detailed estimates with no hidden fees",
     "Local Murray-based team with 10+ years experience",
-    "Understanding of Utah building codes and permits",
+    "Understanding of Utah building codes and standards",
     "Climate-appropriate materials and techniques",
   ];
 
@@ -765,7 +765,7 @@ function generateRealisticTestimonials(
     },
     {
       name: "Lisa K.",
-      text: `Highly recommend Wild West Construction for ${serviceDisplay} work. They helped us navigate the ${city} permit process and their team was respectful of our neighbors. Clean, professional job from start to finish.`,
+      text: `Highly recommend Wild West Construction for ${serviceDisplay} work. They helped us navigate the ${city} project coordination process and their team was respectful of our neighbors. Clean, professional job from start to finish.`,
       rating: 5,
     },
   ];
@@ -788,10 +788,8 @@ function generateValueDrivenFAQ(
       answer: `${serviceDisplay.charAt(0).toUpperCase() + serviceDisplay.slice(1)} costs in ${city} typically range from ${serviceData.cost_factors.low} to ${serviceData.cost_factors.high}, depending on project scope. Major cost factors include: ${serviceData.cost_factors.factors.slice(0, 3).join(", ")}. Wild West Construction provides detailed, transparent estimates with no hidden fees.`,
     },
     {
-      question: `Do I need permits for ${serviceDisplay} in ${city}?`,
-      answer: cityData
-        ? `Most ${serviceDisplay} projects in ${city} require permits from ${cityData.permitting.department}. Processing typically takes ${cityData.permitting.avgProcessingTime} with fees around ${cityData.permitting.fees}. Wild West Construction can help you navigate the permit process and ensure compliance with local codes.`
-        : `Permit requirements for ${serviceDisplay} vary by project scope in ${city}. Wild West Construction will help determine what permits are needed and handle the application process for you.`,
+      question: `What planning is involved for ${serviceDisplay} projects in ${city}?`,
+      answer: `Every ${serviceDisplay} project in ${city} requires careful coordination to ensure quality results and compliance with local building standards. Wild West Construction handles all project planning, including timeline development, material coordination, and adherence to Utah building codes. We take care of all the details so you can focus on enjoying the results.`,
     },
     {
       question: `What's the best time of year for ${serviceDisplay} in Utah?`,
@@ -799,7 +797,7 @@ function generateValueDrivenFAQ(
     },
     {
       question: `How long does a typical ${serviceDisplay} project take?`,
-      answer: `Timeline for ${serviceDisplay} projects: ${serviceData.installation_timeline.prep} for preparation, ${serviceData.installation_timeline.installation} for main work, and ${serviceData.installation_timeline.cleanup} for cleanup. Total project time is typically ${serviceData.installation_timeline.total}. Weather and permit processing may affect scheduling.`,
+      answer: `Timeline for ${serviceDisplay} projects: ${serviceData.installation_timeline.prep} for preparation, ${serviceData.installation_timeline.installation} for main work, and ${serviceData.installation_timeline.cleanup} for cleanup. Total project time is typically ${serviceData.installation_timeline.total}. Weather and project coordination may affect scheduling.`,
     },
     {
       question: `What makes Utah ${serviceDisplay} projects different?`,
@@ -838,32 +836,33 @@ Salt Lake County sales tax varies by city (6.10%-8.35%), and Utah's climate may 
 Every project is unique. Call (801) 691-4065 for a free, detailed estimate based on your specific needs and property conditions.`;
 }
 
-function generatePermitSection(service: ServiceType, city: string): string {
+function generateProjectPlanningSection(service: ServiceType, city: string): string {
   const cityData = CITY_DATA[city];
+  const serviceDisplay = service.replace("_", " ");
 
-  if (!cityData) {
-    return `Permit requirements for ${service.replace("_", " ")} projects in ${city} vary by scope. Wild West Construction will help determine what permits are needed and handle the application process.`;
-  }
+  return `**${city} Project Planning & Considerations:**
 
-  return `**${city} Permit Information:**
+**Project Coordination:** Every ${serviceDisplay} project requires careful planning to ensure success and minimize disruption to your daily life.
 
-**Permitting Department:** ${cityData.permitting.department}
-**Processing Time:** ${cityData.permitting.avgProcessingTime}
-**Typical Fees:** ${cityData.permitting.fees}
-
-**Common Requirements:**
-${cityData.permitting.commonRequirements.map((req) => `• ${req}`).join("\n")}
+**Local Building Considerations:**
+• Understanding ${city}'s unique architectural styles and building characteristics
+• Coordination with utility companies for disconnections when needed
+• Neighborhood-specific requirements and considerations
+• Proper material selection for Utah's climate conditions
 
 **What Wild West Construction Handles:**
-• Permit application preparation and submission
-• Code compliance verification
-• Inspector coordination and scheduling
-• Final approval documentation
+• Complete project planning and timeline development
+• Code compliance verification and building standards adherence
+• Coordination with local authorities and utility companies
+• Quality assurance and project oversight
 
-**Important Notes:**
-Starting work without proper permits can result in fines and complications when selling your home. We ensure all work meets or exceeds local building codes and passes inspection the first time.
+**Timeline Planning:**
+We work with you to schedule your project at the optimal time, considering Utah's seasonal conditions and your personal schedule. Our goal is to complete your project efficiently while maintaining the highest quality standards.
 
-**Questions about permits?** Call us at (801) 691-4065 and we'll explain exactly what your project requires.`;
+**Communication & Updates:**
+Regular progress updates and clear communication throughout the project ensure you're always informed about the work being done on your property.
+
+**Questions about your project?** Call us at (801) 691-4065 and we'll walk you through everything involved in your specific ${serviceDisplay} project.`;
 }
 
 function generateSeasonalSection(service: ServiceType): string {
@@ -969,7 +968,7 @@ ${serviceData.diy_vs_professional.professional_required.map((item) => `• ${ite
 ${serviceData.diy_vs_professional.cost_comparison}
 
 **Utah-Specific DIY Challenges:**
-• Building codes and permit requirements
+• Building codes and compliance requirements
 • Proper disposal of materials (especially hazardous)
 • Understanding local soil and foundation conditions
 • Working with utility companies for disconnections
@@ -977,7 +976,7 @@ ${serviceData.diy_vs_professional.cost_comparison}
 
 **Why Choose Wild West Construction:**
 • Licensed and insured protection
-• Knowledge of Utah building codes and permits
+• Knowledge of Utah building codes and standards
 • Proper disposal and recycling coordination
 • Warranty on all work performed
 • Time savings - you focus on your life, we handle the project
@@ -1081,7 +1080,6 @@ export const SERVICE_KEYWORDS: Record<ServiceType, string[]> = {
     "commercial building demolition",
     "residential demolition",
     "selective demolition services",
-    "demolition permit",
     "concrete demolition",
     "structural demolition contractors",
     "demolition cost",

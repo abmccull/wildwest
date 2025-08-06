@@ -211,7 +211,7 @@ export default function DemolitionServices() {
                 From selective interior demolition that preserves structural
                 integrity to complete building teardown with environmental
                 considerations, we handle projects of all sizes. Our
-                comprehensive approach includes proper permits, utility
+                comprehensive approach includes utility
                 shutoffs, hazardous material assessment, and complete debris
                 removal—giving you peace of mind throughout the entire process.
               </p>
@@ -387,7 +387,7 @@ export default function DemolitionServices() {
                 </ul>
               </div>
 
-              {/* Planning & Permits */}
+              {/* Planning & Coordination */}
               <div className="bg-white rounded-lg shadow-construction p-6 hover:shadow-xl transition-shadow duration-300">
                 <div className="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center mb-4">
                   <svg
@@ -405,10 +405,10 @@ export default function DemolitionServices() {
                   </svg>
                 </div>
                 <h3 className="text-xl font-bold text-gray-900 mb-3">
-                  Planning & Permits
+                  Planning & Coordination
                 </h3>
                 <ul className="text-gray-700 space-y-2">
-                  <li>• Permit acquisition</li>
+                  <li>• Project coordination</li>
                   <li>• Structural assessments</li>
                   <li>• Utility disconnection</li>
                   <li>• Safety planning</li>
@@ -453,10 +453,10 @@ export default function DemolitionServices() {
                   <span className="text-2xl font-bold text-white">2</span>
                 </div>
                 <h3 className="text-xl font-bold text-gray-900 mb-3">
-                  Planning & Permits
+                  Planning & Coordination
                 </h3>
                 <p className="text-gray-700">
-                  Detailed demolition plan, permit acquisition, utility
+                  Detailed demolition plan, project coordination, utility
                   shutoffs, and safety protocol development.
                 </p>
               </div>
@@ -549,7 +549,7 @@ export default function DemolitionServices() {
                 </div>
                 <h3 className="text-xl font-bold mb-3">Transparent Pricing</h3>
                 <p className="text-gray-300">
-                  Fixed-price contracts with no hidden fees. Includes permits,
+                  Fixed-price contracts with no hidden fees. Includes all
                   disposal, and cleanup in every quote.
                 </p>
               </div>
@@ -661,7 +661,7 @@ export default function DemolitionServices() {
                 Ready to Start Your Demolition Project?
               </h2>
               <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                Get your free estimate today. All services include permits,
+                Get your free estimate today. All services include
                 safety equipment, and complete cleanup.
               </p>
             </div>
@@ -671,7 +671,7 @@ export default function DemolitionServices() {
                 Get Your Free Demolition Estimate Today
               </h3>
               <p className="text-lg text-gray-700 mb-6">
-                Our demolition experts will assess your project, handle all permits, and provide transparent pricing with no hidden fees. 
+                Our demolition experts will assess your project and provide transparent pricing with no hidden fees. 
                 We specialize in safe, efficient demolition with complete debris removal and site cleanup.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
@@ -705,20 +705,6 @@ export default function DemolitionServices() {
             </div>
 
             <div className="space-y-8">
-              {/* FAQ Item 1 */}
-              <div className="border-b border-gray-200 pb-8">
-                <h3 className="text-xl font-bold text-gray-900 mb-4">
-                  Do I need permits for demolition work?
-                </h3>
-                <p className="text-gray-700 leading-relaxed">
-                  Most demolition projects require permits from local
-                  authorities. We handle all permit applications and coordinate
-                  with building departments to ensure compliance. Permit
-                  requirements vary by location and project scope, but we guide
-                  you through the entire process and include permit costs in our
-                  quotes.
-                </p>
-              </div>
 
               {/* FAQ Item 2 */}
               <div className="border-b border-gray-200 pb-8">
@@ -1003,7 +989,7 @@ export default function DemolitionServices() {
                 </h2>
                 <p className="text-xl text-red-100 mb-8 leading-relaxed">
                   Get your free, comprehensive estimate today. Our demolition
-                  experts will assess your project, handle all permits, and
+                  experts will assess your project and
                   provide transparent pricing with no hidden fees.
                 </p>
 
@@ -1038,7 +1024,7 @@ export default function DemolitionServices() {
                         d="M5 13l4 4L19 7"
                       />
                     </svg>
-                    <span>Permit Handling Included</span>
+                    <span>Professional Service Included</span>
                   </div>
                   <div className="flex items-center space-x-3">
                     <svg
