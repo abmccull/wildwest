@@ -32,7 +32,7 @@ const navigation: NavigationItem[] = [
       },
       {
         label: "Junk Removal",
-        href: "/services/junk_removal",
+        href: "/services/junk-removal",
         description: "Reliable junk and debris removal",
       },
     ],
@@ -50,9 +50,9 @@ const navigation: NavigationItem[] = [
       { label: "Murray", href: "/locations/murray" },
     ],
   },
+  { label: "Blog", href: "/blog" },
   { label: "Gallery", href: "/gallery" },
   { label: "Testimonials", href: "/testimonials" },
-  { label: "Quote", href: "/quote" },
   { label: "Contact", href: "/contact" },
 ];
 
@@ -77,12 +77,12 @@ const Header: React.FC = () => {
   return (
     <header className="bg-white shadow-construction sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16 md:h-20">
+        <div className="flex justify-between items-center h-16 md:h-18 lg:h-20">
           {/* Logo */}
           <div className="flex-shrink-0">
             <Link
               href="/"
-              className="flex items-center space-x-3"
+              className="flex items-center space-x-2 sm:space-x-3"
               onClick={closeMenus}
             >
               <div className="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-br from-desert-red to-mustang-yellow rounded-lg flex items-center justify-center shadow-western">
@@ -91,22 +91,22 @@ const Header: React.FC = () => {
                 </span>
               </div>
               <div className="hidden sm:block">
-                <h1 className="text-xl md:text-2xl font-bold text-blue-900">
+                <h1 className="text-lg sm:text-xl md:text-2xl font-bold text-blue-900 leading-tight">
                   Wild West Construction
                 </h1>
-                <p className="text-sm text-gray-600 -mt-1">
-                  Utah&apos;s Premier Builder
+                <p className="text-xs md:text-sm text-gray-600 -mt-0.5 leading-tight">
+                  Expert Flooring, Demolition & Junk Removal Services
                 </p>
               </div>
             </Link>
           </div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex space-x-8">
+          <nav className="hidden lg:flex items-center space-x-8">
             {navigation.map((item) => (
               <div key={item.label} className="relative group">
                 <button
-                  className="flex items-center space-x-1 text-blue-900 hover:text-red-600 font-medium transition-colors duration-200"
+                  className="flex items-center space-x-1 text-blue-900 hover:text-red-600 font-medium transition-colors duration-200 whitespace-nowrap"
                   onClick={() =>
                     item.hasDropdown
                       ? toggleDropdown(item.label)
@@ -137,12 +137,12 @@ const Header: React.FC = () => {
                 {item.hasDropdown &&
                   item.dropdownItems &&
                   openDropdown === item.label && (
-                    <div className="absolute top-full left-0 mt-2 w-80 bg-white rounded-lg shadow-construction border border-gray-100 py-2 z-50">
+                    <div className="absolute top-full left-0 mt-1 w-80 bg-white rounded-lg shadow-construction border border-gray-100 py-1 z-50">
                       {item.dropdownItems.map((dropdownItem) => (
                         <a
                           key={dropdownItem.label}
                           href={dropdownItem.href}
-                          className="block px-4 py-3 hover:bg-gray-50 transition-colors duration-200"
+                          className="block px-5 py-3 hover:bg-gray-50 transition-colors duration-200"
                           onClick={closeMenus}
                         >
                           <div className="text-blue-900 font-medium">
@@ -163,13 +163,13 @@ const Header: React.FC = () => {
 
           {/* CTA Button */}
           <div className="hidden md:flex items-center space-x-4">
-            <a href="/quote" className="btn-primary" onClick={closeMenus}>
+            <a href="/quote" className="btn-primary text-sm lg:text-base px-4 py-2 lg:px-6" onClick={closeMenus}>
               Get Free Quote
             </a>
             <a
               href="tel:+1-801-691-4065"
               data-source="header"
-              className="text-red-600 hover:text-red-700 font-semibold transition-colors duration-200"
+              className="text-red-600 hover:text-red-700 font-semibold transition-colors duration-200 text-sm lg:text-base whitespace-nowrap"
             >
               (801) 691-4065
             </a>
@@ -218,7 +218,7 @@ const Header: React.FC = () => {
         {/* Mobile Navigation */}
         {isMobileMenuOpen && (
           <div className="lg:hidden border-t border-gray-200">
-            <div className="px-2 pt-2 pb-3 space-y-1 bg-white">
+            <div className="px-2 pt-3 pb-4 space-y-2 bg-white">
               {navigation.map((item) => (
                 <div key={item.label}>
                   <button
@@ -227,7 +227,7 @@ const Header: React.FC = () => {
                         ? toggleDropdown(item.label)
                         : (window.location.href = item.href)
                     }
-                    className="w-full flex items-center justify-between text-left px-3 py-2 rounded-md text-base font-medium text-blue-900 hover:text-red-600 hover:bg-gray-50 transition-colors duration-200"
+                    className="w-full flex items-center justify-between text-left px-4 py-3 rounded-md text-base font-medium text-blue-900 hover:text-red-600 hover:bg-gray-50 transition-colors duration-200"
                   >
                     <span>{item.label}</span>
                     {item.hasDropdown && (
@@ -253,12 +253,12 @@ const Header: React.FC = () => {
                   {item.hasDropdown &&
                     item.dropdownItems &&
                     openDropdown === item.label && (
-                      <div className="ml-4 space-y-1">
+                      <div className="ml-6 mt-1 space-y-1">
                         {item.dropdownItems.map((dropdownItem) => (
                           <a
                             key={dropdownItem.label}
                             href={dropdownItem.href}
-                            className="block px-3 py-2 rounded-md text-sm text-gray-700 hover:text-red-600 hover:bg-gray-50 transition-colors duration-200"
+                            className="block px-4 py-2 rounded-md text-sm text-gray-700 hover:text-red-600 hover:bg-gray-50 transition-colors duration-200"
                             onClick={closeMenus}
                           >
                             {dropdownItem.label}
@@ -270,10 +270,10 @@ const Header: React.FC = () => {
               ))}
 
               {/* Mobile CTA */}
-              <div className="border-t border-gray-200 mt-4 pt-4 space-y-2">
+              <div className="border-t border-gray-200 mt-6 pt-4 px-2 space-y-3">
                 <a
                   href="/quote"
-                  className="block w-full text-center btn-primary"
+                  className="block w-full text-center btn-primary py-3"
                   onClick={closeMenus}
                 >
                   Get Free Quote
@@ -281,7 +281,7 @@ const Header: React.FC = () => {
                 <a
                   href="tel:+1-801-691-4065"
                   data-source="mobile-menu"
-                  className="block text-center text-red-600 font-semibold py-2"
+                  className="block text-center text-red-600 font-semibold py-2 px-4 rounded-md hover:bg-gray-50 transition-colors duration-200"
                   onClick={closeMenus}
                 >
                   Call: (801) 691-4065

@@ -22,6 +22,153 @@ export type LeadStatus =
 export interface Database {
   public: {
     Tables: {
+      blog_categories: {
+        Row: {
+          id: string;
+          name: string;
+          slug: string;
+          description: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          name: string;
+          slug: string;
+          description?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          name?: string;
+          slug?: string;
+          description?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+      };
+      blog_posts: {
+        Row: {
+          id: string;
+          title: string;
+          slug: string;
+          excerpt: string;
+          content: string;
+          author: string;
+          category_id: string;
+          featured_image: string | null;
+          meta_description: string;
+          meta_keywords: string | null;
+          tags: string[];
+          published: boolean;
+          featured: boolean;
+          views: number;
+          reading_time: number | null;
+          published_at: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          title: string;
+          slug: string;
+          excerpt: string;
+          content: string;
+          author?: string;
+          category_id: string;
+          featured_image?: string | null;
+          meta_description: string;
+          meta_keywords?: string | null;
+          tags?: string[];
+          published?: boolean;
+          featured?: boolean;
+          views?: number;
+          reading_time?: number | null;
+          published_at?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          title?: string;
+          slug?: string;
+          excerpt?: string;
+          content?: string;
+          author?: string;
+          category_id?: string;
+          featured_image?: string | null;
+          meta_description?: string;
+          meta_keywords?: string | null;
+          tags?: string[];
+          published?: boolean;
+          featured?: boolean;
+          views?: number;
+          reading_time?: number | null;
+          published_at?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+      };
+      blog_post_analytics: {
+        Row: {
+          id: string;
+          post_id: string;
+          visitor_id: string | null;
+          session_id: string | null;
+          referrer: string | null;
+          utm_source: string | null;
+          utm_medium: string | null;
+          utm_campaign: string | null;
+          device_type: string | null;
+          browser: string | null;
+          country: string | null;
+          region: string | null;
+          city: string | null;
+          ip_address: string | null;
+          duration: number | null;
+          scroll_depth: number | null;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          post_id: string;
+          visitor_id?: string | null;
+          session_id?: string | null;
+          referrer?: string | null;
+          utm_source?: string | null;
+          utm_medium?: string | null;
+          utm_campaign?: string | null;
+          device_type?: string | null;
+          browser?: string | null;
+          country?: string | null;
+          region?: string | null;
+          city?: string | null;
+          ip_address?: string | null;
+          duration?: number | null;
+          scroll_depth?: number | null;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          post_id?: string;
+          visitor_id?: string | null;
+          session_id?: string | null;
+          referrer?: string | null;
+          utm_source?: string | null;
+          utm_medium?: string | null;
+          utm_campaign?: string | null;
+          device_type?: string | null;
+          browser?: string | null;
+          country?: string | null;
+          region?: string | null;
+          city?: string | null;
+          ip_address?: string | null;
+          duration?: number | null;
+          scroll_depth?: number | null;
+          created_at?: string;
+        };
+      };
       pages: {
         Row: {
           id: string;
@@ -222,6 +369,70 @@ export interface Database {
         };
         Returns: void;
       };
+      get_blog_posts: {
+        Args: {
+          page_num?: number;
+          page_size?: number;
+          category_slug?: string;
+          search_term?: string;
+        };
+        Returns: {
+          id: string;
+          title: string;
+          slug: string;
+          excerpt: string;
+          author: string;
+          category_name: string;
+          category_slug: string;
+          featured_image: string | null;
+          tags: string[];
+          published: boolean;
+          featured: boolean;
+          views: number;
+          reading_time: number | null;
+          published_at: string | null;
+          created_at: string;
+        }[];
+      };
+      get_blog_post_with_related: {
+        Args: {
+          post_slug: string;
+        };
+        Returns: {
+          id: string;
+          title: string;
+          slug: string;
+          excerpt: string;
+          content: string;
+          author: string;
+          category_name: string;
+          category_slug: string;
+          featured_image: string | null;
+          meta_description: string;
+          meta_keywords: string | null;
+          tags: string[];
+          published: boolean;
+          featured: boolean;
+          views: number;
+          reading_time: number | null;
+          published_at: string | null;
+          created_at: string;
+          related_posts: Json;
+        }[];
+      };
+      get_blog_posts_count: {
+        Args: {
+          category_slug?: string;
+          search_term?: string;
+        };
+        Returns: number;
+      };
+      increment_blog_post_views: {
+        Args: {
+          post_uuid: string;
+        };
+        Returns: void;
+      };
     };
     Enums: {
       lead_status: "new" | "contacted" | "qualified" | "converted" | "lost";
@@ -234,6 +445,17 @@ export interface Database {
 }
 
 // Helper types for easier usage
+export type BlogCategory = Database["public"]["Tables"]["blog_categories"]["Row"];
+export type BlogCategoryInsert = Database["public"]["Tables"]["blog_categories"]["Insert"];
+export type BlogCategoryUpdate = Database["public"]["Tables"]["blog_categories"]["Update"];
+
+export type BlogPost = Database["public"]["Tables"]["blog_posts"]["Row"];
+export type BlogPostInsert = Database["public"]["Tables"]["blog_posts"]["Insert"];
+export type BlogPostUpdate = Database["public"]["Tables"]["blog_posts"]["Update"];
+
+export type BlogPostAnalytics = Database["public"]["Tables"]["blog_post_analytics"]["Row"];
+export type BlogPostAnalyticsInsert = Database["public"]["Tables"]["blog_post_analytics"]["Insert"];
+
 export type Page = Database["public"]["Tables"]["pages"]["Row"];
 export type PageInsert = Database["public"]["Tables"]["pages"]["Insert"];
 export type PageUpdate = Database["public"]["Tables"]["pages"]["Update"];

@@ -16,7 +16,7 @@ interface PageData {
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl =
-    process.env.NEXT_PUBLIC_SITE_URL || "https://wildwestconstruction.com";
+    process.env.NEXT_PUBLIC_SITE_URL || "https://wildwestslc.com";
 
   try {
     // Fetch all published pages from Supabase
@@ -28,11 +28,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
     if (error) {
       console.error("Error fetching pages for sitemap:", error);
-      // Return basic sitemap if database query fails
-      return getBasicSitemap(baseUrl);
+      // Return enhanced basic sitemap if database query fails
+      return getEnhancedBasicSitemap(baseUrl);
     }
 
-    // Create sitemap entries
+    // Create sitemap entries with enhanced priorities
     const sitemapEntries: MetadataRoute.Sitemap = [
       // Homepage - highest priority
       {
@@ -41,41 +41,100 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         changeFrequency: "daily",
         priority: 1.0,
       },
-      // About page
+      // Main service pages - high priority
+      {
+        url: `${baseUrl}/services/flooring`,
+        lastModified: new Date(),
+        changeFrequency: "weekly",
+        priority: 0.9,
+      },
+      {
+        url: `${baseUrl}/services/demolition`,
+        lastModified: new Date(),
+        changeFrequency: "weekly", 
+        priority: 0.9,
+      },
+      {
+        url: `${baseUrl}/services/junk-removal`,
+        lastModified: new Date(),
+        changeFrequency: "weekly",
+        priority: 0.9,
+      },
+      // Company pages - important for trust
       {
         url: `${baseUrl}/about`,
         lastModified: new Date(),
         changeFrequency: "monthly",
         priority: 0.8,
       },
-      // Contact page
       {
         url: `${baseUrl}/contact`,
         lastModified: new Date(),
         changeFrequency: "monthly",
         priority: 0.8,
       },
+      // Blog/content pages
+      {
+        url: `${baseUrl}/blog`,
+        lastModified: new Date(),
+        changeFrequency: "weekly",
+        priority: 0.7,
+      },
+      // Footer pages - lower priority but important for completeness
+      {
+        url: `${baseUrl}/privacy`,
+        lastModified: new Date(),
+        changeFrequency: "yearly",
+        priority: 0.3,
+      },
+      {
+        url: `${baseUrl}/terms`,
+        lastModified: new Date(),
+        changeFrequency: "yearly",
+        priority: 0.3,
+      },
+      {
+        url: `${baseUrl}/license`,
+        lastModified: new Date(),
+        changeFrequency: "yearly",
+        priority: 0.4,
+      },
     ];
 
-    // Add dynamic pages from database
+    // Add dynamic pages from database with intelligent prioritization
     if (pages && pages.length > 0) {
       pages.forEach((page: PageData) => {
-        const pageUrl = `${baseUrl}/locations/${page.slug}`;
+        // Determine if it's a city hub or city+service page
+        const isServicePage = page.service && page.service !== 'hub';
+        const pageUrl = isServicePage 
+          ? `${baseUrl}/locations/${page.city}/${page.service}`
+          : `${baseUrl}/locations/${page.city}`;
 
-        // Set priority and change frequency based on page structure
+        // Smart priority based on city population and service type
         let priority = 0.7;
-        let changeFrequency:
+        let changeFrequency: 
           | "always"
           | "hourly"
           | "daily"
           | "weekly"
           | "monthly"
           | "yearly"
-          | "never" = "weekly";
+          | "never" = "monthly";
 
-        // All city/service pages get similar priority
-        priority = 0.7;
-        changeFrequency = "monthly";
+        // Higher priority for major Utah cities
+        const majorCities = ['salt-lake-city', 'west-valley-city', 'west-jordan', 'sandy', 'orem'];
+        if (majorCities.includes(page.city)) {
+          priority = isServicePage ? 0.8 : 0.75;
+        } else {
+          priority = isServicePage ? 0.7 : 0.65;
+        }
+
+        // More frequent updates for service pages
+        if (isServicePage) {
+          changeFrequency = "monthly";
+        } else {
+          changeFrequency = "monthly";
+        }
 
         sitemapEntries.push({
           url: pageUrl,
@@ -86,17 +145,26 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       });
     }
 
-    return sitemapEntries;
+    // Sort by priority (highest first) for better crawling
+    return sitemapEntries.sort((a, b) => (b.priority || 0) - (a.priority || 0));
   } catch (error) {
     console.error("Error generating sitemap:", error);
-    // Return basic sitemap if any error occurs
-    return getBasicSitemap(baseUrl);
+    // Return enhanced basic sitemap if any error occurs
+    return getEnhancedBasicSitemap(baseUrl);
   }
 }
 
-// Fallback basic sitemap in case of errors
-function getBasicSitemap(baseUrl: string): MetadataRoute.Sitemap {
-  return [
+// Enhanced fallback sitemap with Utah locations in case of errors
+function getEnhancedBasicSitemap(baseUrl: string): MetadataRoute.Sitemap {
+  const utahCities = [
+    'salt-lake-city', 'west-valley-city', 'west-jordan', 'sandy', 'orem',
+    'murray', 'taylorsville', 'draper', 'riverton', 'cottonwood-heights',
+    'bountiful', 'layton', 'ogden', 'pleasant-grove', 'roy'
+  ];
+
+  const services = ['flooring', 'demolition', 'junk-removal'];
+  
+  const sitemapEntries: MetadataRoute.Sitemap = [
     {
       url: baseUrl,
       lastModified: new Date(),
@@ -115,24 +183,34 @@ function getBasicSitemap(baseUrl: string): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.8,
     },
-    // Add common service pages as fallback
-    {
-      url: `${baseUrl}/services/roofing`,
+    // Main service pages
+    ...services.map(service => ({
+      url: `${baseUrl}/services/${service}`,
       lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.7,
+      changeFrequency: "weekly" as const,
+      priority: 0.9,
+    })),
+    // Major Utah city hubs
+    ...utahCities.slice(0, 8).map(city => ({
+      url: `${baseUrl}/locations/${city}`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.75,
+    })),
+    // Footer pages
+    {
+      url: `${baseUrl}/privacy`,
+      lastModified: new Date(),
+      changeFrequency: "yearly" as const,
+      priority: 0.3,
     },
     {
-      url: `${baseUrl}/services/siding`,
+      url: `${baseUrl}/terms`,
       lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/services/windows`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.7,
+      changeFrequency: "yearly" as const,
+      priority: 0.3,
     },
   ];
+
+  return sitemapEntries.sort((a, b) => (b.priority || 0) - (a.priority || 0));
 }
