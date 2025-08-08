@@ -5,8 +5,7 @@ import { MetadataRoute } from "next";
 export const revalidate = 86400; // Revalidate once per day
 
 export default function robots(): MetadataRoute.Robots {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://wildwestslc.com";
-
+  // Hardcode the sitemap URL to avoid parsing issues
   return {
     rules: [
       {
@@ -92,6 +91,6 @@ export default function robots(): MetadataRoute.Robots {
         disallow: "/api/",
       },
     ],
-    sitemap: [`${baseUrl}/sitemap.xml`],
+    sitemap: "https://wildwestslc.com/sitemap.xml",
   };
 }
