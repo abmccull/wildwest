@@ -252,7 +252,7 @@ const Footer: React.FC = () => {
               <div className="flex space-x-3">
                 <a
                   href="https://www.facebook.com/wildwestflooringbrokers/"
-                  className="text-gray-300 hover:text-red-400 transition-colors duration-200"
+                  className="text-gray-300 hover:text-red-400 transition-colors duration-200 inline-flex items-center justify-center w-10 h-10 rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-red-600"
                   aria-label="Facebook"
                 >
                   <svg
@@ -266,7 +266,7 @@ const Footer: React.FC = () => {
 
                 <a
                   href="https://www.instagram.com/wildwestflooring/"
-                  className="text-gray-300 hover:text-red-400 transition-colors duration-200"
+                  className="text-gray-300 hover:text-red-400 transition-colors duration-200 inline-flex items-center justify-center w-10 h-10 rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-red-600"
                   aria-label="Instagram"
                 >
                   <svg

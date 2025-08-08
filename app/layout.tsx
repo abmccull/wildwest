@@ -8,10 +8,7 @@ import "./globals.css";
 import WebVitals from "@/components/WebVitals";
 import ServiceWorkerRegistration from "@/components/ServiceWorkerRegistration";
 import Analytics from "@/components/AnalyticsOptimized";
-import CSSOptimizer from "@/components/CSSOptimizer";
 import PerformanceMonitor from "@/components/PerformanceMonitor";
-import PerformanceOptimizer from "@/components/PerformanceOptimizer";
-import ResourceLoader from "@/components/ResourceLoader";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -20,6 +17,7 @@ const inter = Inter({
   weight: ["400", "500", "600", "700"],
   preload: true,
   fallback: ["system-ui", "arial"],
+  adjustFontFallback: true,
 });
 
 export const viewport: Viewport = {
@@ -123,14 +121,7 @@ export default function RootLayout({
           crossOrigin="anonymous"
         />
         
-        {/* Preload critical font files directly */}
-        <link
-          rel="preload"
-          as="font"
-          type="font/woff2"
-          href="https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfMZhrib2Bg-4.woff2"
-          crossOrigin="anonymous"
-        />
+        {/* Removed external font preload to avoid 404s; rely on next/font */}
         
         {/* Defer analytics connections to after initial render */}
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
@@ -140,113 +131,7 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://www.facebook.com" />
         <link rel="dns-prefetch" href="https://vercel.live" />
 
-        {/* Advanced render-blocking CSS prevention and optimization */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              (function() {
-                // Enhanced CSS optimization - always apply to eliminate render-blocking
-                var criticalCSSApplied = false;
-                
-                // Immediately process all CSS to prevent render-blocking
-                var processCSS = function() {
-                  var links = document.querySelectorAll('link[rel="stylesheet"], link[data-n-css]');
-                  var processedCount = 0;
-                  
-                  links.forEach(function(link) {
-                    if (link.href && !link.dataset.optimized) {
-                      // Mark as optimized to prevent reprocessing
-                      link.dataset.optimized = 'true';
-                      
-                      // Convert ALL CSS to non-blocking by default
-                      var originalMedia = link.media || 'all';
-                      
-                      // Use print media trick to prevent render-blocking
-                      link.media = 'print';
-                      
-                      // Restore media type when loaded
-                      link.onload = function() {
-                        link.media = originalMedia;
-                        link.onload = null;
-                      };
-                      
-                      // Fallback for browsers that don't fire onload
-                      requestAnimationFrame(function() {
-                        link.media = originalMedia;
-                      });
-                      
-                      processedCount++;
-                    }
-                  });
-                  
-                  return processedCount > 0;
-                };
-                
-                // Preload critical CSS files for faster loading
-                var preloadCSS = function(href) {
-                  var preload = document.createElement('link');
-                  preload.rel = 'preload';
-                  preload.as = 'style';
-                  preload.href = href;
-                  document.head.appendChild(preload);
-                };
-                
-                // Process immediately
-                processCSS();
-                
-                // Monitor for new CSS files
-                if (typeof MutationObserver !== 'undefined') {
-                  var observer = new MutationObserver(function(mutations) {
-                    mutations.forEach(function(mutation) {
-                      if (mutation.type === 'childList') {
-                        mutation.addedNodes.forEach(function(node) {
-                          if (node.nodeType === 1 && node.tagName === 'LINK' && 
-                              (node.rel === 'stylesheet' || node.dataset.nCss)) {
-                            // Process new CSS immediately
-                            setTimeout(function() {
-                              if (!node.dataset.optimized) {
-                                node.dataset.optimized = 'true';
-                                var originalMedia = node.media || 'all';
-                                node.media = 'print';
-                                node.onload = function() {
-                                  node.media = originalMedia;
-                                  node.onload = null;
-                                };
-                                requestAnimationFrame(function() {
-                                  node.media = originalMedia;
-                                });
-                              }
-                            }, 0);
-                          }
-                        });
-                      }
-                    });
-                  });
-                  
-                  observer.observe(document.documentElement, {
-                    childList: true,
-                    subtree: true
-                  });
-                }
-                
-                // Process on various load states
-                if (document.readyState === 'loading') {
-                  document.addEventListener('DOMContentLoaded', processCSS);
-                }
-                
-                // Also process after page load
-                window.addEventListener('load', processCSS);
-                
-                // Process CSS as soon as possible
-                if (typeof requestIdleCallback !== 'undefined') {
-                  requestIdleCallback(processCSS, { timeout: 50 });
-                } else {
-                  setTimeout(processCSS, 0);
-                }
-              })();
-            `,
-          }}
-        />
+        {/* Removed aggressive CSS mutation script to prevent forced reflows/CLS */}
 
         {/* PWA Manifest */}
         <link rel="manifest" href="/manifest.json" />
@@ -261,26 +146,17 @@ export default function RootLayout({
         <meta name="msapplication-TileColor" content="#1e3a8a" />
         <meta name="msapplication-config" content="/browserconfig.xml" />
 
-        {/* Icons for PWA */}
+        {/* Fallback meta description to satisfy SEO audit; page-level metadata may override */}
+        <meta
+          name="description"
+          content="Wild West Construction provides professional flooring, demolition, and junk removal services throughout Utah. Licensed, insured, and locally owned construction contractors."
+        />
+
+        {/* Icons for PWA (use existing public assets) */}
         <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-        <link
-          rel="icon"
-          type="image/png"
-          sizes="32x32"
-          href="/images/icon-32x32.png"
-        />
-        <link
-          rel="icon"
-          type="image/png"
-          sizes="16x16"
-          href="/images/icon-16x16.png"
-        />
-        <link rel="apple-touch-icon" href="/images/icon-180x180.png" />
-        <link
-          rel="mask-icon"
-          href="/images/safari-pinned-tab.svg"
-          color="#1e3a8a"
-        />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+        <link rel="apple-touch-icon" href="/icon-192.png" />
 
         {/* Preload critical above-the-fold images */}
         <link
@@ -305,8 +181,7 @@ export default function RootLayout({
             img,video,canvas,svg{display:block;max-width:100%;height:auto}
             img[width][height]{aspect-ratio:attr(width)/attr(height)}
             
-            /* Font loading optimization */
-            @font-face{font-family:'Inter';font-style:normal;font-weight:400 700;font-display:swap;src:local('Inter'),url('https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfMZhrib2Bg-4.woff2') format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+            /* Font loading handled by next/font; external @font-face removed */
 
             /* Header critical styles with explicit height to prevent CLS */
             header{min-height:64px}
@@ -510,9 +385,7 @@ export default function RootLayout({
           Skip to main content
         </a>
 
-        <CSSOptimizer />
-        <PerformanceOptimizer />
-        <ResourceLoader />
+        {/* Removed CSSOptimizer and ResourceLoader to avoid DOM/style thrashing that caused forced reflows */}
         <ServiceWorkerRegistration />
         <WebVitals />
         <Analytics />

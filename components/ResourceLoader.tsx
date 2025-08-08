@@ -293,8 +293,7 @@ const ResourceLoader: React.FC = () => {
     const simulateServerPush = () => {
       // Critical resources that would benefit from server push
       const pushResources = [
-        { href: '/logo.webp', as: 'image', type: 'image/webp' },
-        { href: '/_next/static/css/app.css', as: 'style', type: 'text/css' }
+        { href: '/logo.webp', as: 'image', type: 'image/webp' }
       ];
       
       pushResources.forEach((resource) => {
