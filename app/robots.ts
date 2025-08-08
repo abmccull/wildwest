@@ -19,13 +19,11 @@ export default function robots(): MetadataRoute.Robots {
           "/private/",
           "/temp/",
           "/test/",
-          "*.json",
-          "*.xml$", // Allow sitemap.xml but block other XML files
-          "*?*utm_*", // Block tracking parameters
-          "*?*fbclid*", // Block Facebook click IDs
-          "*?*gclid*", // Block Google click IDs
-        ],
-        crawlDelay: 1, // Be respectful to search engines
+          "/*.json$",
+          "/*?*utm_*",
+          "/*?*fbclid*",
+          "/*?*gclid*",
+        ]
       },
       {
         userAgent: "Googlebot",
@@ -38,7 +36,6 @@ export default function robots(): MetadataRoute.Robots {
           "/temp/",
           "/test/",
         ],
-        crawlDelay: 0, // No delay for Google
       },
       {
         userAgent: "Bingbot",
@@ -51,7 +48,6 @@ export default function robots(): MetadataRoute.Robots {
           "/temp/",
           "/test/",
         ],
-        crawlDelay: 1,
       },
       // Block AI training bots from scraping content
       {
@@ -81,26 +77,21 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: "FacebookBot",
         allow: "/",
-        crawlDelay: 2,
       },
       // Block common scraper bots
       {
         userAgent: "AhrefsBot",
-        crawlDelay: 10,
         disallow: "/api/",
       },
       {
         userAgent: "SemrushBot",
-        crawlDelay: 10,
         disallow: "/api/",
       },
       {
         userAgent: "MJ12bot",
-        crawlDelay: 10,
         disallow: "/api/",
       },
     ],
     sitemap: `${baseUrl}/sitemap.xml`,
-    host: baseUrl,
   };
 }
