@@ -1,3 +1,7 @@
+/* Ensure critical Tailwind utilities are inlined in the first CSS chunk */
+@layer utilities {
+  .min-h-hero { min-height: 600px; }
+}
 @import "tailwindcss";
 
 @theme {

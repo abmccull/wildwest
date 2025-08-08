@@ -19,7 +19,6 @@ const nextConfig: NextConfig = {
   experimental: {
     // Removed optimizePackageImports due to RSC chunk issues (see troubleshooting)
     scrollRestoration: true,
-    // CSS optimization handled manually via CSSOptimizer component
   },
 
   
@@ -97,10 +96,7 @@ const nextConfig: NextConfig = {
             value: "on",
           },
           // Enable HTTP/2 Server Push hints
-          {
-            key: "Link",
-            value: "</logo.webp>; rel=preload; as=image, </manifest.json>; rel=preload; as=fetch",
-          },
+          // Remove HTTP/2 Push-like Link hints that can hurt mobile LCP
         ],
       },
       // Cache static assets aggressively (1 year)
@@ -393,31 +389,7 @@ const nextConfig: NextConfig = {
         );
       }
 
-      // Advanced CSS optimization for render-blocking elimination
-      config.optimization.splitChunks = {
-        ...config.optimization.splitChunks,
-        cacheGroups: {
-          ...config.optimization.splitChunks?.cacheGroups,
-          // Critical CSS bundle
-          critical: {
-            name: "critical",
-            test: /\.(css|scss|sass)$/,
-            chunks: "initial",
-            enforce: true,
-            priority: 30,
-            minSize: 0,
-          },
-          // Non-critical CSS bundle
-          styles: {
-            name: "styles",
-            test: /\.(css|scss|sass)$/,
-            chunks: "async",
-            enforce: true,
-            priority: 20,
-            minSize: 1000,
-          },
-        },
-      };
+      // Let Next handle CSS chunking to avoid extra CSS request on critical path for mobile
 
       // Enhanced CSS optimization (relies on PostCSS config for minification)
 

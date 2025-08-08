@@ -13,7 +13,7 @@ const FACEBOOK_PIXEL_ID =
   process.env.NEXT_PUBLIC_FACEBOOK_PIXEL_ID || "XXXXXXXXX";
 
 // Performance optimization: Only load scripts when needed
-const IDLE_TIMEOUT = 3000; // 3 seconds
+const IDLE_TIMEOUT = 3000; // Desktop fallback
 const INTERACTION_EVENTS = ['mousedown', 'mousemove', 'keydown', 'scroll', 'touchstart'];
 
 // Business contact information
@@ -184,20 +184,25 @@ const debounce = (func: Function, wait: number) => {
 // Main Analytics component with lazy loading optimization
 export default function Analytics() {
   const pathname = usePathname();
-  const [shouldLoadScripts, setShouldLoadScripts] = useState(false);
+  const [shouldLoadGtag, setShouldLoadGtag] = useState(false);
+  const [shouldLoadFb, setShouldLoadFb] = useState(false);
   const [scriptsLoaded, setScriptsLoaded] = useState({ gtag: false, fbq: false });
 
-  // Lazy loading logic - load scripts on user interaction or after timeout
+  // Lazy loading logic - load scripts on user interaction; desktop has small timeout fallback, mobile has none
   useEffect(() => {
-    let timeoutId: NodeJS.Timeout;
+    let timeoutId: NodeJS.Timeout | null = null;
+    const isMobile = typeof window !== 'undefined' && (window.matchMedia?.('(pointer: coarse)').matches || window.innerWidth < 768);
     
     const handleUserInteraction = () => {
-      setShouldLoadScripts(true);
+      setShouldLoadGtag(true);
+      setShouldLoadFb(true);
       // Remove event listeners once triggered
       INTERACTION_EVENTS.forEach(event => {
         window.removeEventListener(event, handleUserInteraction, { passive: true } as any);
       });
-      if (timeoutId) clearTimeout(timeoutId);
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
     };
 
     // Load on user interaction
@@ -205,13 +210,16 @@ export default function Analytics() {
       window.addEventListener(event, handleUserInteraction, { passive: true } as any);
     });
 
-    // Fallback: load after timeout even without interaction
-    timeoutId = setTimeout(() => {
-      setShouldLoadScripts(true);
-      INTERACTION_EVENTS.forEach(event => {
-        window.removeEventListener(event, handleUserInteraction, { passive: true } as any);
-      });
-    }, IDLE_TIMEOUT);
+    // Desktop-only fallback: load after short timeout; on mobile, avoid fallback to keep CWV clean
+    if (!isMobile) {
+      timeoutId = setTimeout(() => {
+        setShouldLoadGtag(true);
+        setShouldLoadFb(true);
+        INTERACTION_EVENTS.forEach(event => {
+          window.removeEventListener(event, handleUserInteraction, { passive: true } as any);
+        });
+      }, IDLE_TIMEOUT);
+    }
 
     return () => {
       INTERACTION_EVENTS.forEach(event => {
@@ -223,7 +231,7 @@ export default function Analytics() {
 
   // Initialize Google Analytics 4 when script loads
   useEffect(() => {
-    if (typeof window !== "undefined" && shouldLoadScripts && scriptsLoaded.gtag) {
+    if (typeof window !== "undefined" && shouldLoadGtag && scriptsLoaded.gtag) {
       // Initialize gtag manually (script is loaded via Script components)
       window.dataLayer = window.dataLayer || [];
       function gtag(...args: any[]) {
@@ -258,7 +266,7 @@ export default function Analytics() {
         }, 300000); // Every 5 minutes
       }
     }
-  }, [shouldLoadScripts, scriptsLoaded.gtag]);
+  }, [shouldLoadGtag, scriptsLoaded.gtag]);
 
   // Initialize tracking after both scripts are loaded
   useEffect(() => {
@@ -268,30 +276,26 @@ export default function Analytics() {
         const addPhoneTracking = () => {
           const phoneLinks = document.querySelectorAll('a[href*="tel:"]');
           phoneLinks.forEach((link) => {
-            // Remove existing listeners to prevent duplicates
-            const newLink = link.cloneNode(true) as Element;
-            link.parentNode?.replaceChild(newLink, link);
-            
-            newLink.addEventListener("click", (e) => {
-              const source = (e.target as HTMLElement).getAttribute("data-source") || "website";
-              const serviceType = (e.target as HTMLElement).getAttribute("data-service-type") || "general";
+            const el = link as HTMLElement;
+            if ((el as any).dataset.tracked === '1') return;
+            (el as any).dataset.tracked = '1';
+            el.addEventListener("click", () => {
+              const source = el.getAttribute("data-source") || "website";
+              const serviceType = el.getAttribute("data-service-type") || "general";
               trackPhoneClick(source, serviceType);
             }, { passive: true });
           });
         };
 
         const addWhatsAppTracking = () => {
-          const whatsappLinks = document.querySelectorAll(
-            `a[href*="wa.me"], a[href*="whatsapp"]`,
-          );
+          const whatsappLinks = document.querySelectorAll(`a[href*="wa.me"], a[href*="whatsapp"]`);
           whatsappLinks.forEach((link) => {
-            // Remove existing listeners to prevent duplicates
-            const newLink = link.cloneNode(true) as Element;
-            link.parentNode?.replaceChild(newLink, link);
-            
-            newLink.addEventListener("click", (e) => {
-              const source = (e.target as HTMLElement).getAttribute("data-source") || "website";
-              const serviceType = (e.target as HTMLElement).getAttribute("data-service-type") || "general";
+            const el = link as HTMLElement;
+            if ((el as any).dataset.tracked === '1') return;
+            (el as any).dataset.tracked = '1';
+            el.addEventListener("click", () => {
+              const source = el.getAttribute("data-source") || "website";
+              const serviceType = el.getAttribute("data-service-type") || "general";
               trackWhatsAppClick(source, serviceType);
             }, { passive: true });
           });
@@ -308,52 +312,40 @@ export default function Analytics() {
         initializeTracking();
       }
 
-      // Re-run tracking setup when content changes (for SPA navigation) with debouncing
-      const debouncedTrackingUpdate = debounce(() => {
-        const addPhoneTracking = () => {
-          const phoneLinks = document.querySelectorAll('a[href*="tel:"]');
-          phoneLinks.forEach((link) => {
-            const newLink = link.cloneNode(true) as Element;
-            link.parentNode?.replaceChild(newLink, link);
-            
-            newLink.addEventListener("click", (e) => {
-              const source = (e.target as HTMLElement).getAttribute("data-source") || "website";
-              const serviceType = (e.target as HTMLElement).getAttribute("data-service-type") || "general";
-              trackPhoneClick(source, serviceType);
-            }, { passive: true });
-          });
-        };
-
-        const addWhatsAppTracking = () => {
-          const whatsappLinks = document.querySelectorAll(
-            `a[href*="wa.me"], a[href*="whatsapp"]`,
-          );
-          whatsappLinks.forEach((link) => {
-            const newLink = link.cloneNode(true) as Element;
-            link.parentNode?.replaceChild(newLink, link);
-            
-            newLink.addEventListener("click", (e) => {
-              const source = (e.target as HTMLElement).getAttribute("data-source") || "website";
-              const serviceType = (e.target as HTMLElement).getAttribute("data-service-type") || "general";
-              trackWhatsAppClick(source, serviceType);
-            }, { passive: true });
-          });
-        };
-
-        addPhoneTracking();
-        addWhatsAppTracking();
-      }, 100); // 100ms debounce
-
-      const observer = new MutationObserver(() => {
-        debouncedTrackingUpdate();
-      });
-
-      observer.observe(document.body, {
-        childList: true,
-        subtree: true,
-      });
-
-      return () => observer.disconnect();
+      // Re-run setup on route changes only, to avoid MutationObserver-induced reflows
+      // Re-declare helpers in this scope to satisfy TS and avoid hoisting issues
+      const setupPhone = () => {
+        const phoneLinks = document.querySelectorAll('a[href*="tel:"]');
+        phoneLinks.forEach((link) => {
+          const el = link as HTMLElement;
+          if ((el as any).dataset.tracked === '1') return;
+          (el as any).dataset.tracked = '1';
+          el.addEventListener("click", () => {
+            const source = el.getAttribute("data-source") || "website";
+            const serviceType = el.getAttribute("data-service-type") || "general";
+            trackPhoneClick(source, serviceType);
+          }, { passive: true });
+        });
+      };
+      const setupWhatsApp = () => {
+        const whatsappLinks = document.querySelectorAll(`a[href*="wa.me"], a[href*="whatsapp"]`);
+        whatsappLinks.forEach((link) => {
+          const el = link as HTMLElement;
+          if ((el as any).dataset.tracked === '1') return;
+          (el as any).dataset.tracked = '1';
+          el.addEventListener("click", () => {
+            const source = el.getAttribute("data-source") || "website";
+            const serviceType = el.getAttribute("data-service-type") || "general";
+            trackWhatsAppClick(source, serviceType);
+          }, { passive: true });
+        });
+      };
+      const runSetup = debounce(() => {
+        setupPhone();
+        setupWhatsApp();
+      }, 100);
+      runSetup();
+      return () => { /* no-op */ };
     }
   }, [scriptsLoaded]);
 
@@ -372,22 +364,25 @@ export default function Analytics() {
   return (
     <>
       {/* Only load scripts when user interaction is detected or after timeout */}
-      {shouldLoadScripts && (
+      {(shouldLoadGtag || shouldLoadFb) && (
         <>
           {/* Google Analytics Script with optimized loading */}
-          <Script
-            src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
-            strategy="lazyOnload"
-            onLoad={() => setScriptsLoaded(prev => ({ ...prev, gtag: true }))}
-          />
+          {shouldLoadGtag && (
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
+              strategy="lazyOnload"
+              onLoad={() => setScriptsLoaded(prev => ({ ...prev, gtag: true }))}
+            />
+          )}
           
           {/* Facebook Pixel Script with optimized lazy loading */}
-          <Script 
-            id="facebook-pixel" 
-            strategy="lazyOnload"
-            onLoad={() => setScriptsLoaded(prev => ({ ...prev, fbq: true }))}
-          >
-            {`
+          {shouldLoadFb && (
+            <Script 
+              id="facebook-pixel" 
+              strategy="lazyOnload"
+              onLoad={() => setScriptsLoaded(prev => ({ ...prev, fbq: true }))}
+            >
+              {`
               (function(f,b,e,v,n,t,s){
                 if(f.fbq)return;n=f.fbq=function(){n.callMethod?
                 n.callMethod.apply(n,arguments):n.queue.push(arguments)};
@@ -411,7 +406,8 @@ export default function Analytics() {
                 }
               }, 100);
             `}
-          </Script>
+            </Script>
+          )}
         </>
       )}
       

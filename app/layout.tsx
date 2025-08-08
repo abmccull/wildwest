@@ -2,8 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import Script from "next/script";
 import Image from "next/image";
-import { Analytics as VercelAnalytics } from "@vercel/analytics/next";
-import { SpeedInsights } from "@vercel/speed-insights/next";
+// Removed Vercel analytics on initial load to improve mobile TBT; can be re-added lazily if needed
 import "./globals.css";
 import WebVitals from "@/components/WebVitals";
 import ServiceWorkerRegistration from "@/components/ServiceWorkerRegistration";
@@ -113,23 +112,16 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.className} ${inter.variable}`}>
       <head>
-        {/* Optimized resource hints with priority ordering */}
+        {/* Resource hints */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         
         {/* Removed external font preload to avoid 404s; rely on next/font */}
         
-        {/* Defer analytics connections to after initial render */}
+        {/* Avoid extra sockets on mobile by not preconnecting analytics domains */}
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
         <link rel="dns-prefetch" href="https://connect.facebook.net" />
-        <link rel="dns-prefetch" href="https://vitals.vercel-insights.com" />
         <link rel="dns-prefetch" href="https://www.google-analytics.com" />
-        <link rel="dns-prefetch" href="https://www.facebook.com" />
-        <link rel="dns-prefetch" href="https://vercel.live" />
 
         {/* Removed aggressive CSS mutation script to prevent forced reflows/CLS */}
 
@@ -391,8 +383,7 @@ export default function RootLayout({
         <Analytics />
         <PerformanceMonitor />
         {children}
-        <VercelAnalytics />
-        <SpeedInsights />
+        {/* Analytics tools removed from critical path */}
 
         {/* Schema markup for WebSite */}
         <script
