@@ -743,9 +743,8 @@ export async function getCityPages(city: string): Promise<Page[]> {
  * Generate static paths for city pages
  */
 export function generateCityPaths() {
-  return Object.keys(CITY_DISPLAY_NAMES).map((city) => ({
-    params: { city },
-  }));
+  // Next app router expects an array of params objects
+  return Object.keys(CITY_DISPLAY_NAMES).map((city) => ({ city }));
 }
 
 /**

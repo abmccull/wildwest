@@ -1,4 +1,6 @@
 import { createClient } from "@supabase/supabase-js";
+import { CITY_DISPLAY_NAMES } from "@/lib/seo";
+import { SERVICES } from "@/types/database";
 import { MetadataRoute } from "next";
 
 interface PageData {
@@ -206,6 +208,25 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
           priority: 0.6,
         });
       });
+    }
+
+    // Add full static coverage for city/service URLs
+    for (const city of Object.keys(CITY_DISPLAY_NAMES)) {
+      sitemapEntries.push({
+        url: `${baseUrl}/locations/${city}`,
+        lastModified: new Date(),
+        changeFrequency: "monthly",
+        priority: 0.75,
+      });
+      for (const service of SERVICES) {
+        const serviceUrl = service.replace(/_/g, "-");
+        sitemapEntries.push({
+          url: `${baseUrl}/locations/${city}/${serviceUrl}`,
+          lastModified: new Date(),
+          changeFrequency: "monthly",
+          priority: 0.7,
+        });
+      }
     }
 
     // Dedupe URLs and sort by priority (highest first)
