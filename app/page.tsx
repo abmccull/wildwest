@@ -64,6 +64,12 @@ export default function Home() {
                   >
                     Get Free Quote
                   </Link>
+                  <Link
+                    href="/locations"
+                    className="inline-block px-8 py-4 bg-white text-blue-900 font-bold rounded-lg hover:bg-gray-100 transition-colors duration-200 text-center text-lg"
+                  >
+                    View Service Areas
+                  </Link>
                   <a
                     href="tel:+1-801-691-4065"
                     data-source="homepage_hero"
@@ -196,7 +202,7 @@ export default function Home() {
                     title={`${SERVICE_DISPLAY_NAMES[service]} Services`}
                     description={getServiceDescription(service)}
                     features={getServiceFeatures(service)}
-                    href={`/services/${service}`}
+                    href={`/locations/murray/${service}`}
                     iconType={getServiceIconType(service)}
                   />
                 ))}
