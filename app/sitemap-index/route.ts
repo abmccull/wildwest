@@ -1,3 +1,3 @@
-export { GET as default } from "../sitemaps/index/route";
+export { GET } from "../sitemaps/index/route";
 
 
