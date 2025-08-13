@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { findRedirect, normalizePath } from "@/lib/redirects";
 
 // Use Node.js runtime for better compatibility
 // export const runtime = 'edge'; // Removed due to compatibility issues
@@ -20,6 +21,27 @@ const CACHE_HEADERS = {
 export function middleware(request: NextRequest) {
   const response = NextResponse.next();
   const url = request.nextUrl;
+  const host = request.headers.get("host") || "";
+
+  // Canonicalize host: redirect www -> apex
+  if (host === "www.wildwestslc.com") {
+    url.hostname = "wildwestslc.com";
+    return NextResponse.redirect(url, { status: 308 });
+  }
+
+  // URL normalization: lowercase path, remove trailing slash, collapse doubles
+  const normalizedPath = normalizePath(url.pathname);
+  if (normalizedPath !== url.pathname) {
+    url.pathname = normalizedPath;
+    return NextResponse.redirect(url, { status: 308 });
+  }
+
+  // Manual redirect rules
+  const manual = findRedirect(url.pathname);
+  if (manual) {
+    url.pathname = manual.to;
+    return NextResponse.redirect(url, { status: manual.permanent ? 308 : 307 });
+  }
   
   // Add optimized cache headers based on content type
   const pathname = url.pathname;

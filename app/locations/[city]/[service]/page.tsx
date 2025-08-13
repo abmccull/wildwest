@@ -371,6 +371,28 @@ export default async function ServicePage({ params }: ServicePageProps) {
                 </div>
               </div>
 
+              {/* Popular keyword pages in this city */}
+              <div className="bg-blue-50 rounded-lg p-6 mb-8">
+                <h3 className="text-lg font-bold text-blue-900 mb-3">Popular in {displayCity}</h3>
+                <div className="space-y-2">
+                  {[
+                    `hardwood-flooring-installation`,
+                    `luxury-vinyl-plank-installation`,
+                    `kitchen-demolition`,
+                    `bathroom-demolition`,
+                    `construction-debris-removal`,
+                  ].map((slug) => (
+                    <Link
+                      key={slug}
+                      href={`/${displayCity.toLowerCase().replace(/\s+/g, "-")}-${slug}`}
+                      className="block text-sm text-blue-800 hover:text-red-600"
+                    >
+                      {slug.replace(/-/g, " ")}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+
               {/* Contact Info */}
               <div className="bg-gray-900 text-white rounded-lg p-6 mb-8">
                 <h3 className="text-lg font-bold mb-4">

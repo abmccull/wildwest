@@ -170,6 +170,14 @@
       "destination": "https://connect.facebook.net/en_US/fbevents.js"
     }
   ],
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "has": [{ "type": "host", "value": "www.wildwestslc.com" }],
+      "destination": "https://wildwestslc.com/$1",
+      "permanent": true
+    }
+  ],
   "functions": {
     "app/page.tsx": {
       "maxDuration": 5

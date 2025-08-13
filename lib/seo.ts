@@ -17,6 +17,7 @@ export const CITY_DISPLAY_NAMES: Record<string, string> = {
   "west-valley-city": "West Valley City",
   "west-jordan": "West Jordan",
   sandy: "Sandy",
+  "south-jordan": "South Jordan",
   orem: "Orem",
   ogden: "Ogden",
   layton: "Layton",
@@ -25,6 +26,11 @@ export const CITY_DISPLAY_NAMES: Record<string, string> = {
   bountiful: "Bountiful",
   draper: "Draper",
   riverton: "Riverton",
+  herriman: "Herriman",
+  midvale: "Midvale",
+  holladay: "Holladay",
+  "south-salt-lake": "South Salt Lake",
+  bluffdale: "Bluffdale",
   roy: "Roy",
   "pleasant-grove": "Pleasant Grove",
   "cottonwood-heights": "Cottonwood Heights",
@@ -743,8 +749,9 @@ export async function getCityPages(city: string): Promise<Page[]> {
  * Generate static paths for city pages
  */
 export function generateCityPaths() {
-  // Next app router expects an array of params objects
-  return Object.keys(CITY_DISPLAY_NAMES).map((city) => ({ city }));
+  return Object.keys(CITY_DISPLAY_NAMES).map((city) => ({
+    params: { city },
+  }));
 }
 
 /**

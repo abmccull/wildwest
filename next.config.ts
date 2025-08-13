@@ -441,6 +441,18 @@ const nextConfig: NextConfig = {
         destination: "https://wildwestslc.com/:path*",
         permanent: true,
       },
+      // Canonicalize host: redirect www to apex
+      {
+        source: "/:path*",
+        has: [
+          {
+            type: "host",
+            value: "www.wildwestslc.com",
+          },
+        ],
+        destination: "https://wildwestslc.com/:path*",
+        permanent: true,
+      },
     ];
   },
 

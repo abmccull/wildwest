@@ -91,6 +91,6 @@ export default function robots(): MetadataRoute.Robots {
         disallow: "/api/",
       },
     ],
-    sitemap: "https://wildwestslc.com/sitemap.xml",
+    sitemap: "https://wildwestslc.com/sitemap-index.xml",
   };
 }

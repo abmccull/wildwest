@@ -1,6 +1,4 @@
 import { createClient } from "@supabase/supabase-js";
-import { CITY_DISPLAY_NAMES } from "@/lib/seo";
-import { SERVICES } from "@/types/database";
 import { MetadataRoute } from "next";
 
 interface PageData {
@@ -50,7 +48,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       // Continue without blog data but don't fail completely
     }
 
-    // Create sitemap entries with enhanced priorities
+    // Create sitemap entries with enhanced priorities (core pages only)
     const sitemapEntries: MetadataRoute.Sitemap = [
       // Homepage - highest priority
       {
@@ -87,6 +85,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       },
       {
         url: `${baseUrl}/team`,
+        lastModified: new Date(),
+        changeFrequency: "monthly",
+        priority: 0.8,
+      },
+      {
+        url: `${baseUrl}/contact`,
         lastModified: new Date(),
         changeFrequency: "monthly",
         priority: 0.8,
@@ -135,68 +139,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         changeFrequency: "yearly",
         priority: 0.3,
       },
+      {
+        url: `${baseUrl}/license`,
+        lastModified: new Date(),
+        changeFrequency: "yearly",
+        priority: 0.4,
+      },
     ];
 
-    // Add dynamic pages from database with intelligent prioritization
-    if (pages && pages.length > 0) {
-      const toSlug = (value: string): string => {
-        return String(value || "")
-          .toLowerCase()
-          .replace(/[_\s]+/g, "-")
-          .replace(/[^a-z0-9-]/g, "-")
-          .replace(/-+/g, "-")
-          .replace(/^-|-$|\.$/g, "");
-      };
-      pages.forEach((page: PageData) => {
-        // Determine if it's a city hub or city+service page
-        const isServicePage = page.service && page.service !== "hub";
-        // Normalize/slugify to kebab-case to match route structure
-        const citySlug = toSlug(page.city);
-        const serviceSlug = toSlug(page.service);
-        const pageUrl = isServicePage
-          ? `${baseUrl}/locations/${citySlug}/${serviceSlug}`
-          : `${baseUrl}/locations/${citySlug}`;
-
-        // Smart priority based on city population and service type
-        let priority = 0.7;
-        let changeFrequency:
-          | "always"
-          | "hourly"
-          | "daily"
-          | "weekly"
-          | "monthly"
-          | "yearly"
-          | "never" = "monthly";
-
-        // Higher priority for major Utah cities
-        const majorCities = [
-          "salt-lake-city",
-          "west-valley-city",
-          "west-jordan",
-          "sandy",
-          "orem",
-        ];
-        if (majorCities.includes(page.city)) {
-          priority = isServicePage ? 0.8 : 0.75;
-        } else {
-          priority = isServicePage ? 0.7 : 0.65;
-        }
-
-        // More frequent updates for service pages
-        if (isServicePage) {
-          changeFrequency = "monthly";
-        } else {
-          changeFrequency = "monthly";
-        }
-
-        sitemapEntries.push({
-          url: pageUrl,
-          lastModified: new Date(page.updated_at),
-          changeFrequency,
-          priority,
-        });
-      });
-    }
+    // For scale, move bulk URLs to dedicated sitemap files under /sitemaps/*
 
     // Add blog posts from database
     if (blogPosts && blogPosts.length > 0) {
@@ -210,34 +161,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       });
     }
 
-    // Add full static coverage for city/service URLs
-    for (const city of Object.keys(CITY_DISPLAY_NAMES)) {
-      sitemapEntries.push({
-        url: `${baseUrl}/locations/${city}`,
-        lastModified: new Date(),
-        changeFrequency: "monthly",
-        priority: 0.75,
-      });
-      for (const service of SERVICES) {
-        const serviceUrl = service.replace(/_/g, "-");
-        sitemapEntries.push({
-          url: `${baseUrl}/locations/${city}/${serviceUrl}`,
-          lastModified: new Date(),
-          changeFrequency: "monthly",
-          priority: 0.7,
-        });
-      }
-    }
-
-    // Dedupe URLs and sort by priority (highest first)
-    const seen = new Set<string>();
-    const deduped = sitemapEntries.filter((entry) => {
-      if (!entry.url) return false;
-      if (seen.has(entry.url)) return false;
-      seen.add(entry.url);
-      return true;
-    });
-    return deduped.sort((a, b) => (b.priority || 0) - (a.priority || 0));
+    // Sort by priority (highest first) for better crawling
+    return sitemapEntries.sort((a, b) => (b.priority || 0) - (a.priority || 0));
   } catch (error) {
     console.error("Error generating sitemap:", error);
     // Return enhanced basic sitemap if any error occurs
@@ -282,6 +207,12 @@ function getEnhancedBasicSitemap(baseUrl: string): MetadataRoute.Sitemap {
     },
     {
       url: `${baseUrl}/team`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/contact`,
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.8,
@@ -338,6 +269,12 @@ function getEnhancedBasicSitemap(baseUrl: string): MetadataRoute.Sitemap {
       priority: 0.3,
     },
     {
+      url: `${baseUrl}/license`,
+      lastModified: new Date(),
+      changeFrequency: "yearly" as const,
+      priority: 0.4,
+    },
+    {
       url: `${baseUrl}/terms`,
       lastModified: new Date(),
       changeFrequency: "yearly" as const,
@@ -345,13 +282,5 @@ function getEnhancedBasicSitemap(baseUrl: string): MetadataRoute.Sitemap {
     },
   ];
 
-  // Dedupe and sort by priority
-  const seen = new Set<string>();
-  const deduped = sitemapEntries.filter((entry) => {
-    if (!entry.url) return false;
-    if (seen.has(entry.url)) return false;
-    seen.add(entry.url);
-    return true;
-  });
-  return deduped.sort((a, b) => (b.priority || 0) - (a.priority || 0));
+  return sitemapEntries.sort((a, b) => (b.priority || 0) - (a.priority || 0));
 }

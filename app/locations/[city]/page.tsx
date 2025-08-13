@@ -218,6 +218,31 @@ export default async function CityHubPage({ params }: CityHubPageProps) {
           </div>
         </section>
 
+        {/* Deep links to top keyword pages for this city */}
+        <section className="py-12 bg-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 className="text-2xl font-bold text-blue-900 mb-4">Popular searches in {displayCity}</h2>
+            <div className="flex flex-wrap gap-3">
+              {[
+                `hardwood flooring installation`,
+                `luxury vinyl plank installation`,
+                `kitchen demolition`,
+                `bathroom demolition`,
+                `construction debris removal`,
+                `estate cleanout services`,
+              ].map((kw) => (
+                <Link
+                  key={kw}
+                  href={`/${displayCity.toLowerCase().replace(/\s+/g, "-")}-${kw.replace(/\s+/g, "-")}`}
+                  className="px-3 py-2 text-sm rounded border hover:border-red-300 hover:bg-red-50"
+                >
+                  {kw}
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* City-Specific Content */}
         <section className="py-16 bg-gray-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
