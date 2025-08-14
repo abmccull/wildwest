@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { findRedirect, generateDynamicRedirect, normalizePath } from "@/lib/redirects";
+import { findRedirect, normalizePath } from "@/lib/redirects";
 
 // Use Node.js runtime for better compatibility
 // export const runtime = 'edge'; // Removed due to compatibility issues
@@ -43,12 +43,6 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(url, { status: manual.permanent ? 301 : 307 });
   }
 
-  // Dynamic redirect rules for database-driven URLs
-  const dynamic = generateDynamicRedirect(url.pathname);
-  if (dynamic) {
-    url.pathname = dynamic.to;
-    return NextResponse.redirect(url, { status: dynamic.permanent ? 301 : 307 });
-  }
   
   // Add optimized cache headers based on content type
   const pathname = url.pathname;
