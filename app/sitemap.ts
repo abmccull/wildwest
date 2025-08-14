@@ -147,7 +147,74 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       },
     ];
 
-    // For scale, move bulk URLs to dedicated sitemap files under /sitemaps/*
+    // Add city/service combination pages from routes (not database pages)
+    // Only include cities that are properly mapped in the routing system
+    const mappedCities = [
+      "salt-lake-city", "west-valley-city", "west-jordan", "sandy",
+      "south-jordan", "orem", "ogden", "layton", "taylorsville", 
+      "murray", "bountiful", "draper", "riverton", "herriman",
+      "midvale", "holladay", "south-salt-lake", "bluffdale",
+      "roy", "pleasant-grove", "cottonwood-heights"
+    ];
+    
+    const services = ["flooring", "demolition", "junk-removal"];
+    
+    // Add city hub pages
+    mappedCities.forEach(city => {
+      sitemapEntries.push({
+        url: `${baseUrl}/locations/${city}`,
+        lastModified: new Date(),
+        changeFrequency: "monthly",
+        priority: 0.75,
+      });
+      
+      // Add city-service pages
+      services.forEach(service => {
+        sitemapEntries.push({
+          url: `${baseUrl}/locations/${city}/${service}`,
+          lastModified: new Date(),
+          changeFrequency: "weekly",
+          priority: 0.8,
+        });
+      });
+    });
+
+    // Add database pages with conflict resolution
+    if (pages && pages.length > 0) {
+      const processedUrls = new Set<string>();
+      
+      pages.forEach((page: PageData) => {
+        // Check if this database page conflicts with location routes
+        const citySlug = mappedCities.find(city => {
+          const displayName = city.split('-').map(word => 
+            word.charAt(0).toUpperCase() + word.slice(1)
+          ).join(' ').replace('Salt Lake City', 'Salt Lake City');
+          return displayName.toLowerCase().replace(/\s+/g, '-') === page.city.toLowerCase().replace(/\s+/g, '-');
+        });
+        
+        const serviceSlug = page.service.replace(/_/g, "-");
+        const conflictsWithLocation = citySlug && services.includes(serviceSlug);
+        
+        if (conflictsWithLocation) {
+          // Skip database page if it conflicts with location route
+          // The location route is already included above with higher priority
+          console.log(`Skipping conflicting database page: ${page.slug} (conflicts with /locations/${citySlug}/${serviceSlug})`);
+          return;
+        }
+        
+        // Add unique database page
+        const pageUrl = `${baseUrl}/${page.slug}`;
+        if (!processedUrls.has(pageUrl)) {
+          processedUrls.add(pageUrl);
+          sitemapEntries.push({
+            url: pageUrl,
+            lastModified: new Date(page.updated_at),
+            changeFrequency: "weekly",
+            priority: 0.7, // Lower than location routes for non-conflicting pages
+          });
+        }
+      });
+    }
 
     // Add blog posts from database
     if (blogPosts && blogPosts.length > 0) {

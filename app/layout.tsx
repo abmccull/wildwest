@@ -19,7 +19,8 @@ const inter = Inter({
   variable: "--font-inter",
   weight: ["400", "500", "600", "700"],
   preload: true,
-  fallback: ["system-ui", "arial"],
+  fallback: ["ui-sans-serif", "system-ui", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", "sans-serif"],
+  adjustFontFallback: true,
 });
 
 export const viewport: Viewport = {
@@ -47,6 +48,9 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://wildwestslc.com"),
   alternates: {
     canonical: "https://wildwestslc.com",
+    languages: {
+      "en-US": "https://wildwestslc.com",
+    },
   },
   icons: {
     icon: [
@@ -123,12 +127,19 @@ export default function RootLayout({
           crossOrigin="anonymous"
         />
         
-        {/* Preload critical font files directly */}
+        {/* Preload critical font files for better LCP */}
         <link
           rel="preload"
           as="font"
           type="font/woff2"
-          href="https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfMZhrib2Bg-4.woff2"
+          href="https://fonts.gstatic.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfMZhrib2Bg-4.woff2"
+          crossOrigin="anonymous"
+        />
+        <link
+          rel="preload"
+          as="font"
+          type="font/woff2"
+          href="https://fonts.gstatic.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyeAZhrib2Bg-4.woff2"
           crossOrigin="anonymous"
         />
         
@@ -282,12 +293,20 @@ export default function RootLayout({
           color="#1e3a8a"
         />
 
-        {/* Preload critical above-the-fold images */}
+        {/* Preload critical above-the-fold images for better LCP */}
         <link
           rel="preload"
           href="/logo.webp"
           as="image"
           type="image/webp"
+          fetchPriority="high"
+        />
+        <link
+          rel="preload"
+          href="/images/og-image.jpg"
+          as="image"
+          type="image/jpeg"
+          fetchPriority="high"
         />
 
         {/* CSS loading optimization will be handled by CSSOptimizer component */}
@@ -305,8 +324,11 @@ export default function RootLayout({
             img,video,canvas,svg{display:block;max-width:100%;height:auto}
             img[width][height]{aspect-ratio:attr(width)/attr(height)}
             
-            /* Font loading optimization */
-            @font-face{font-family:'Inter';font-style:normal;font-weight:400 700;font-display:swap;src:local('Inter'),url('https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfMZhrib2Bg-4.woff2') format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+            /* Optimized font loading with size-adjust for better CLS */
+            @font-face{font-family:'Inter';font-style:normal;font-weight:400;font-display:swap;src:local('Inter Regular'),url('https://fonts.gstatic.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfMZhrib2Bg-4.woff2') format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;size-adjust:100.06%}
+            @font-face{font-family:'Inter';font-style:normal;font-weight:500;font-display:swap;src:local('Inter Medium'),url('https://fonts.gstatic.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyeAZhrib2Bg-4.woff2') format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;size-adjust:100.06%}
+            @font-face{font-family:'Inter';font-style:normal;font-weight:600;font-display:swap;src:local('Inter SemiBold'),url('https://fonts.gstatic.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyyAZhrib2Bg-4.woff2') format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;size-adjust:100.06%}
+            @font-face{font-family:'Inter';font-style:normal;font-weight:700;font-display:swap;src:local('Inter Bold'),url('https://fonts.gstatic.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZhrib2Bg-4.woff2') format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;size-adjust:100.06%}
 
             /* Header critical styles with explicit height to prevent CLS */
             header{min-height:64px}

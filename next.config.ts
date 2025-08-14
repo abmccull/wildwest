@@ -19,6 +19,8 @@ const nextConfig: NextConfig = {
   experimental: {
     // Removed optimizePackageImports due to RSC chunk issues (see troubleshooting)
     scrollRestoration: true,
+    // Enable memory usage optimization
+    webpackMemoryOptimizations: true,
   },
 
   
@@ -95,8 +97,15 @@ const nextConfig: NextConfig = {
             key: "X-DNS-Prefetch-Control",
             value: "on",
           },
-          // Enable HTTP/2 Server Push hints
-          // Remove HTTP/2 Push-like Link hints that can hurt mobile LCP
+          // Performance headers for better caching
+          {
+            key: "Timing-Allow-Origin",
+            value: "*",
+          },
+          {
+            key: "Accept-CH",
+            value: "DPR, Viewport-Width, Width",
+          },
         ],
       },
       // Cache static assets aggressively (1 year)
@@ -348,9 +357,35 @@ const nextConfig: NextConfig = {
 
     // Production optimizations
     if (!dev) {
-      // Tree shaking optimization
+      // Enhanced tree shaking optimization
       config.optimization.usedExports = true;
       config.optimization.sideEffects = false;
+      config.optimization.providedExports = true;
+      
+      // Split chunks more aggressively for better caching
+      if (config.optimization.splitChunks) {
+        config.optimization.splitChunks.chunks = 'all';
+        config.optimization.splitChunks.minSize = 20000;
+        config.optimization.splitChunks.maxSize = 244000;
+        
+        if (!config.optimization.splitChunks.cacheGroups) {
+          config.optimization.splitChunks.cacheGroups = {};
+        }
+        
+        config.optimization.splitChunks.cacheGroups.vendor = {
+          test: /[\/]node_modules[\/]/,
+          name: 'vendors',
+          chunks: 'all',
+          priority: 10,
+        };
+        
+        config.optimization.splitChunks.cacheGroups.common = {
+          minChunks: 2,
+          chunks: 'all',
+          enforce: true,
+          priority: 5,
+        };
+      }
 
       // More aggressive polyfill removal
       config.resolve.mainFields = ['browser', 'module', 'main'];

@@ -181,10 +181,14 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
       className={`
       relative bg-white rounded-lg shadow-construction border border-gray-200 
       hover:shadow-xl hover:border-red-600/20 transition-all duration-300 
-      group overflow-hidden
+      group overflow-hidden service-card min-h-[350px]
       ${isFeatured ? "ring-2 ring-red-600 shadow-xl" : ""}
       ${className}
     `}
+      style={{
+        contain: 'layout style',
+        aspectRatio: isCompact ? '1 / 1.1' : '1 / 1.2'
+      }}
     >
       {/* Featured Badge */}
       {isFeatured && (
@@ -206,7 +210,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
 
       <div className={`p-6 ${isCompact ? "p-4" : "p-6"}`}>
         {/* Header */}
-        <div className="flex items-start space-x-4 mb-4">
+        <div className="flex items-start space-x-4 mb-4 min-h-[60px]">
           <div
             className={`
             flex-shrink-0 p-3 rounded-lg group-hover:scale-110 transition-transform duration-300

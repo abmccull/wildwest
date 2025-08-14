@@ -39,7 +39,7 @@ export default function Home() {
 
       <main id="main-content">
         {/* Hero Section with fixed dimensions to prevent CLS */}
-        <section className="bg-gradient-to-r from-blue-900 to-blue-700 text-white py-20 min-h-[600px]">
+        <section className="bg-gradient-to-r from-blue-900 to-blue-700 text-white py-20 min-h-[600px] hero-container">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               {/* Hero Content with stable layout */}
@@ -158,7 +158,7 @@ export default function Home() {
         </section>
 
         {/* Services Overview with stable layout */}
-        <section id="below-fold" className="py-16 bg-white min-h-[600px]" data-below-fold="true">
+        <section id="below-fold" className="py-16 bg-white min-h-[600px]" data-below-fold="true" style={{contentVisibility: 'auto', containIntrinsicSize: '600px'}}>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
               <h2 className="text-4xl font-bold text-gray-900 mb-4">
@@ -171,7 +171,7 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="service-cards-grid min-h-[400px]">
+            <div className="service-cards-grid min-h-[400px]" data-testid="service-cards">
               <Suspense
                 fallback={
                   <>

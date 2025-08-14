@@ -1,6 +1,10 @@
-/* Ensure critical Tailwind utilities are inlined in the first CSS chunk */
+/* Critical CSS optimizations - inlined utilities for better LCP */
 @layer utilities {
   .min-h-hero { min-height: 600px; }
+  /* Above-the-fold critical styles */
+  .hero-container { min-height: 600px; display: flex; align-items: center; }
+  .hero-gradient { background: linear-gradient(to right, #1e3a8a, #1d4ed8); }
+  .skeleton { background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%); background-size: 200% 100%; animation: skeleton-loading 1.5s ease-in-out infinite; }
 }
 @import "tailwindcss";
 
@@ -74,9 +78,11 @@ body {
   @apply bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-6 rounded-lg transition-colors duration-200 shadow-lg;
 }
 
-/* Hero section styles */
+/* Optimized hero section styles - prevent layout shift */
 .hero-gradient { 
-  background: linear-gradient(to right, #1e3a8a, #1d4ed8); 
+  background: linear-gradient(to right, #1e3a8a, #1d4ed8);
+  min-height: 600px;
+  contain: layout style;
 }
 
 /* Button hover effects */
@@ -205,11 +211,17 @@ select {
   }
 }
 
-/* Service Cards Grid Fix */
+/* Service Cards Grid Fix - prevent layout shift with aspect-ratio */
 .service-cards-grid {
   display: grid !important;
   grid-template-columns: 1fr !important;
   gap: 2rem !important;
+  min-height: 400px;
+}
+
+.service-card {
+  aspect-ratio: 1 / 1.2;
+  contain: layout style;
 }
 
 @media (min-width: 768px) {
@@ -224,10 +236,13 @@ select {
   }
 }
 
-/* Responsive Grid Fixes for Service Cards and Footer */
+/* Enhanced responsive grid with containment for better performance */
 @media (min-width: 768px) {
   .md\:grid-cols-2 {
     grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+  .service-cards-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
   }
 }
 
@@ -240,6 +255,12 @@ select {
   }
   .lg\:col-span-1 {
     grid-column: span 1 / span 1 !important;
+  }
+  .service-cards-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+  .service-card {
+    aspect-ratio: 1 / 1.1;
   }
 }
 

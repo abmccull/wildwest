@@ -13,8 +13,8 @@ const FACEBOOK_PIXEL_ID =
   process.env.NEXT_PUBLIC_FACEBOOK_PIXEL_ID || "XXXXXXXXX";
 
 // Performance optimization: Only load scripts when needed
-const IDLE_TIMEOUT = 3000; // Desktop fallback
-const INTERACTION_EVENTS = ['mousedown', 'mousemove', 'keydown', 'scroll', 'touchstart'];
+const IDLE_TIMEOUT = 5000; // Desktop fallback - increased for better FID
+const INTERACTION_EVENTS = ['mousedown', 'keydown', 'touchstart', 'click']; // Removed passive events that can hurt FID
 
 // Business contact information
 const BUSINESS_PHONE = "(801) 691-4065";
@@ -210,11 +210,19 @@ export default function Analytics() {
       window.addEventListener(event, handleUserInteraction, { passive: true } as any);
     });
 
-    // Desktop-only fallback: load after short timeout; on mobile, avoid fallback to keep CWV clean
+    // Desktop-only fallback: load after longer timeout to improve FID; mobile has no fallback for best CWV
     if (!isMobile) {
       timeoutId = setTimeout(() => {
-        setShouldLoadGtag(true);
-        setShouldLoadFb(true);
+        // Use requestIdleCallback to defer analytics loading until browser is idle
+        if ('requestIdleCallback' in window) {
+          requestIdleCallback(() => {
+            setShouldLoadGtag(true);
+            setShouldLoadFb(true);
+          }, { timeout: IDLE_TIMEOUT });
+        } else {
+          setShouldLoadGtag(true);
+          setShouldLoadFb(true);
+        }
         INTERACTION_EVENTS.forEach(event => {
           window.removeEventListener(event, handleUserInteraction, { passive: true } as any);
         });
@@ -398,13 +406,22 @@ export default function Analytics() {
                 (window.fbq.q = window.fbq.q || []).push(arguments)
               };
               
-              // Defer initialization to prevent blocking
-              setTimeout(function(){
-                if(window.fbq && typeof window.fbq === 'function'){
-                  window.fbq('init', '${FACEBOOK_PIXEL_ID}');
-                  window.fbq('track', 'PageView');
-                }
-              }, 100);
+              // Defer initialization to prevent blocking - use requestIdleCallback for better FID
+              if ('requestIdleCallback' in window) {
+                requestIdleCallback(function(){
+                  if(window.fbq && typeof window.fbq === 'function'){
+                    window.fbq('init', '${FACEBOOK_PIXEL_ID}');
+                    window.fbq('track', 'PageView');
+                  }
+                }, { timeout: 200 });
+              } else {
+                setTimeout(function(){
+                  if(window.fbq && typeof window.fbq === 'function'){
+                    window.fbq('init', '${FACEBOOK_PIXEL_ID}');
+                    window.fbq('track', 'PageView');
+                  }
+                }, 200);
+              }
             `}
             </Script>
           )}

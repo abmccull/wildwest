@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import Link from "next/link";
 import { Suspense } from "react";
 
@@ -12,6 +12,8 @@ import {
   generateFAQSchema,
   getPageBySlug,
   incrementPageViews,
+  generateDatabasePageMetadata,
+  CITY_DISPLAY_NAMES,
 } from "@/lib/seo";
 import {
   SERVICE_DISPLAY_NAMES,
@@ -51,7 +53,7 @@ export async function generateStaticParams() {
   }
 }
 
-// Generate metadata for SEO
+// Generate metadata for SEO with canonical conflict resolution
 export async function generateMetadata({
   params,
 }: DynamicPageProps): Promise<Metadata> {
@@ -64,78 +66,14 @@ export async function generateMetadata({
     return {
       title: "Page Not Found | Wild West Construction",
       description: "The requested page was not found.",
+      alternates: {
+        canonical: `https://wildwestslc.com/404`,
+      },
     };
   }
 
-  const title = pageData.meta_title;
-  const description = pageData.meta_description;
-  const serviceName = SERVICE_DISPLAY_NAMES[pageData.service];
-
-  // Enhanced Utah-focused keywords
-  const keywords = [
-    `${pageData.keyword}`,
-    `${serviceName} ${pageData.city} Utah`,
-    `construction services ${pageData.city}`,
-    `contractors ${pageData.city} UT`,
-    `licensed contractors Salt Lake County`,
-    `${pageData.city} home improvement`,
-    `Utah construction company`,
-    `Salt Lake County contractors`,
-  ].join(", ");
-
-  return {
-    title,
-    description,
-    keywords,
-    authors: [{ name: "Wild West Construction" }],
-    creator: "Wild West Construction",
-    publisher: "Wild West Construction",
-    openGraph: {
-      title,
-      description,
-      url: `https://wildwestslc.com/${slug}`,
-      siteName: "Wild West Construction",
-      type: "website",
-      locale: "en_US",
-      images: [
-        {
-          url: `/images/og-${pageData.service}.jpg`,
-          width: 1200,
-          height: 630,
-          alt: `${serviceName} Services in ${pageData.city}, Utah - Wild West Construction`,
-        },
-      ],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title,
-      description,
-      images: [`/images/og-${pageData.service}.jpg`],
-      creator: "@wildwestslc",
-      site: "@wildwestslc",
-    },
-    alternates: {
-      canonical: `https://wildwestslc.com/${slug}`,
-    },
-    robots: {
-      index: true,
-      follow: true,
-      googleBot: {
-        index: true,
-        follow: true,
-        "max-video-preview": -1,
-        "max-image-preview": "large",
-        "max-snippet": -1,
-      },
-    },
-    other: {
-      "geo.region": "US-UT",
-      "geo.placename": pageData.city,
-      "geo.position": "40.6669;-111.8904",
-      ICBM: "40.6669, -111.8904",
-      "service-type": serviceName,
-    },
-  };
+  // Use enhanced metadata generation with conflict resolution
+  return generateDatabasePageMetadata(slug, pageData);
 }
 
 export default async function DynamicPage({ params }: DynamicPageProps) {
@@ -144,7 +82,12 @@ export default async function DynamicPage({ params }: DynamicPageProps) {
   // Fetch page data from database
   const pageData = await getPageBySlug(slug);
 
+  // If page not found, try to redirect to nested URL structure
   if (!pageData) {
+    const redirectUrl = attemptCityServiceRedirect(slug);
+    if (redirectUrl) {
+      redirect(redirectUrl);
+    }
     notFound();
   }
 
@@ -790,6 +733,39 @@ function generateServiceSchema(pageData: Page) {
       },
     },
   };
+}
+
+// Helper function to attempt redirecting flat slugs to nested structure
+function attemptCityServiceRedirect(slug: string): string | null {
+  // Parse pattern: city-service or city-service-keywords
+  const parts = slug.split('-');
+  
+  if (parts.length < 2) return null;
+  
+  const validServices = ['flooring', 'demolition', 'junk', 'junk_removal'];
+  
+  // Try to find city-service pattern
+  for (let i = 1; i < parts.length; i++) {
+    const cityPart = parts.slice(0, i).join('-');
+    const servicePart = parts[i];
+    
+    // Handle junk removal special case
+    let normalizedService = servicePart;
+    if (servicePart === 'junk' && parts[i + 1] === 'removal') {
+      normalizedService = 'junk-removal';
+    } else if (servicePart === 'junk_removal') {
+      normalizedService = 'junk-removal';
+    }
+    
+    // Check if this matches a valid city-service pattern that should be redirected
+    // This helps with canonical URL consistency
+    if (CITY_DISPLAY_NAMES[cityPart] && ['flooring', 'demolition', 'junk-removal'].includes(normalizedService)) {
+      console.log(`Redirecting ${slug} to canonical location route: /locations/${cityPart}/${normalizedService}`);
+      return `/locations/${cityPart}/${normalizedService}`;
+    }
+  }
+  
+  return null;
 }
 
 // Enable ISR with 1 hour revalidation
