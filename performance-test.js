@@ -8,7 +8,7 @@
 const https = require('https');
 const { performance } = require('perf_hooks');
 
-const SITE_URL = process.env.SITE_URL || 'https://wildwestslc.com';
+const SITE_URL = process.env.SITE_URL || 'http://localhost:3000';
 
 // Core Web Vitals thresholds
 const THRESHOLDS = {
