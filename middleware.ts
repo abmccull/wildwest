@@ -1,108 +1,94 @@
 import { NextRequest, NextResponse } from "next/server";
-import { findRedirect, normalizePath } from "@/lib/redirects";
 
-// Use Node.js runtime for better compatibility
-// export const runtime = 'edge'; // Removed due to compatibility issues
-
-// Basic auth credentials (in production, these should be environment variables)
+// Basic auth credentials
 const ADMIN_USERNAME = process.env.ADMIN_USERNAME || "admin";
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "wildwest2024!";
 
-// Cache control headers for different content types
-const CACHE_HEADERS = {
-  STATIC_LONG: 'public, max-age=31536000, immutable',
-  STATIC_SHORT: 'public, max-age=86400, s-maxage=86400',
-  HTML: 'public, s-maxage=60, stale-while-revalidate=300, max-age=0',
-  API: 'no-store, no-cache, must-revalidate, proxy-revalidate',
-  CDN_LONG: 'public, s-maxage=31536000, immutable',
-  CDN_EDGE: 'public, s-maxage=60, stale-while-revalidate=300',
-};
-
 export function middleware(request: NextRequest) {
-  const response = NextResponse.next();
   const url = request.nextUrl;
+  const pathname = url.pathname.toLowerCase();
+  
+  // Canonicalize www to apex domain
   const host = request.headers.get("host") || "";
-
-  // Canonicalize host: redirect www -> apex
   if (host === "www.wildwestslc.com") {
     url.hostname = "wildwestslc.com";
     return NextResponse.redirect(url, { status: 308 });
   }
 
-  // URL normalization: lowercase path, remove trailing slash, collapse doubles
-  const normalizedPath = normalizePath(url.pathname);
-  if (normalizedPath !== url.pathname) {
-    url.pathname = normalizedPath;
-    return NextResponse.redirect(url, { status: 308 });
+  // Simple redirect map for city-service URLs
+  const redirectMap: Record<string, string> = {
+    "/murray-flooring": "/locations/murray/flooring",
+    "/murray-demolition": "/locations/murray/demolition",
+    "/murray-junk-removal": "/locations/murray/junk-removal",
+    "/salt-lake-city-flooring": "/locations/salt-lake-city/flooring",
+    "/salt-lake-city-demolition": "/locations/salt-lake-city/demolition",
+    "/salt-lake-city-junk-removal": "/locations/salt-lake-city/junk-removal",
+    "/west-valley-city-flooring": "/locations/west-valley-city/flooring",
+    "/west-valley-city-demolition": "/locations/west-valley-city/demolition",
+    "/west-valley-city-junk-removal": "/locations/west-valley-city/junk-removal",
+    "/west-jordan-flooring": "/locations/west-jordan/flooring",
+    "/west-jordan-demolition": "/locations/west-jordan/demolition",
+    "/west-jordan-junk-removal": "/locations/west-jordan/junk-removal",
+    "/sandy-flooring": "/locations/sandy/flooring",
+    "/sandy-demolition": "/locations/sandy/demolition",
+    "/sandy-junk-removal": "/locations/sandy/junk-removal",
+    "/south-jordan-flooring": "/locations/south-jordan/flooring",
+    "/south-jordan-demolition": "/locations/south-jordan/demolition",
+    "/south-jordan-junk-removal": "/locations/south-jordan/junk-removal",
+    "/orem-flooring": "/locations/orem/flooring",
+    "/orem-demolition": "/locations/orem/demolition",
+    "/orem-junk-removal": "/locations/orem/junk-removal",
+    "/ogden-flooring": "/locations/ogden/flooring",
+    "/ogden-demolition": "/locations/ogden/demolition",
+    "/ogden-junk-removal": "/locations/ogden/junk-removal",
+    "/layton-flooring": "/locations/layton/flooring",
+    "/layton-demolition": "/locations/layton/demolition",
+    "/layton-junk-removal": "/locations/layton/junk-removal",
+    "/taylorsville-flooring": "/locations/taylorsville/flooring",
+    "/taylorsville-demolition": "/locations/taylorsville/demolition",
+    "/taylorsville-junk-removal": "/locations/taylorsville/junk-removal",
+    "/bountiful-flooring": "/locations/bountiful/flooring",
+    "/bountiful-demolition": "/locations/bountiful/demolition",
+    "/bountiful-junk-removal": "/locations/bountiful/junk-removal",
+    "/draper-flooring": "/locations/draper/flooring",
+    "/draper-demolition": "/locations/draper/demolition",
+    "/draper-junk-removal": "/locations/draper/junk-removal",
+    "/riverton-flooring": "/locations/riverton/flooring",
+    "/riverton-demolition": "/locations/riverton/demolition",
+    "/riverton-junk-removal": "/locations/riverton/junk-removal",
+    "/herriman-flooring": "/locations/herriman/flooring",
+    "/herriman-demolition": "/locations/herriman/demolition",
+    "/herriman-junk-removal": "/locations/herriman/junk-removal",
+    "/midvale-flooring": "/locations/midvale/flooring",
+    "/midvale-demolition": "/locations/midvale/demolition",
+    "/midvale-junk-removal": "/locations/midvale/junk-removal",
+    "/holladay-flooring": "/locations/holladay/flooring",
+    "/holladay-demolition": "/locations/holladay/demolition",
+    "/holladay-junk-removal": "/locations/holladay/junk-removal",
+    "/south-salt-lake-flooring": "/locations/south-salt-lake/flooring",
+    "/south-salt-lake-demolition": "/locations/south-salt-lake/demolition",
+    "/south-salt-lake-junk-removal": "/locations/south-salt-lake/junk-removal",
+    "/bluffdale-flooring": "/locations/bluffdale/flooring",
+    "/bluffdale-demolition": "/locations/bluffdale/demolition",
+    "/bluffdale-junk-removal": "/locations/bluffdale/junk-removal",
+    "/roy-flooring": "/locations/roy/flooring",
+    "/roy-demolition": "/locations/roy/demolition",
+    "/roy-junk-removal": "/locations/roy/junk-removal",
+    "/pleasant-grove-flooring": "/locations/pleasant-grove/flooring",
+    "/pleasant-grove-demolition": "/locations/pleasant-grove/demolition",
+    "/pleasant-grove-junk-removal": "/locations/pleasant-grove/junk-removal",
+    "/cottonwood-heights-flooring": "/locations/cottonwood-heights/flooring",
+    "/cottonwood-heights-demolition": "/locations/cottonwood-heights/demolition",
+    "/cottonwood-heights-junk-removal": "/locations/cottonwood-heights/junk-removal",
+  };
+
+  // Check for redirects
+  if (redirectMap[pathname]) {
+    url.pathname = redirectMap[pathname];
+    return NextResponse.redirect(url, { status: 301 });
   }
 
-  // Manual redirect rules
-  const manual = findRedirect(url.pathname);
-  if (manual) {
-    url.pathname = manual.to;
-    return NextResponse.redirect(url, { status: manual.permanent ? 301 : 307 });
-  }
-
-  
-  // Add optimized cache headers based on content type
-  const pathname = url.pathname;
-  
-  // Static assets - long-term caching with CDN optimization
-  if (pathname.match(/\.(ico|svg|jpg|jpeg|png|gif|webp|avif)$/i)) {
-    response.headers.set('Cache-Control', CACHE_HEADERS.STATIC_LONG);
-    response.headers.set('CDN-Cache-Control', CACHE_HEADERS.CDN_LONG);
-    response.headers.set('Vercel-CDN-Cache-Control', CACHE_HEADERS.CDN_LONG);
-  }
-  
-  // CSS and JS files - long-term caching with immutable
-  if (pathname.match(/\.(css|js)$/i) || pathname.includes('/_next/static/')) {
-    response.headers.set('Cache-Control', CACHE_HEADERS.STATIC_LONG);
-    response.headers.set('CDN-Cache-Control', CACHE_HEADERS.CDN_LONG);
-    response.headers.set('Vercel-CDN-Cache-Control', CACHE_HEADERS.CDN_LONG);
-  }
-  
-  // Fonts - long-term caching with CORS headers
-  if (pathname.match(/\.(woff|woff2|ttf|otf|eot)$/i)) {
-    response.headers.set('Cache-Control', CACHE_HEADERS.STATIC_LONG);
-    response.headers.set('CDN-Cache-Control', CACHE_HEADERS.CDN_LONG);
-    response.headers.set('Vercel-CDN-Cache-Control', CACHE_HEADERS.CDN_LONG);
-    response.headers.set('Access-Control-Allow-Origin', '*');
-    response.headers.set('Access-Control-Allow-Methods', 'GET, HEAD, OPTIONS');
-    response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Accept, Origin, User-Agent');
-    response.headers.set('Cross-Origin-Resource-Policy', 'cross-origin');
-  }
-  
-  // HTML pages - aggressive edge caching with stale-while-revalidate
-  if (!pathname.includes('.') && !pathname.startsWith('/api/')) {
-    response.headers.set('Cache-Control', CACHE_HEADERS.HTML);
-    response.headers.set('CDN-Cache-Control', CACHE_HEADERS.CDN_EDGE);
-    response.headers.set('Vercel-CDN-Cache-Control', CACHE_HEADERS.CDN_EDGE);
-  }
-  
-  // API routes - no cache with additional headers
-  if (pathname.startsWith('/api/')) {
-    response.headers.set('Cache-Control', CACHE_HEADERS.API);
-    response.headers.set('CDN-Cache-Control', 'no-cache');
-    response.headers.set('Vercel-CDN-Cache-Control', 'no-cache');
-    response.headers.set('Pragma', 'no-cache');
-    response.headers.set('Expires', '0');
-  }
-  
-  // Add ETag support for better cache validation
-  if (pathname.match(/\.(css|js|json)$/i)) {
-    const etag = `W/"${Buffer.from(pathname).toString('base64')}"`;
-    response.headers.set('ETag', etag);
-  }
-  
-  // Add performance and security hints
-  response.headers.set('X-DNS-Prefetch-Control', 'on');
-  response.headers.set('Connection', 'keep-alive');
-  
-  // Add server timing headers for performance monitoring
-  const serverTiming = `middleware;dur=${Date.now() - (request as any).startTime || 0}`;
-  response.headers.set('Server-Timing', serverTiming);
-  
-  // Only protect /admin routes
+  // Admin authentication
   if (request.nextUrl.pathname.startsWith("/admin")) {
     const basicAuth = request.headers.get("authorization");
 
@@ -111,18 +97,15 @@ export function middleware(request: NextRequest) {
       if (authValue) {
         try {
           const [user, pwd] = atob(authValue).split(":");
-
           if (user === ADMIN_USERNAME && pwd === ADMIN_PASSWORD) {
-            return response;
+            return NextResponse.next();
           }
         } catch (error) {
-          // Invalid base64 or other decode error
           console.error("Auth decode error:", error);
         }
       }
     }
 
-    // Return 401 with WWW-Authenticate header for basic auth prompt
     return new NextResponse("Authentication required", {
       status: 401,
       headers: {
@@ -131,15 +114,12 @@ export function middleware(request: NextRequest) {
     });
   }
 
-  return response;
+  return NextResponse.next();
 }
 
 export const config = {
   matcher: [
-    /*
-     * Match all admin routes and key paths for optimization
-     */
     "/admin/:path*",
-    "/((?!_next/static|_next/image|favicon.ico).*)",
+    "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
   ],
 };
