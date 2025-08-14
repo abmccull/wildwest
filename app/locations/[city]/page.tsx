@@ -158,7 +158,7 @@ export default async function CityHubPage({ params }: CityHubPageProps) {
                     className="px-8 py-3 btn-whatsapp font-semibold rounded-lg text-center flex items-center justify-center space-x-2"
                   >
                     <svg
-                      className="w-5 h-5"
+                      className="w-6 h-6"
                       fill="currentColor"
                       viewBox="0 0 24 24"
                     >
@@ -400,7 +400,7 @@ export default async function CityHubPage({ params }: CityHubPageProps) {
                         className="flex items-center space-x-2 text-green-400 hover:text-green-300 transition-colors"
                       >
                         <svg
-                          className="w-5 h-5"
+                          className="w-6 h-6"
                           fill="currentColor"
                           viewBox="0 0 24 24"
                         >
@@ -506,7 +506,7 @@ export default async function CityHubPage({ params }: CityHubPageProps) {
                 className="px-8 py-3 btn-whatsapp font-semibold rounded-lg flex items-center justify-center space-x-2"
               >
                 <svg
-                  className="w-5 h-5"
+                  className="w-6 h-6"
                   fill="currentColor"
                   viewBox="0 0 24 24"
                 >
