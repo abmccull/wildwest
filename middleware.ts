@@ -73,6 +73,11 @@ export function middleware(request: NextRequest) {
   if (malformedMatch) {
     const fullSlug = malformedMatch[1];
 
+    // Skip if it already ends with -ut (valid city page)
+    if (fullSlug.endsWith('-ut')) {
+      return NextResponse.next();
+    }
+
     // Check if this matches any of our valid cities at the start
     for (const city of VALID_CITIES) {
       if (fullSlug.startsWith(city + '-')) {

@@ -117,7 +117,7 @@ const CallToAction: React.FC<CallToActionProps> = ({
                 <div className="flex flex-col items-center">
                   <div className="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center mb-3">
                     <svg
-                      className="w-6 h-6 text-accent"
+                      className="w-6 h-6 text-white"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -138,7 +138,7 @@ const CallToAction: React.FC<CallToActionProps> = ({
                 <div className="flex flex-col items-center">
                   <div className="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center mb-3">
                     <svg
-                      className="w-6 h-6 text-accent"
+                      className="w-6 h-6 text-white"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -159,7 +159,7 @@ const CallToAction: React.FC<CallToActionProps> = ({
                 <div className="flex flex-col items-center">
                   <div className="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center mb-3">
                     <svg
-                      className="w-6 h-6 text-accent"
+                      className="w-6 h-6 text-white"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
