@@ -4,13 +4,15 @@
  * Renders appropriate icons for different service features and categories
  */
 
+import React from 'react';
+
 interface ServiceIconProps {
   icon: string;
   className?: string;
 }
 
 export function ServiceIcon({ icon, className = 'w-6 h-6' }: ServiceIconProps) {
-  const iconMap: { [key: string]: JSX.Element } = {
+  const iconMap: { [key: string]: React.ReactElement } = {
     // General icons
     'shield-check': (
       <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
