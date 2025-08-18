@@ -22,6 +22,7 @@ const VALID_CITIES = [
   'draper',
   'south-jordan',
   'midvale',
+  'millcreek',
   'cottonwood-heights',
   'taylorsville',
   'sandy',
@@ -74,14 +75,8 @@ export function middleware(request: NextRequest) {
   if (malformedMatch) {
     const fullSlug = malformedMatch[1];
 
-    // Skip if it already ends with -ut (valid city page)
+    // Skip if it already ends with -ut (valid city page) - don't redirect city-only pages
     if (fullSlug.endsWith('-ut')) {
-      // Just ensure trailing slash for city-only pages
-      if (!pathname.endsWith('/')) {
-        const newUrl = new URL(request.url);
-        newUrl.pathname = pathname + '/';
-        return NextResponse.redirect(newUrl, { status: 301 });
-      }
       return NextResponse.next();
     }
 
@@ -115,12 +110,7 @@ export function middleware(request: NextRequest) {
       return NextResponse.redirect(newUrl, { status: 301 });
     }
 
-    // Ensure trailing slash
-    if (!pathname.endsWith('/')) {
-      const newUrl = new URL(request.url);
-      newUrl.pathname = pathname + '/';
-      return NextResponse.redirect(newUrl, { status: 301 });
-    }
+    // Don't force trailing slashes - let Next.js handle this to avoid conflicts
   }
 
   return NextResponse.next();
