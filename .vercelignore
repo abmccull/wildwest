@@ -1,0 +1,44 @@
+# Development files
+.env.local
+.env.development
+.env.test
+
+# Test files
+__tests__
+*.test.ts
+*.test.tsx
+*.spec.ts
+*.spec.tsx
+jest.config.js
+jest.setup.js
+
+# Documentation
+README.md
+docs/
+*.md
+
+# Source control
+.git/
+.gitignore
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# macOS
+.DS_Store
+
+# Temporary files
+temp/
+tmp/
+*.tmp
+
+# Local scripts
+claude_desktop_config.json
+claude_desktop_config_alt.json
+supabase-mcp-wrapper.sh
+
+# CSV source files (these are processed during build)
+wildwest_master_seo_matrix.csv

@@ -1,0 +1,22 @@
+category,service,slug,description,averagePrice,duration,difficulty,popularity,seasonality,equipment
+Flooring,Hardwood Installation,hardwood-installation,"Professional hardwood flooring installation with premium materials and expert craftsmanship",4500,5-7 days,High,90,Year-round,Specialized tools
+Flooring,Laminate Installation,laminate-installation,"Affordable laminate flooring installation for durable and attractive floors",2500,2-3 days,Medium,85,Year-round,Standard tools
+Flooring,Vinyl Plank Installation,vinyl-plank-installation,"Modern luxury vinyl plank installation for water-resistant beautiful floors",3000,3-4 days,Medium,80,Year-round,Standard tools
+Flooring,Tile Installation,tile-installation,"Expert ceramic and porcelain tile installation for kitchens and bathrooms",3500,4-6 days,High,75,Year-round,Specialized tools
+Flooring,Carpet Installation,carpet-installation,"Professional carpet installation with padding and finishing touches",1800,1-2 days,Low,70,Year-round,Standard tools
+Flooring,Floor Refinishing,floor-refinishing,"Restore and refinish existing hardwood floors to like-new condition",2800,3-4 days,Medium,65,Spring/Fall,Specialized tools
+Flooring,Subfloor Repair,subfloor-repair,"Structural subfloor repair and replacement for solid foundation",2000,2-3 days,High,60,Year-round,Specialized tools
+Demolition,Interior Demolition,interior-demolition,"Safe interior demolition services for walls kitchens and bathrooms",3000,2-4 days,High,85,Year-round,Heavy equipment
+Demolition,Kitchen Demolition,kitchen-demolition,"Complete kitchen demolition including cabinets countertops and appliances",2500,1-2 days,Medium,90,Year-round,Standard tools
+Demolition,Bathroom Demolition,bathroom-demolition,"Full bathroom demolition including fixtures tiles and plumbing prep",2000,1-2 days,Medium,85,Year-round,Standard tools
+Demolition,Deck Demolition,deck-demolition,"Safe deck and patio demolition with proper disposal",1500,1 day,Medium,70,Spring/Summer,Standard tools
+Demolition,Fence Removal,fence-removal,"Complete fence removal and site cleanup services",800,Half day,Low,75,Year-round,Standard tools
+Demolition,Shed Demolition,shed-demolition,"Small structure demolition including sheds and outbuildings",1200,1 day,Medium,65,Year-round,Standard tools
+Demolition,Concrete Removal,concrete-removal,"Heavy concrete demolition including driveways and foundations",2800,2-3 days,High,80,Year-round,Heavy equipment
+Junk Removal,Construction Debris,construction-debris-removal,"Professional construction waste and debris removal services",500,Same day,Low,95,Year-round,Truck and crew
+Junk Removal,Furniture Removal,furniture-removal,"Complete furniture and appliance removal and disposal",300,Same day,Low,90,Year-round,Truck and crew
+Junk Removal,Yard Waste Removal,yard-waste-removal,"Landscaping debris and organic waste removal services",250,Same day,Low,85,Spring/Summer,Truck and crew
+Junk Removal,Appliance Removal,appliance-removal,"Safe removal and disposal of old appliances and electronics",200,Same day,Low,80,Year-round,Truck and crew
+Junk Removal,Basement Cleanout,basement-cleanout,"Complete basement cleanout and junk removal services",600,1 day,Medium,75,Year-round,Truck and crew
+Junk Removal,Garage Cleanout,garage-cleanout,"Comprehensive garage cleaning and junk removal",400,Half day,Low,85,Year-round,Truck and crew
+Junk Removal,Estate Cleanout,estate-cleanout,"Sensitive estate and property cleanout services",800,1-2 days,Medium,70,Year-round,Truck and crew

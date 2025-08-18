@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "supabase": {
+      "command": "bash",
+      "args": [
+        "-c",
+        "source /Users/abmccull/Desktop/Wildwest/.env && SUPABASE_ACCESS_TOKEN=$supabase_personal_access_token npx -y @supabase/mcp-server-supabase@latest --read-only --project-ref=kbzhaqavljuvmyfltfqn"
+      ]
+    }
+  }
+}

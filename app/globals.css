@@ -1,0 +1,190 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Critical CSS for above-the-fold content */
+:root {
+  --primary: #7c5035;
+  --secondary: #c59d5f;
+  --accent: #d4af37;
+  --background: #f7f1e3;
+  --text-dark: #333333;
+  --text-light: #ffffff;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* Prevent layout shifts */
+    overflow-x: hidden;
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--text-dark);
+    /* Optimize text rendering */
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    /* Prevent FOUT (Flash of Unstyled Text) */
+    font-display: swap;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-bold;
+    /* Optimize heading rendering */
+    text-wrap: balance;
+  }
+
+  a {
+    @apply transition-colors duration-200;
+  }
+
+  /* Optimize image loading */
+  img {
+    height: auto;
+    max-width: 100%;
+  }
+
+  /* Prevent layout shift for images */
+  img[width][height] {
+    height: auto;
+  }
+
+  /* Optimize button interactions */
+  button {
+    touch-action: manipulation;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-primary text-text-light px-6 py-3 rounded-md hover:bg-opacity-90 transition-all duration-200 font-medium;
+    /* Prevent layout shift on hover */
+    transform: translateZ(0);
+    will-change: transform;
+  }
+
+  .btn-secondary {
+    @apply bg-secondary text-text-dark px-6 py-3 rounded-md hover:bg-opacity-90 transition-all duration-200 font-medium;
+    /* Prevent layout shift on hover */
+    transform: translateZ(0);
+    will-change: transform;
+  }
+
+  .container-custom {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  /* Critical above-the-fold styles */
+  .critical-header {
+    background-color: var(--primary);
+    color: var(--text-light);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    /* Ensure consistent height to prevent CLS */
+    min-height: 64px;
+  }
+
+  .critical-hero {
+    background: linear-gradient(to right, rgba(124, 80, 53, 0.1), rgba(124, 80, 53, 0.05));
+    padding: 4rem 0 6rem;
+    /* Prevent layout shift */
+    min-height: 500px;
+    display: flex;
+    align-items: center;
+  }
+
+  @media (min-width: 1024px) {
+    .critical-hero {
+      padding: 6rem 0;
+      min-height: 600px;
+    }
+  }
+
+  .critical-btn-primary {
+    background-color: var(--primary);
+    color: var(--text-light);
+    padding: 1rem 2rem;
+    border-radius: 0.375rem;
+    font-weight: 500;
+    transition: all 0.2s;
+    display: inline-block;
+    text-decoration: none;
+    /* Prevent layout shift */
+    transform: translateZ(0);
+    will-change: transform;
+  }
+
+  .critical-btn-primary:hover {
+    background-color: rgba(124, 80, 53, 0.9);
+    transform: translateY(-1px);
+  }
+
+  /* Performance optimizations */
+  .optimize-animation {
+    /* Use GPU acceleration for smooth animations */
+    transform: translateZ(0);
+    will-change: transform;
+  }
+
+  .optimize-scroll {
+    /* Optimize scrolling performance */
+    overflow-scrolling: touch;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Skeleton loading states */
+  .skeleton {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+  }
+
+  @keyframes loading {
+    0% {
+      background-position: 200% 0;
+    }
+    100% {
+      background-position: -200% 0;
+    }
+  }
+
+  /* Hide scrollbar for carousel components */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@layer utilities {
+  /* Performance utility classes */
+  .gpu-accelerated {
+    transform: translateZ(0);
+    will-change: transform;
+  }
+
+  .prevent-cls {
+    /* Prevent Cumulative Layout Shift */
+    aspect-ratio: attr(width) / attr(height);
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .optimize-legibility {
+    text-rendering: optimizeLegibility;
+  }
+}

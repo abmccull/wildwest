@@ -1,0 +1,72 @@
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "@id": "https://www.wildwestslc.com/#localbusiness",
+  "name": "Wild West Construction",
+  "url": "https://www.wildwestslc.com/",
+  "image": "https://www.wildwestslc.com/static/brand-logo.png",
+  "telephone": "+1-801-691-4065",
+  "email": "info@wildwestslc.com",
+  "priceRange": "$$",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "4097 S 420 W",
+    "addressLocality": "Murray",
+    "addressRegion": "UT",
+    "postalCode": "84123",
+    "addressCountry": "US"
+  },
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      "opens": "08:00",
+      "closes": "18:00"
+    }
+  ],
+  "areaServed": [
+    { "@type": "City", "name": "Alta, Utah" },
+    { "@type": "City", "name": "Bluffdale, Utah" },
+    { "@type": "City", "name": "Brighton, Utah" },
+    { "@type": "City", "name": "Cottonwood Heights, Utah" },
+    { "@type": "City", "name": "Draper, Utah" },
+    { "@type": "City", "name": "Herriman, Utah" },
+    { "@type": "City", "name": "Holladay, Utah" },
+    { "@type": "City", "name": "Midvale, Utah" },
+    { "@type": "City", "name": "Millcreek, Utah" },
+    { "@type": "City", "name": "Murray, Utah" },
+    { "@type": "City", "name": "Riverton, Utah" },
+    { "@type": "City", "name": "Sandy, Utah" },
+    { "@type": "City", "name": "Salt Lake City, Utah" },
+    { "@type": "City", "name": "South Jordan, Utah" },
+    { "@type": "City", "name": "South Salt Lake, Utah" },
+    { "@type": "City", "name": "Taylorsville, Utah" },
+    { "@type": "City", "name": "West Jordan, Utah" },
+    { "@type": "City", "name": "West Valley City, Utah" },
+    { "@type": "City", "name": "Copperton, Utah" },
+    { "@type": "City", "name": "Emigration Canyon, Utah" },
+    { "@type": "City", "name": "Kearns, Utah" },
+    { "@type": "City", "name": "Magna, Utah" },
+    { "@type": "City", "name": "White City, Utah" }
+  ],
+  "department": [
+    {
+      "@type": "LocalBusiness",
+      "@id": "https://www.wildwestslc.com/#flooring",
+      "name": "Wild West Construction \u2014 Flooring",
+      "url": "https://www.wildwestslc.com/#flooring"
+    },
+    {
+      "@type": "LocalBusiness",
+      "@id": "https://www.wildwestslc.com/#demolition",
+      "name": "Wild West Construction \u2014 Demolition",
+      "url": "https://www.wildwestslc.com/#demolition"
+    },
+    {
+      "@type": "LocalBusiness",
+      "@id": "https://www.wildwestslc.com/#junk-removal",
+      "name": "Wild West Construction \u2014 Junk Removal",
+      "url": "https://www.wildwestslc.com/#junk-removal"
+    }
+  ]
+}

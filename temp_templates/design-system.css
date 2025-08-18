@@ -1,0 +1,129 @@
+/* Wild West Construction - Design System v2.0 */
+
+:root {
+  /* Brand Colors - Trust & Action */
+  --brand-primary: #1e40af;        /* Deep Blue - Trust/Reliability */
+  --brand-secondary: #059669;      /* Green - Success/Action */
+  --brand-accent: #dc2626;         /* Red - Urgency/Limited */
+  --brand-warning: #f59e0b;        /* Amber - Attention */
+  --brand-info: #3b82f6;           /* Sky Blue - Information */
+  
+  /* Semantic Colors */
+  --color-cta: var(--brand-secondary);
+  --color-cta-hover: #047857;
+  --color-urgent: var(--brand-accent);
+  --color-trust: var(--brand-primary);
+  
+  /* Typography Scale */
+  --font-display: 'Inter', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  
+  /* Mobile-First Sizing */
+  --text-xs: clamp(0.75rem, 2.5vw, 0.875rem);
+  --text-sm: clamp(0.875rem, 3vw, 1rem);
+  --text-base: clamp(1rem, 3.5vw, 1.125rem);
+  --text-lg: clamp(1.125rem, 4vw, 1.25rem);
+  --text-xl: clamp(1.25rem, 4.5vw, 1.5rem);
+  --text-2xl: clamp(1.5rem, 5vw, 2rem);
+  --text-3xl: clamp(2rem, 6vw, 3rem);
+  --text-4xl: clamp(2.5rem, 7vw, 4rem);
+  
+  /* Spacing System */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  
+  /* Layout Constants */
+  --header-height: 64px;
+  --mobile-cta-height: 72px;
+  --max-width: 1280px;
+  --content-width: 1024px;
+  
+  /* Animation */
+  --transition-fast: 150ms ease;
+  --transition-base: 300ms ease;
+  --transition-slow: 500ms ease;
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-base: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  
+  /* Border Radius */
+  --radius-sm: 0.25rem;
+  --radius-base: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-full: 9999px;
+}
+
+/* Component Classes */
+.hero-gradient {
+  background: linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-info) 100%);
+}
+
+.trust-badge {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.cta-primary {
+  background: var(--color-cta);
+  color: white;
+  padding: var(--space-4) var(--space-8);
+  border-radius: var(--radius-base);
+  font-weight: 600;
+  font-size: var(--text-lg);
+  transition: all var(--transition-base);
+  transform: translateZ(0); /* Prevent layout shift */
+  will-change: transform;
+  min-height: 48px; /* Touch target */
+}
+
+.cta-primary:hover {
+  background: var(--color-cta-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.cta-urgent {
+  background: var(--color-urgent);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.8; }
+}
+
+/* Mobile-First Grid */
+.container {
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--space-4);
+}
+
+@media (min-width: 768px) {
+  .container {
+    padding: 0 var(--space-6);
+  }
+}
+
+/* Performance Optimizations */
+.gpu-accelerated {
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+.lazy-load {
+  content-visibility: auto;
+}

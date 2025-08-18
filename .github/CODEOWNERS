@@ -1,0 +1,29 @@
+# CODEOWNERS file for Wild West Construction project
+# This file defines who is responsible for code in this repository
+
+# Default owner for everything in the repo
+* @abmccull
+
+# Frontend code owners
+/app/ @abmccull
+/components/ @abmccull
+/styles/ @abmccull
+/public/ @abmccull
+
+# Configuration files
+/package.json @abmccull
+/tsconfig.json @abmccull
+/next.config.js @abmccull
+/tailwind.config.js @abmccull
+/postcss.config.js @abmccull
+
+# CI/CD and GitHub Actions
+/.github/ @abmccull
+
+# Testing
+/jest.config.js @abmccull
+/jest.setup.js @abmccull
+/**/*.test.ts @abmccull
+/**/*.test.tsx @abmccull
+/**/*.spec.ts @abmccull
+/**/*.spec.tsx @abmccull
