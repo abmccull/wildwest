@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server';
-import OpenAI from 'openai';
 import { createServerServiceClient } from '@/lib/supabase-server';
 import {
   withApiMiddleware,
@@ -12,10 +11,23 @@ import {
 import { analyticsService } from '@/lib/services';
 import type { ChatSessionInsert } from '@/supabase/types/database.types';
 
-// Initialize OpenAI client
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+// Conditionally initialize OpenAI only if API key is available
+let openai: any = null;
+
+// Initialize OpenAI lazily to avoid build-time errors
+const getOpenAIClient = () => {
+  if (!openai && process.env.OPENAI_API_KEY) {
+    try {
+      const OpenAI = require('openai');
+      openai = new OpenAI({
+        apiKey: process.env.OPENAI_API_KEY,
+      });
+    } catch (error) {
+      console.error('Failed to initialize OpenAI client:', error);
+    }
+  }
+  return openai;
+};
 
 const SYSTEM_PROMPT = `You are a helpful assistant for Wild West Construction, a construction company serving Salt Lake County, Utah. 
 
@@ -81,8 +93,12 @@ export const POST = withApiMiddleware(
 
     try {
       // Check if OpenAI is configured
-      if (!process.env.OPENAI_API_KEY) {
-        throw new ValidationError('OpenAI integration is not configured');
+      const client = getOpenAIClient();
+      if (!client) {
+        return NextResponse.json(
+          errorResponse('Chat feature is currently unavailable. Please contact us directly.'),
+          { status: 503 }
+        );
       }
 
       // Parse request body
@@ -134,7 +150,7 @@ export const POST = withApiMiddleware(
 
       try {
         // Call OpenAI API
-        const completion = await openai.chat.completions.create({
+        const completion = await client.chat.completions.create({
           model: 'gpt-4o-mini',
           messages: openaiMessages,
           max_tokens: 500,

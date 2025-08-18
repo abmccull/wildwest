@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 
+        http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd
+        http://www.google.com/schemas/sitemap-image/1.1
+        http://www.google.com/schemas/sitemap-image/1.1/sitemap-image.xsd">
+  <url>
+    <loc>https://wildwestslc.com</loc>
+      <image:image>
+        <image:loc>https://wildwestslc.com/og-image.jpg</image:loc>
+        <image:title>Wild West Construction - Professional Building Services</image:title>
+        <image:caption>Utah&apos;s trusted construction experts for flooring, demolition, and junk removal</image:caption>
+      </image:image>
+      <image:image>
+        <image:loc>https://wildwestslc.com/logo.png</image:loc>
+        <image:title>Wild West Construction Logo</image:title>
+      </image:image>
+  </url>
+  <url>
+    <loc>https://wildwestslc.com/flooring</loc>
+      <image:image>
+        <image:loc>https://wildwestslc.com/images/flooring-hero.jpg</image:loc>
+        <image:title>Flooring Services Hero Image</image:title>
+        <image:caption>Professional flooring services in Salt Lake County, Utah</image:caption>
+        <image:geo_location>Salt Lake City, Utah, USA</image:geo_location>
+      </image:image>
+      <image:image>
+        <image:loc>https://wildwestslc.com/images/flooring-gallery-1.jpg</image:loc>
+        <image:title>Flooring Services Gallery</image:title>
+        <image:caption>Examples of our flooring services work</image:caption>
+        <image:geo_location>Salt Lake County, Utah, USA</image:geo_location>
+      </image:image>
+  </url>
+  <url>
+    <loc>https://wildwestslc.com/demolition</loc>
+      <image:image>
+        <image:loc>https://wildwestslc.com/images/demolition-hero.jpg</image:loc>
+        <image:title>Demolition Services Hero Image</image:title>
+        <image:caption>Professional demolition services in Salt Lake County, Utah</image:caption>
+        <image:geo_location>Salt Lake City, Utah, USA</image:geo_location>
+      </image:image>
+      <image:image>
+        <image:loc>https://wildwestslc.com/images/demolition-gallery-1.jpg</image:loc>
+        <image:title>Demolition Services Gallery</image:title>
+        <image:caption>Examples of our demolition services work</image:caption>
+        <image:geo_location>Salt Lake County, Utah, USA</image:geo_location>
+      </image:image>
+  </url>
+  <url>
+    <loc>https://wildwestslc.com/junk-removal</loc>
+      <image:image>
+        <image:loc>https://wildwestslc.com/images/junk-removal-hero.jpg</image:loc>
+        <image:title>Junk Removal Services Hero Image</image:title>
+        <image:caption>Professional junk removal services in Salt Lake County, Utah</image:caption>
+        <image:geo_location>Salt Lake City, Utah, USA</image:geo_location>
+      </image:image>
+      <image:image>
+        <image:loc>https://wildwestslc.com/images/junk-removal-gallery-1.jpg</image:loc>
+        <image:title>Junk Removal Services Gallery</image:title>
+        <image:caption>Examples of our junk removal services work</image:caption>
+        <image:geo_location>Salt Lake County, Utah, USA</image:geo_location>
+      </image:image>
+  </url>
+</urlset>
