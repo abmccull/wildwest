@@ -25,18 +25,25 @@ export interface BookingConfirmationData {
 }
 
 class EmailService {
-  private resend: Resend;
+  private resend: Resend | null;
   private fromEmail: string;
   private replyToEmail: string;
   private companyName: string;
+  private isEnabled: boolean;
 
   constructor() {
     const resendApiKey = process.env.RESEND_API_KEY;
-    if (!resendApiKey) {
-      throw new Error('RESEND_API_KEY environment variable is required');
+
+    // Only initialize Resend if API key is provided
+    if (resendApiKey) {
+      this.resend = new Resend(resendApiKey);
+      this.isEnabled = true;
+    } else {
+      this.resend = null;
+      this.isEnabled = false;
+      console.warn('Email service disabled: RESEND_API_KEY not configured');
     }
 
-    this.resend = new Resend(resendApiKey);
     this.fromEmail = process.env.FROM_EMAIL || 'noreply@wildwestconstruction.com';
     this.replyToEmail = process.env.REPLY_TO_EMAIL || 'contact@wildwestconstruction.com';
     this.companyName = 'Wild West Construction';
@@ -321,6 +328,11 @@ This email was sent in response to your inquiry on our website.
   }
 
   async sendLeadConfirmation(data: LeadConfirmationData): Promise<boolean> {
+    if (!this.isEnabled) {
+      console.log('Email service is disabled - skipping lead confirmation email');
+      return false;
+    }
+
     if (!data.lead.email) {
       console.log('Skipping email confirmation - no email provided');
       return false;
@@ -342,7 +354,7 @@ This email was sent in response to your inquiry on our website.
         replyTo: this.replyToEmail,
       };
 
-      const result = await this.resend.emails.send(emailData as any);
+      const result = await this.resend!.emails.send(emailData as any);
 
       console.log('Lead confirmation email sent:', result.data?.id);
       return true;
@@ -353,6 +365,11 @@ This email was sent in response to your inquiry on our website.
   }
 
   async sendBookingConfirmation(data: BookingConfirmationData): Promise<boolean> {
+    if (!this.isEnabled) {
+      console.log('Email service is disabled - skipping booking confirmation email');
+      return false;
+    }
+
     if (!data.lead?.email) {
       console.log('Skipping booking confirmation email - no email provided');
       return false;
@@ -383,7 +400,7 @@ This email was sent in response to your inquiry on our website.
         });
       }
 
-      const result = await this.resend.emails.send({
+      const result = await this.resend!.emails.send({
         ...emailData,
         attachments: attachments.length > 0 ? attachments : undefined,
       } as any);
@@ -401,6 +418,11 @@ This email was sent in response to your inquiry on our website.
     content: string,
     recipient?: string
   ): Promise<boolean> {
+    if (!this.isEnabled) {
+      console.log('Email service is disabled - skipping internal notification');
+      return false;
+    }
+
     try {
       const emailData: EmailData = {
         to: recipient || this.replyToEmail,
@@ -421,7 +443,7 @@ This email was sent in response to your inquiry on our website.
         replyTo: this.replyToEmail,
       };
 
-      const result = await this.resend.emails.send(emailData as any);
+      const result = await this.resend!.emails.send(emailData as any);
       console.log('Internal notification email sent:', result.data?.id);
       return true;
     } catch (error) {
@@ -431,8 +453,13 @@ This email was sent in response to your inquiry on our website.
   }
 
   async testEmail(recipientEmail: string): Promise<boolean> {
+    if (!this.isEnabled) {
+      console.log('Email service is disabled - cannot send test email');
+      return false;
+    }
+
     try {
-      const result = await this.resend.emails.send({
+      const result = await this.resend!.emails.send({
         to: recipientEmail,
         subject: `${this.companyName} - Email Service Test`,
         html: '<p>This is a test email from the Wild West Construction API.</p>',
