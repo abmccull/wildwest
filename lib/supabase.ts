@@ -3,26 +3,28 @@ import type { Database } from '../supabase/types/database.types';
 
 // Environment variables validation
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+// Use the new publishable key instead of anon key
+const supabasePublishableKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
+// Secret key for server-side operations
+const supabaseSecretKey = process.env.SUPABASE_SECRET_KEY;
 
-if (!supabaseUrl || !supabaseAnonKey) {
+if (!supabaseUrl || !supabasePublishableKey) {
   throw new Error('Missing Supabase environment variables');
 }
 
 // Client-side Supabase client (for frontend components)
 export const createClientComponentClient = () => {
-  return createClient<Database>(supabaseUrl!, supabaseAnonKey!);
+  return createClient<Database>(supabaseUrl!, supabasePublishableKey!);
 };
 
 // Service role client (for admin operations, bypasses RLS)
 // This should only be used in API routes or server-side code
 export const createServiceClient = () => {
-  if (!supabaseServiceKey) {
-    throw new Error('Missing SUPABASE_SERVICE_ROLE_KEY environment variable');
+  if (!supabaseSecretKey) {
+    throw new Error('Missing SUPABASE_SECRET_KEY environment variable');
   }
 
-  return createClient<Database>(supabaseUrl, supabaseServiceKey, {
+  return createClient<Database>(supabaseUrl, supabaseSecretKey, {
     auth: {
       autoRefreshToken: false,
       persistSession: false,
@@ -31,7 +33,7 @@ export const createServiceClient = () => {
 };
 
 // Standard client for API routes (respects RLS)
-export const supabase = createClient<Database>(supabaseUrl, supabaseAnonKey);
+export const supabase = createClient<Database>(supabaseUrl, supabasePublishableKey);
 
 // Export types for easier usage
 export type { Database } from '../supabase/types/database.types';
