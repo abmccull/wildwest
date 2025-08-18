@@ -33,33 +33,37 @@ export function generateSeoAltText(
   serviceType?: string
 ): string {
   // Remove file extension and clean filename
-  const baseName = filename.split('/').pop()?.replace(/\.[^/.]+$/, '') || '';
+  const baseName =
+    filename
+      .split('/')
+      .pop()
+      ?.replace(/\.[^/.]+$/, '') || '';
   const cleanName = baseName.replace(/[-_]/g, ' ').trim();
-  
+
   // Build context-aware alt text
   const parts: string[] = [];
-  
+
   if (serviceType) {
     parts.push(serviceType);
   }
-  
+
   if (cleanName && !cleanName.includes('image') && !cleanName.includes('img')) {
     parts.push(cleanName);
   }
-  
+
   if (category) {
     parts.push(category);
   }
-  
+
   if (location) {
     parts.push(`in ${location}`);
   }
-  
+
   // Default fallback
   if (parts.length === 0) {
     return 'Wild West Construction services';
   }
-  
+
   // Capitalize first letter of the result
   const altText = parts.join(' ');
   return altText.charAt(0).toUpperCase() + altText.slice(1);
@@ -77,7 +81,7 @@ export function generateImageStructuredData(
 ): StructuredImageData {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://wildwestslc.com';
   const imageUrl = image.src.startsWith('http') ? image.src : `${baseUrl}${image.src}`;
-  
+
   return {
     '@context': 'https://schema.org',
     '@type': 'ImageObject',
@@ -190,20 +194,20 @@ export function generateBlurDataUrl(
  */
 export function preloadCriticalImages(images: ImageMetadata[]): void {
   if (typeof window === 'undefined') return;
-  
+
   images.forEach((image) => {
     const link = document.createElement('link');
     link.rel = 'preload';
     link.as = 'image';
     link.href = image.src;
-    
+
     // Add specific attributes for different image types
     if (image.src.endsWith('.webp')) {
       link.type = 'image/webp';
     } else if (image.src.endsWith('.avif')) {
       link.type = 'image/avif';
     }
-    
+
     document.head.appendChild(link);
   });
 }
@@ -218,16 +222,14 @@ export function checkImageFormatSupport(): {
   if (typeof window === 'undefined') {
     return { webp: true, avif: false }; // Default for SSR
   }
-  
-  const webpSupport = document
-    .createElement('canvas')
-    .toDataURL('image/webp')
-    .indexOf('data:image/webp') === 0;
-  
+
+  const webpSupport =
+    document.createElement('canvas').toDataURL('image/webp').indexOf('data:image/webp') === 0;
+
   // AVIF support detection is more complex and would require a promise
   // For now, we'll use a simple check
   const avifSupport = false; // Conservative default
-  
+
   return {
     webp: webpSupport,
     avif: avifSupport,
@@ -242,26 +244,29 @@ export function validateImageSeo(image: ImageMetadata): {
   issues: string[];
 } {
   const issues: string[] = [];
-  
+
   if (!image.alt || image.alt.trim().length === 0) {
     issues.push('Missing alt text');
   } else if (image.alt.length > 125) {
     issues.push('Alt text too long (should be under 125 characters)');
-  } else if (image.alt.toLowerCase().includes('image of') || image.alt.toLowerCase().includes('picture of')) {
+  } else if (
+    image.alt.toLowerCase().includes('image of') ||
+    image.alt.toLowerCase().includes('picture of')
+  ) {
     issues.push('Alt text should not include "image of" or "picture of"');
   }
-  
+
   if (!image.src) {
     issues.push('Missing image source');
   }
-  
+
   if (image.width && image.height) {
     const aspectRatio = image.width / image.height;
     if (aspectRatio > 3 || aspectRatio < 0.33) {
       issues.push('Unusual aspect ratio - may cause layout shifts');
     }
   }
-  
+
   return {
     isValid: issues.length === 0,
     issues,

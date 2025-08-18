@@ -1,16 +1,19 @@
 # Vercel Environment Variables Setup
 
 ## Critical Security Update
+
 The old Supabase service role key has been exposed and must be replaced immediately.
 
 ## Required Environment Variables for Vercel
 
 ### 1. Go to your Vercel project dashboard
+
 Navigate to: Settings > Environment Variables
 
 ### 2. Add the following environment variables:
 
 #### Supabase Configuration (REQUIRED)
+
 ```
 NEXT_PUBLIC_SUPABASE_URL = https://kbzhaqavljuvmyfltfqn.supabase.co
 NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY = [Copy from Supabase API Keys > Publishable key]
@@ -18,17 +21,20 @@ SUPABASE_SECRET_KEY = [Copy from Supabase API Keys > Secret keys > default]
 ```
 
 ⚠️ **IMPORTANT SECURITY NOTES:**
+
 - The `SUPABASE_SECRET_KEY` should ONLY be added to Production and Preview environments
 - NEVER add the secret key to Development environment if you're sharing the project
 - The publishable key is safe to expose in client-side code
 - The secret key must NEVER be exposed in client-side code
 
 #### Site Configuration
+
 ```
 NEXT_PUBLIC_SITE_URL = https://wildwestslc.com
 ```
 
 #### Optional Services
+
 ```
 # Twilio (if using SMS features)
 TWILIO_ACCOUNT_SID = [Your Twilio Account SID]
@@ -57,12 +63,15 @@ TURNSTILE_SECRET_KEY = [Your Turnstile Secret Key]
 ```
 
 ### 3. Environment Variable Scopes
+
 For each variable, select the appropriate scope:
+
 - **Production**: Live website
 - **Preview**: Pull request previews
 - **Development**: Local development (be careful with secrets here)
 
 ### 4. After Adding Variables
+
 1. Trigger a new deployment for changes to take effect
 2. Check the deployment logs for any environment variable errors
 3. Test the functionality that depends on these variables
@@ -70,6 +79,7 @@ For each variable, select the appropriate scope:
 ## Local Development Setup
 
 1. Copy `.env.local.example` to `.env.local`:
+
 ```bash
 cp .env.local.example .env.local
 ```
@@ -79,6 +89,7 @@ cp .env.local.example .env.local
 3. Never commit `.env.local` to version control
 
 ## Verification Checklist
+
 - [ ] Old service role key has been disabled in Supabase
 - [ ] New API keys have been generated in Supabase
 - [ ] Environment variables updated in Vercel
@@ -106,6 +117,7 @@ cp .env.local.example .env.local
 ## Troubleshooting
 
 If you encounter errors after updating:
+
 1. Check Vercel deployment logs for missing environment variables
 2. Verify the keys are correctly copied (no extra spaces)
 3. Ensure the old keys are fully removed from the codebase

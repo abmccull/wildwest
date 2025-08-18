@@ -49,8 +49,9 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: 'Wild West Construction - Utah\'s Premier Construction Company',
-    description: 'Professional flooring, demolition, and junk removal services across Salt Lake County and surrounding areas. Licensed, insured, and locally owned since 2014.',
+    title: "Wild West Construction - Utah's Premier Construction Company",
+    description:
+      'Professional flooring, demolition, and junk removal services across Salt Lake County and surrounding areas. Licensed, insured, and locally owned since 2014.',
     type: 'website',
     locale: 'en_US',
     siteName: 'Wild West Construction',
@@ -60,7 +61,7 @@ export const metadata: Metadata = {
         url: '/images/og-wildwest-construction.jpg',
         width: 1200,
         height: 630,
-        alt: 'Wild West Construction - Utah\'s Trusted Construction Experts serving 23+ cities',
+        alt: "Wild West Construction - Utah's Trusted Construction Experts serving 23+ cities",
         type: 'image/jpeg',
       },
       {
@@ -72,13 +73,12 @@ export const metadata: Metadata = {
       },
     ],
     countryName: 'United States',
-    region: 'UT',
-    locality: 'Salt Lake City',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Wild West Construction - Utah\'s Premier Construction Company',
-    description: 'Professional flooring, demolition, and junk removal services across 23+ Utah cities. Licensed, insured, and locally trusted.',
+    title: "Wild West Construction - Utah's Premier Construction Company",
+    description:
+      'Professional flooring, demolition, and junk removal services across 23+ Utah cities. Licensed, insured, and locally trusted.',
     site: '@wildwestconstr',
     creator: '@wildwestconstr',
     images: ['/images/og-wildwest-construction.jpg'],
@@ -97,17 +97,17 @@ export const metadata: Metadata = {
   verification: {
     google: process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION || 'google-site-verification-code',
     yandex: process.env.NEXT_PUBLIC_YANDEX_VERIFICATION || 'yandex-verification-code',
-    bing: process.env.NEXT_PUBLIC_BING_VERIFICATION || 'bing-verification-code',
   },
   other: {
     'geo.region': 'US-UT',
     'geo.placename': 'Salt Lake City, Utah',
     'geo.position': '40.7608;-111.8910',
-    'ICBM': '40.7608, -111.8910',
+    ICBM: '40.7608, -111.8910',
     'DC.title': 'Wild West Construction - Utah Construction Services',
     'DC.creator': 'Wild West Construction',
     'DC.subject': 'Construction Services, Flooring, Demolition, Junk Removal',
-    'DC.description': 'Professional construction services across Utah including flooring installation, demolition, and junk removal',
+    'DC.description':
+      'Professional construction services across Utah including flooring installation, demolition, and junk removal',
     'DC.publisher': 'Wild West Construction',
     'DC.contributor': 'Wild West Construction Team',
     'DC.date': '2014',
@@ -133,7 +133,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="manifest" href="/site.webmanifest" />
         <meta name="msapplication-TileColor" content="#7C5035" />
         <meta name="theme-color" content="#7C5035" />
-        
+
         {/* DNS Prefetch and Preconnect for performance */}
         <link rel="dns-prefetch" href="//fonts.googleapis.com" />
         <link rel="dns-prefetch" href="//fonts.gstatic.com" />
@@ -194,9 +194,21 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 
         {/* Hreflang tags for language alternatives */}
-        <link rel="alternate" hrefLang="en-US" href={process.env.NEXT_PUBLIC_SITE_URL || 'https://wildwestconstruction.com'} />
-        <link rel="alternate" hrefLang="es-US" href={`${process.env.NEXT_PUBLIC_SITE_URL || 'https://wildwestconstruction.com'}/es`} />
-        <link rel="alternate" hrefLang="x-default" href={process.env.NEXT_PUBLIC_SITE_URL || 'https://wildwestconstruction.com'} />
+        <link
+          rel="alternate"
+          hrefLang="en-US"
+          href={process.env.NEXT_PUBLIC_SITE_URL || 'https://wildwestconstruction.com'}
+        />
+        <link
+          rel="alternate"
+          hrefLang="es-US"
+          href={`${process.env.NEXT_PUBLIC_SITE_URL || 'https://wildwestconstruction.com'}/es`}
+        />
+        <link
+          rel="alternate"
+          hrefLang="x-default"
+          href={process.env.NEXT_PUBLIC_SITE_URL || 'https://wildwestconstruction.com'}
+        />
 
         {/* Local Business structured data */}
         <script
@@ -208,7 +220,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               '@id': `${process.env.NEXT_PUBLIC_SITE_URL}#organization`,
               name: 'Wild West Construction',
               alternateName: 'Wild West Construction LLC',
-              description: 'Professional construction services including flooring, demolition, and junk removal across Utah',
+              description:
+                'Professional construction services including flooring, demolition, and junk removal across Utah',
               url: process.env.NEXT_PUBLIC_SITE_URL,
               logo: `${process.env.NEXT_PUBLIC_SITE_URL}/images/wildwest-logo.png`,
               image: `${process.env.NEXT_PUBLIC_SITE_URL}/images/wildwest-construction-team.jpg`,
@@ -220,27 +233,27 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 addressLocality: 'Salt Lake City',
                 addressRegion: 'UT',
                 postalCode: '84101',
-                addressCountry: 'US'
+                addressCountry: 'US',
               },
               geo: {
                 '@type': 'GeoCoordinates',
                 latitude: 40.7608,
-                longitude: -111.8910
+                longitude: -111.891,
               },
               areaServed: [
                 {
                   '@type': 'State',
                   name: 'Utah',
-                  '@id': 'https://en.wikipedia.org/wiki/Utah'
+                  '@id': 'https://en.wikipedia.org/wiki/Utah',
                 },
                 {
                   '@type': 'AdministrativeArea',
                   name: 'Salt Lake County',
                   containedInPlace: {
                     '@type': 'State',
-                    name: 'Utah'
-                  }
-                }
+                    name: 'Utah',
+                  },
+                },
               ],
               serviceType: ['Construction', 'Flooring Installation', 'Demolition', 'Junk Removal'],
               hasOfferCatalog: {
@@ -252,63 +265,63 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                     itemOffered: {
                       '@type': 'Service',
                       name: 'Flooring Installation',
-                      description: 'Professional flooring installation services'
-                    }
+                      description: 'Professional flooring installation services',
+                    },
                   },
                   {
                     '@type': 'Offer',
                     itemOffered: {
                       '@type': 'Service',
                       name: 'Demolition Services',
-                      description: 'Safe and efficient demolition services'
-                    }
+                      description: 'Safe and efficient demolition services',
+                    },
                   },
                   {
                     '@type': 'Offer',
                     itemOffered: {
                       '@type': 'Service',
                       name: 'Junk Removal',
-                      description: 'Fast and reliable junk removal services'
-                    }
-                  }
-                ]
+                      description: 'Fast and reliable junk removal services',
+                    },
+                  },
+                ],
               },
               openingHoursSpecification: [
                 {
                   '@type': 'OpeningHoursSpecification',
                   dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
                   opens: '07:00',
-                  closes: '18:00'
+                  closes: '18:00',
                 },
                 {
                   '@type': 'OpeningHoursSpecification',
                   dayOfWeek: 'Saturday',
                   opens: '08:00',
-                  closes: '16:00'
-                }
+                  closes: '16:00',
+                },
               ],
               aggregateRating: {
                 '@type': 'AggregateRating',
                 ratingValue: '4.9',
                 reviewCount: '127',
-                bestRating: '5'
+                bestRating: '5',
               },
               founder: {
                 '@type': 'Person',
-                name: 'John Smith'
+                name: 'John Smith',
               },
               foundingDate: '2014',
               numberOfEmployees: '15-25',
               paymentAccepted: 'Cash, Check, Credit Card',
               priceRange: '$$',
-              slogan: 'Building Utah\'s Future, One Project at a Time',
+              slogan: "Building Utah's Future, One Project at a Time",
               sameAs: [
                 'https://www.facebook.com/wildwestconstruction',
                 'https://www.linkedin.com/company/wild-west-construction',
                 'https://www.yelp.com/biz/wild-west-construction',
-                'https://www.bbb.org/us/ut/profile/general-contractor/wild-west-construction'
-              ]
-            })
+                'https://www.bbb.org/us/ut/profile/general-contractor/wild-west-construction',
+              ],
+            }),
           }}
         />
 
@@ -323,7 +336,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               name: 'Wild West Construction',
               url: process.env.NEXT_PUBLIC_SITE_URL,
               logo: `${process.env.NEXT_PUBLIC_SITE_URL}/images/wildwest-logo.png`,
-              description: 'Utah\'s premier construction company specializing in flooring, demolition, and junk removal services',
+              description:
+                "Utah's premier construction company specializing in flooring, demolition, and junk removal services",
               foundingDate: '2014',
               contactPoint: [
                 {
@@ -331,8 +345,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                   telephone: '+18015550123',
                   contactType: 'customer service',
                   areaServed: 'US-UT',
-                  availableLanguage: ['English', 'Spanish']
-                }
+                  availableLanguage: ['English', 'Spanish'],
+                },
               ],
               address: {
                 '@type': 'PostalAddress',
@@ -340,13 +354,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 addressLocality: 'Salt Lake City',
                 addressRegion: 'UT',
                 postalCode: '84101',
-                addressCountry: 'US'
+                addressCountry: 'US',
               },
               sameAs: [
                 'https://www.facebook.com/wildwestconstruction',
-                'https://www.linkedin.com/company/wild-west-construction'
-              ]
-            })
+                'https://www.linkedin.com/company/wild-west-construction',
+              ],
+            }),
           }}
         />
 
@@ -361,18 +375,19 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               name: 'Wild West Construction',
               alternateName: 'Wild West Construction Utah',
               url: process.env.NEXT_PUBLIC_SITE_URL,
-              description: 'Professional construction services across Utah including flooring, demolition, and junk removal',
+              description:
+                'Professional construction services across Utah including flooring, demolition, and junk removal',
               publisher: {
                 '@type': 'Organization',
-                '@id': `${process.env.NEXT_PUBLIC_SITE_URL}#organization`
+                '@id': `${process.env.NEXT_PUBLIC_SITE_URL}#organization`,
               },
               potentialAction: {
                 '@type': 'SearchAction',
                 target: `${process.env.NEXT_PUBLIC_SITE_URL}/search?q={search_term_string}`,
-                'query-input': 'required name=search_term_string'
+                'query-input': 'required name=search_term_string',
               },
-              inLanguage: ['en-US', 'es-US']
-            })
+              inLanguage: ['en-US', 'es-US'],
+            }),
           }}
         />
 

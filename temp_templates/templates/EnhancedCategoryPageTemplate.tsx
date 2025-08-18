@@ -3,7 +3,14 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { ServiceData, CityData } from '@/lib/data-parser';
-import { Button, Card, Badge, TrustIndicator, ProgressiveForm, StickyMobileCTA } from '@/components/ui';
+import {
+  Button,
+  Card,
+  Badge,
+  TrustIndicator,
+  ProgressiveForm,
+  StickyMobileCTA,
+} from '@/components/ui';
 
 interface EnhancedCategoryPageTemplateProps {
   category: string;
@@ -44,10 +51,26 @@ export const EnhancedCategoryPageTemplate: React.FC<EnhancedCategoryPageTemplate
         'Same-day consultation',
       ],
       process: [
-        { step: 'Consultation', time: 'Day 1', description: 'Free in-home measurement and material selection' },
-        { step: 'Preparation', time: 'Day 2', description: 'Remove old flooring and prepare subfloor' },
-        { step: 'Installation', time: 'Day 3-4', description: 'Professional installation by certified technicians' },
-        { step: 'Finishing', time: 'Day 5', description: 'Final touches, cleanup, and walkthrough' },
+        {
+          step: 'Consultation',
+          time: 'Day 1',
+          description: 'Free in-home measurement and material selection',
+        },
+        {
+          step: 'Preparation',
+          time: 'Day 2',
+          description: 'Remove old flooring and prepare subfloor',
+        },
+        {
+          step: 'Installation',
+          time: 'Day 3-4',
+          description: 'Professional installation by certified technicians',
+        },
+        {
+          step: 'Finishing',
+          time: 'Day 5',
+          description: 'Final touches, cleanup, and walkthrough',
+        },
       ],
     },
     Demolition: {
@@ -71,9 +94,21 @@ export const EnhancedCategoryPageTemplate: React.FC<EnhancedCategoryPageTemplate
       ],
       process: [
         { step: 'Assessment', time: 'Day 1', description: 'Site inspection and safety planning' },
-        { step: 'Preparation', time: 'Day 1', description: 'Secure permits and protect surrounding areas' },
-        { step: 'Demolition', time: 'Day 2', description: 'Systematic demolition following safety protocols' },
-        { step: 'Cleanup', time: 'Day 3', description: 'Complete debris removal and site cleaning' },
+        {
+          step: 'Preparation',
+          time: 'Day 1',
+          description: 'Secure permits and protect surrounding areas',
+        },
+        {
+          step: 'Demolition',
+          time: 'Day 2',
+          description: 'Systematic demolition following safety protocols',
+        },
+        {
+          step: 'Cleanup',
+          time: 'Day 3',
+          description: 'Complete debris removal and site cleaning',
+        },
       ],
     },
     'Junk Removal': {
@@ -109,9 +144,13 @@ export const EnhancedCategoryPageTemplate: React.FC<EnhancedCategoryPageTemplate
   // Calculate price based on selections
   useEffect(() => {
     const sizeMultipliers = { small: 0.7, medium: 1.0, large: 1.5, xlarge: 2.0 };
-    const materialMultiplier = config.materials.find(m => m.name === selectedMaterial)?.multiplier || 1;
+    const materialMultiplier =
+      config.materials.find((m) => m.name === selectedMaterial)?.multiplier || 1;
     const basePrice = config.avgPrice;
-    const calculated = basePrice * sizeMultipliers[selectedSize as keyof typeof sizeMultipliers] * materialMultiplier;
+    const calculated =
+      basePrice *
+      sizeMultipliers[selectedSize as keyof typeof sizeMultipliers] *
+      materialMultiplier;
     setEstimatedPrice(Math.round(calculated));
   }, [selectedSize, selectedMaterial, config]);
 
@@ -130,9 +169,13 @@ export const EnhancedCategoryPageTemplate: React.FC<EnhancedCategoryPageTemplate
         <div className="container pt-20 pb-16">
           {/* Breadcrumbs */}
           <nav className="flex items-center gap-2 text-sm mb-6 text-white/80">
-            <Link href="/" className="hover:text-white">Home</Link>
+            <Link href="/" className="hover:text-white">
+              Home
+            </Link>
             <span>/</span>
-            <Link href="/services" className="hover:text-white">Services</Link>
+            <Link href="/services" className="hover:text-white">
+              Services
+            </Link>
             <span>/</span>
             <span className="text-white font-medium">{category}</span>
           </nav>
@@ -151,7 +194,7 @@ export const EnhancedCategoryPageTemplate: React.FC<EnhancedCategoryPageTemplate
               </h1>
 
               <p className="text-xl-responsive opacity-90 mb-6">
-                Expert {category.toLowerCase()} contractors with {services.length}+ service options. 
+                Expert {category.toLowerCase()} contractors with {services.length}+ service options.
                 Licensed, insured, and guaranteed satisfaction.
               </p>
 
@@ -159,8 +202,18 @@ export const EnhancedCategoryPageTemplate: React.FC<EnhancedCategoryPageTemplate
               <div className="grid grid-cols-2 gap-3 mb-8">
                 {config.benefits.map((benefit, idx) => (
                   <div key={idx} className="flex items-start gap-2">
-                    <svg className="w-5 h-5 text-cta mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    <svg
+                      className="w-5 h-5 text-cta mt-0.5 flex-shrink-0"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M5 13l4 4L19 7"
+                      />
                     </svg>
                     <span className="text-sm">{benefit}</span>
                   </div>
@@ -192,22 +245,26 @@ export const EnhancedCategoryPageTemplate: React.FC<EnhancedCategoryPageTemplate
             {/* Stats and Trust Section */}
             <div className="space-y-6">
               {/* Price Range Card */}
-              <Card variant="elevated" className="bg-white/10 backdrop-blur-md border border-white/20 text-white">
+              <Card
+                variant="elevated"
+                className="bg-white/10 backdrop-blur-md border border-white/20 text-white"
+              >
                 <h3 className="text-xl font-semibold mb-4">Typical Investment Range</h3>
                 <div className="flex items-center justify-between mb-4">
-                  <span className="text-3xl font-bold">${config.priceRange.min.toLocaleString()}</span>
+                  <span className="text-3xl font-bold">
+                    ${config.priceRange.min.toLocaleString()}
+                  </span>
                   <span className="text-2xl">→</span>
-                  <span className="text-3xl font-bold">${config.priceRange.max.toLocaleString()}</span>
+                  <span className="text-3xl font-bold">
+                    ${config.priceRange.max.toLocaleString()}
+                  </span>
                 </div>
                 <div className="bg-white/20 rounded-full h-3 relative overflow-hidden">
-                  <div 
+                  <div
                     className="absolute left-0 h-full bg-gradient-to-r from-cta to-cta-hover rounded-full"
                     style={{ width: '65%' }}
                   />
-                  <div 
-                    className="absolute h-full w-1 bg-white"
-                    style={{ left: '65%' }}
-                  />
+                  <div className="absolute h-full w-1 bg-white" style={{ left: '65%' }} />
                 </div>
                 <p className="text-sm mt-3 opacity-90">
                   Average project: ${config.avgPrice.toLocaleString()}
@@ -244,13 +301,11 @@ export const EnhancedCategoryPageTemplate: React.FC<EnhancedCategoryPageTemplate
       <section id="services" className="py-16 bg-white">
         <div className="container">
           <div className="text-center mb-12">
-            <h2 className="text-3xl-responsive font-bold mb-4">
-              Compare {category} Options
-            </h2>
+            <h2 className="text-3xl-responsive font-bold mb-4">Compare {category} Options</h2>
             <p className="text-lg text-gray-600 max-w-3xl mx-auto mb-6">
               Find the perfect {category.toLowerCase()} solution for your needs and budget
             </p>
-            
+
             {/* View Toggle */}
             <div className="inline-flex bg-gray-100 rounded-lg p-1">
               <button
@@ -287,19 +342,19 @@ export const EnhancedCategoryPageTemplate: React.FC<EnhancedCategoryPageTemplate
                       POPULAR
                     </div>
                   )}
-                  
+
                   <h3 className="text-xl font-semibold mb-3 group-hover:text-brand-primary transition-colors">
                     {service.service}
                   </h3>
-                  
-                  <p className="text-gray-600 mb-4 line-clamp-2">
-                    {service.description}
-                  </p>
-                  
+
+                  <p className="text-gray-600 mb-4 line-clamp-2">{service.description}</p>
+
                   <div className="space-y-3 mb-6">
                     <div className="flex justify-between items-center">
                       <span className="text-sm text-gray-500">Average Cost:</span>
-                      <span className="font-bold text-lg">${service.averagePrice?.toLocaleString()}</span>
+                      <span className="font-bold text-lg">
+                        ${service.averagePrice?.toLocaleString()}
+                      </span>
                     </div>
                     <div className="flex justify-between items-center">
                       <span className="text-sm text-gray-500">Timeline:</span>
@@ -310,13 +365,8 @@ export const EnhancedCategoryPageTemplate: React.FC<EnhancedCategoryPageTemplate
                       <span className="font-medium text-trust">2 Years</span>
                     </div>
                   </div>
-                  
-                  <Button
-                    variant="primary"
-                    fullWidth
-                    size="sm"
-                    animate
-                  >
+
+                  <Button variant="primary" fullWidth size="sm" animate>
                     Get {service.service} Quote →
                   </Button>
                 </Card>
@@ -342,13 +392,15 @@ export const EnhancedCategoryPageTemplate: React.FC<EnhancedCategoryPageTemplate
                       <td className="p-4">
                         <div>
                           <div className="font-medium">{service.service}</div>
-                          <div className="text-sm text-gray-600 max-w-xs">{service.description}</div>
+                          <div className="text-sm text-gray-600 max-w-xs">
+                            {service.description}
+                          </div>
                         </div>
                       </td>
                       <td className="p-4 text-center">
                         <div className="font-bold">
-                          ${(service.averagePrice * 0.8).toLocaleString()} - 
-                          ${(service.averagePrice * 1.2).toLocaleString()}
+                          ${(service.averagePrice * 0.8).toLocaleString()} - $
+                          {(service.averagePrice * 1.2).toLocaleString()}
                         </div>
                       </td>
                       <td className="p-4 text-center">{service.duration || config.timeline}</td>
@@ -400,11 +452,11 @@ export const EnhancedCategoryPageTemplate: React.FC<EnhancedCategoryPageTemplate
             <h2 className="text-3xl-responsive font-bold text-center mb-12">
               Our {category} Process
             </h2>
-            
+
             <div className="relative">
               {/* Timeline Line */}
               <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-gray-300 hidden md:block" />
-              
+
               {/* Process Steps */}
               <div className="space-y-8">
                 {config.process.map((step, idx) => (
@@ -413,7 +465,7 @@ export const EnhancedCategoryPageTemplate: React.FC<EnhancedCategoryPageTemplate
                     <div className="flex-shrink-0 w-16 h-16 bg-brand-primary text-white rounded-full flex items-center justify-center font-bold text-xl relative z-10">
                       {idx + 1}
                     </div>
-                    
+
                     {/* Step Content */}
                     <Card className="flex-1" variant="elevated">
                       <div className="flex justify-between items-start mb-2">
@@ -428,12 +480,7 @@ export const EnhancedCategoryPageTemplate: React.FC<EnhancedCategoryPageTemplate
             </div>
 
             <div className="text-center mt-12">
-              <Button
-                onClick={() => setShowCalculator(true)}
-                variant="primary"
-                size="lg"
-                animate
-              >
+              <Button onClick={() => setShowCalculator(true)} variant="primary" size="lg" animate>
                 Start Your {category} Project →
               </Button>
             </div>
@@ -447,7 +494,7 @@ export const EnhancedCategoryPageTemplate: React.FC<EnhancedCategoryPageTemplate
           <h2 className="text-3xl-responsive font-bold text-center mb-12">
             {category} Materials & Options
           </h2>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
             {config.materials.map((material) => (
               <Card
@@ -565,11 +612,14 @@ export const EnhancedCategoryPageTemplate: React.FC<EnhancedCategoryPageTemplate
                         />
                         <span className="font-medium">{material.name}</span>
                         {material.popular && (
-                          <Badge variant="warning" size="sm">Popular</Badge>
+                          <Badge variant="warning" size="sm">
+                            Popular
+                          </Badge>
                         )}
                       </div>
                       <span className="text-sm text-gray-600">
-                        {material.multiplier > 1 ? '+' : ''}{Math.round((material.multiplier - 1) * 100)}%
+                        {material.multiplier > 1 ? '+' : ''}
+                        {Math.round((material.multiplier - 1) * 100)}%
                       </span>
                     </label>
                   ))}
@@ -582,9 +632,7 @@ export const EnhancedCategoryPageTemplate: React.FC<EnhancedCategoryPageTemplate
                 <div className="text-4xl font-bold text-brand-primary mb-2">
                   ${estimatedPrice.toLocaleString()}
                 </div>
-                <div className="text-sm text-gray-600">
-                  Save up to $500 when you book today!
-                </div>
+                <div className="text-sm text-gray-600">Save up to $500 when you book today!</div>
               </Card>
 
               {/* Contact Form */}

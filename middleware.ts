@@ -59,7 +59,7 @@ export function middleware(request: NextRequest) {
   if (locationsMatch) {
     const [, city, service] = locationsMatch;
     const newUrl = new URL(request.url);
-    
+
     // Map city names to city-ut format
     const citySlug = city + '-ut';
     newUrl.pathname = `/${citySlug}/${service}/`;
@@ -69,17 +69,17 @@ export function middleware(request: NextRequest) {
   // First, check if this is a malformed city URL without -ut suffix
   // Pattern: /city-name-service-name (all combined without proper separation)
   const malformedMatch = pathname.match(/^\/([a-z-]+)$/);
-  
+
   if (malformedMatch) {
     const fullSlug = malformedMatch[1];
-    
+
     // Check if this matches any of our valid cities at the start
     for (const city of VALID_CITIES) {
       if (fullSlug.startsWith(city + '-')) {
         // Extract the service part after the city name
         const servicePartStart = city.length + 1;
         const servicePart = fullSlug.substring(servicePartStart);
-        
+
         if (servicePart) {
           // Redirect to the correct format: /city-ut/service/
           const newUrl = new URL(request.url);

@@ -3,7 +3,14 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { ServiceData, CityData } from '@/lib/data-parser';
-import { Button, Card, Badge, TrustIndicator, ProgressiveForm, StickyMobileCTA } from '@/components/ui';
+import {
+  Button,
+  Card,
+  Badge,
+  TrustIndicator,
+  ProgressiveForm,
+  StickyMobileCTA,
+} from '@/components/ui';
 import { OptimizedImage } from '@/components/ui';
 
 interface EnhancedCityPageTemplateProps {
@@ -53,10 +60,13 @@ export const EnhancedCityPageTemplate: React.FC<EnhancedCityPageTemplateProps> =
   }, [city.name]);
 
   // Group services by category
-  const servicesByCategory = categories.reduce((acc, category) => {
-    acc[category] = services.filter(s => s.category === category).slice(0, 6);
-    return acc;
-  }, {} as Record<string, ServiceData[]>);
+  const servicesByCategory = categories.reduce(
+    (acc, category) => {
+      acc[category] = services.filter((s) => s.category === category).slice(0, 6);
+      return acc;
+    },
+    {} as Record<string, ServiceData[]>
+  );
 
   // Local business schema data
   const businessHours = {
@@ -110,9 +120,13 @@ export const EnhancedCityPageTemplate: React.FC<EnhancedCityPageTemplateProps> =
         <div className="container pt-20 pb-16">
           {/* Breadcrumbs for SEO */}
           <nav className="flex items-center gap-2 text-sm mb-6 text-white/80">
-            <Link href="/" className="hover:text-white">Home</Link>
+            <Link href="/" className="hover:text-white">
+              Home
+            </Link>
             <span>/</span>
-            <Link href="/utah" className="hover:text-white">Utah</Link>
+            <Link href="/utah" className="hover:text-white">
+              Utah
+            </Link>
             <span>/</span>
             <span className="text-white font-medium">{city.name}</span>
           </nav>
@@ -128,10 +142,10 @@ export const EnhancedCityPageTemplate: React.FC<EnhancedCityPageTemplateProps> =
               <h1 className="text-4xl-responsive md:text-5xl-responsive font-bold mb-4">
                 {city.name} Construction Services
               </h1>
-              
+
               <p className="text-xl-responsive opacity-90 mb-6">
-                Your trusted local contractor for flooring, demolition, and junk removal. 
-                Licensed, insured, and proudly serving {population.toLocaleString()} {city.name} residents.
+                Your trusted local contractor for flooring, demolition, and junk removal. Licensed,
+                insured, and proudly serving {population.toLocaleString()} {city.name} residents.
               </p>
 
               {/* Local Stats Grid */}
@@ -163,14 +177,21 @@ export const EnhancedCityPageTemplate: React.FC<EnhancedCityPageTemplateProps> =
                   animate
                   icon={
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+                      />
                     </svg>
                   }
                 >
                   Call {city.name} Office
                 </Button>
                 <Button
-                  onClick={() => document.getElementById('local-quote')?.scrollIntoView({ behavior: 'smooth' })}
+                  onClick={() =>
+                    document.getElementById('local-quote')?.scrollIntoView({ behavior: 'smooth' })
+                  }
                   variant="secondary"
                   size="lg"
                   className="bg-white/20 hover:bg-white/30 backdrop-blur-sm"
@@ -207,12 +228,22 @@ export const EnhancedCityPageTemplate: React.FC<EnhancedCityPageTemplateProps> =
                     </div>
                   </div>
                 </div>
-                
+
                 {/* Business Hours */}
                 <div className="p-6 bg-white">
                   <h3 className="font-semibold mb-3 flex items-center gap-2">
-                    <svg className="w-5 h-5 text-cta" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    <svg
+                      className="w-5 h-5 text-cta"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                      />
                     </svg>
                     {city.name} Office Hours
                   </h3>
@@ -239,8 +270,8 @@ export const EnhancedCityPageTemplate: React.FC<EnhancedCityPageTemplateProps> =
               {city.name} Construction Services
             </h2>
             <p className="text-lg-responsive text-gray-600 max-w-3xl mx-auto">
-              Complete home improvement solutions for {city.name} residents. 
-              All work performed by licensed local contractors with guaranteed satisfaction.
+              Complete home improvement solutions for {city.name} residents. All work performed by
+              licensed local contractors with guaranteed satisfaction.
             </p>
           </div>
 
@@ -267,26 +298,30 @@ export const EnhancedCityPageTemplate: React.FC<EnhancedCityPageTemplateProps> =
                       variant="bordered"
                       hover
                       className="group cursor-pointer"
-                      onClick={() => window.location.href = `/${city.slug}/${service.slug}`}
+                      onClick={() => (window.location.href = `/${city.slug}/${service.slug}`)}
                     >
                       <div className="flex justify-between items-start mb-3">
                         <h4 className="font-semibold text-lg group-hover:text-brand-primary transition-colors">
                           {service.service}
                         </h4>
-                        {(service as any).popular && <Badge variant="warning" size="sm">Popular</Badge>}
+                        {(service as any).popular && (
+                          <Badge variant="warning" size="sm">
+                            Popular
+                          </Badge>
+                        )}
                       </div>
-                      
+
                       <p className="text-gray-600 text-sm mb-4 line-clamp-2">
                         {service.description}
                       </p>
-                      
+
                       <div className="flex items-center justify-between text-sm">
                         <span className="text-gray-500">Starting at</span>
                         <span className="font-bold text-lg text-cta">
                           ${service.averagePrice?.toLocaleString() || '299'}
                         </span>
                       </div>
-                      
+
                       <Button
                         variant="outline"
                         size="sm"
@@ -331,12 +366,14 @@ export const EnhancedCityPageTemplate: React.FC<EnhancedCityPageTemplateProps> =
                           className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cta focus:border-transparent"
                         >
                           <option value="">Select Service</option>
-                          {categories.map(cat => (
-                            <option key={cat} value={cat}>{cat}</option>
+                          {categories.map((cat) => (
+                            <option key={cat} value={cat}>
+                              {cat}
+                            </option>
                           ))}
                         </select>
                       </div>
-                      
+
                       <div>
                         <label className="block text-sm font-medium mb-1">Project Timeline</label>
                         <select className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cta focus:border-transparent">
@@ -366,7 +403,7 @@ export const EnhancedCityPageTemplate: React.FC<EnhancedCityPageTemplateProps> =
                           className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cta focus:border-transparent"
                         />
                       </div>
-                      
+
                       <div>
                         <label className="block text-sm font-medium mb-1">Phone Number</label>
                         <input
@@ -378,7 +415,9 @@ export const EnhancedCityPageTemplate: React.FC<EnhancedCityPageTemplateProps> =
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium mb-1">Project Details (Optional)</label>
+                      <label className="block text-sm font-medium mb-1">
+                        Project Details (Optional)
+                      </label>
                       <textarea
                         rows={3}
                         placeholder="Tell us about your project..."
@@ -386,13 +425,7 @@ export const EnhancedCityPageTemplate: React.FC<EnhancedCityPageTemplateProps> =
                       />
                     </div>
 
-                    <Button
-                      type="submit"
-                      variant="primary"
-                      size="lg"
-                      fullWidth
-                      animate
-                    >
+                    <Button type="submit" variant="primary" size="lg" fullWidth animate>
                       Get My Free {city.name} Quote →
                     </Button>
                   </form>
@@ -430,8 +463,8 @@ export const EnhancedCityPageTemplate: React.FC<EnhancedCityPageTemplateProps> =
                     <div className="text-3xl mb-2">🛡️</div>
                     <h3 className="font-semibold mb-2">{city.name} Guarantee</h3>
                     <p className="text-sm text-gray-600">
-                      100% satisfaction guaranteed for all {city.name} projects. 
-                      2-year warranty on workmanship.
+                      100% satisfaction guaranteed for all {city.name} projects. 2-year warranty on
+                      workmanship.
                     </p>
                   </div>
                 </Card>
@@ -440,16 +473,44 @@ export const EnhancedCityPageTemplate: React.FC<EnhancedCityPageTemplateProps> =
                 <Card>
                   <h3 className="font-semibold mb-3">Contact {city.name} Office</h3>
                   <div className="space-y-2 text-sm">
-                    <a href="tel:18016914065" className="flex items-center gap-2 text-brand-primary hover:text-brand-primary/80">
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                    <a
+                      href="tel:18016914065"
+                      className="flex items-center gap-2 text-brand-primary hover:text-brand-primary/80"
+                    >
+                      <svg
+                        className="w-4 h-4"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+                        />
                       </svg>
                       (801) 691-4065
                     </a>
                     <div className="flex items-center gap-2">
-                      <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                      <svg
+                        className="w-4 h-4 text-gray-400"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                        />
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                        />
                       </svg>
                       Serving all of {city.name}, UT
                     </div>
@@ -464,9 +525,7 @@ export const EnhancedCityPageTemplate: React.FC<EnhancedCityPageTemplateProps> =
       {/* Nearby Cities */}
       <section className="py-16 bg-gray-50">
         <div className="container">
-          <h2 className="text-2xl font-bold text-center mb-8">
-            Also Serving Nearby Cities
-          </h2>
+          <h2 className="text-2xl font-bold text-center mb-8">Also Serving Nearby Cities</h2>
           <div className="flex flex-wrap justify-center gap-3">
             {nearbyCities.slice(0, 12).map((nearbyCity) => (
               <Link
@@ -487,23 +546,24 @@ export const EnhancedCityPageTemplate: React.FC<EnhancedCityPageTemplateProps> =
           <div className="max-w-4xl mx-auto prose prose-gray">
             <h2>Professional Construction Services in {city.name}, Utah</h2>
             <p>
-              Wild West Construction has been proudly serving {city.name} and surrounding areas 
-              for over {localStats.yearsServing} years. As a locally owned and operated business, 
-              we understand the unique needs of {city.name} homeowners and businesses.
+              Wild West Construction has been proudly serving {city.name} and surrounding areas for
+              over {localStats.yearsServing} years. As a locally owned and operated business, we
+              understand the unique needs of {city.name} homeowners and businesses.
             </p>
-            
+
             <h3>Why {city.name} Residents Choose Wild West Construction</h3>
             <p>
-              With {localStats.projectsCompleted}+ completed projects in {city.name}, we've built 
-              a reputation for excellence, reliability, and fair pricing. Our {localStats.averageRating}-star 
-              rating from {localStats.reviewCount}+ local reviews speaks to our commitment to quality.
+              With {localStats.projectsCompleted}+ completed projects in {city.name}, we've built a
+              reputation for excellence, reliability, and fair pricing. Our{' '}
+              {localStats.averageRating}-star rating from {localStats.reviewCount}+ local reviews
+              speaks to our commitment to quality.
             </p>
-            
+
             <h3>Services We Provide in {city.name}</h3>
             <p>
-              From emergency repairs to major renovations, our {city.name} team handles it all. 
-              We specialize in flooring installation, demolition services, and junk removal for 
-              both residential and commercial properties throughout {city.name} and Salt Lake County.
+              From emergency repairs to major renovations, our {city.name} team handles it all. We
+              specialize in flooring installation, demolition services, and junk removal for both
+              residential and commercial properties throughout {city.name} and Salt Lake County.
             </p>
           </div>
         </div>

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import OpenAI from 'openai';
-import { createServiceClient } from '@/lib/supabase';
+import { createServerServiceClient } from '@/lib/supabase-server';
 import {
   withApiMiddleware,
   successResponse,
@@ -77,7 +77,7 @@ interface ChatRequestBody {
 
 export const POST = withApiMiddleware(
   async (req: NextRequest) => {
-    const supabase = createServiceClient();
+    const supabase = createServerServiceClient();
 
     try {
       // Check if OpenAI is configured

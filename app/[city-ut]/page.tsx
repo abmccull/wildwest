@@ -295,11 +295,7 @@ export default function CityPage({ params }: CityPageProps) {
   return (
     <>
       {/* Enhanced Local SEO Schema Markup */}
-      <LocalSchemaMarkup 
-        city={city} 
-        showNeighborhoods={true}
-        showReviews={true}
-      />
+      <LocalSchemaMarkup city={city} showNeighborhoods={true} showReviews={true} />
 
       {/* Legacy Structured Data (keeping for compatibility) */}
       <script
@@ -325,7 +321,8 @@ export default function CityPage({ params }: CityPageProps) {
               Professional Construction Services in {cityDisplayName}
             </h1>
             <p className="text-xl text-gray-600 mb-8 leading-relaxed">
-              {cityContent?.overview || `Wild West Construction is your trusted partner for quality flooring, demolition, and
+              {cityContent?.overview ||
+                `Wild West Construction is your trusted partner for quality flooring, demolition, and
               junk removal services in ${cityDisplayName}, Utah. With years of experience serving ${countyName}, we deliver exceptional craftsmanship and reliable service you can count on.`}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">

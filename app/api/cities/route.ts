@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createServiceClient } from '@/lib/supabase';
+import { createServerServiceClient } from '@/lib/supabase-server';
 import { withApiMiddleware, successResponse, DatabaseError } from '@/lib/api-middleware';
 
 export const GET = withApiMiddleware(
   async (req: NextRequest) => {
-    const supabase = createServiceClient();
+    const supabase = createServerServiceClient();
 
     try {
       // Get query parameters

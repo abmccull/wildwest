@@ -1,6 +1,7 @@
 # 🎨 Wild West Construction - Master Design System Implementation Guide
 
 ## 📋 Table of Contents
+
 1. [Overview](#overview)
 2. [Design Tokens](#design-tokens)
 3. [Component Library](#component-library)
@@ -15,6 +16,7 @@
 This document outlines the complete design system implementation for Wild West Construction, focusing on conversion optimization, mobile-first design, and Core Web Vitals performance.
 
 ### Key Achievements
+
 - ✅ **11 Reusable UI Components** created
 - ✅ **4 Enhanced Page Templates** with conversion optimization
 - ✅ **Performance Monitoring** with Web Vitals tracking
@@ -24,13 +26,14 @@ This document outlines the complete design system implementation for Wild West C
 ## Design Tokens
 
 ### Color System
+
 ```css
 /* Brand Colors */
---brand-primary: #1e40af;    /* Deep Blue - Trust */
---brand-secondary: #059669;  /* Green - Action/Success */
---brand-accent: #dc2626;     /* Red - Urgency */
---brand-warning: #f59e0b;    /* Amber - Ratings/Attention */
---brand-info: #3b82f6;       /* Sky Blue - Information */
+--brand-primary: #1e40af; /* Deep Blue - Trust */
+--brand-secondary: #059669; /* Green - Action/Success */
+--brand-accent: #dc2626; /* Red - Urgency */
+--brand-warning: #f59e0b; /* Amber - Ratings/Attention */
+--brand-info: #3b82f6; /* Sky Blue - Information */
 
 /* Semantic Colors */
 --color-cta: #059669;
@@ -41,6 +44,7 @@ This document outlines the complete design system implementation for Wild West C
 ```
 
 ### Typography Scale
+
 ```css
 /* Mobile-First Responsive Sizing */
 --text-xs: clamp(0.75rem, 2.5vw, 0.875rem);
@@ -54,15 +58,16 @@ This document outlines the complete design system implementation for Wild West C
 ```
 
 ### Spacing System (8px Grid)
+
 ```css
---space-1: 0.25rem;  /* 4px */
---space-2: 0.5rem;   /* 8px */
---space-3: 0.75rem;  /* 12px */
---space-4: 1rem;     /* 16px */
---space-6: 1.5rem;   /* 24px */
---space-8: 2rem;     /* 32px */
---space-12: 3rem;    /* 48px */
---space-16: 4rem;    /* 64px */
+--space-1: 0.25rem; /* 4px */
+--space-2: 0.5rem; /* 8px */
+--space-3: 0.75rem; /* 12px */
+--space-4: 1rem; /* 16px */
+--space-6: 1.5rem; /* 24px */
+--space-8: 2rem; /* 32px */
+--space-12: 3rem; /* 48px */
+--space-16: 4rem; /* 64px */
 ```
 
 ## Component Library
@@ -70,9 +75,11 @@ This document outlines the complete design system implementation for Wild West C
 ### Core UI Components
 
 #### 1. Button Component
+
 **Location:** `/components/ui/Button.tsx`
 
 **Variants:**
+
 - `primary` - Main CTA (green)
 - `secondary` - Secondary actions (blue)
 - `urgent` - Urgency/limited offers (red with pulse)
@@ -80,28 +87,26 @@ This document outlines the complete design system implementation for Wild West C
 - `outline` - Border-only style
 
 **Usage:**
+
 ```tsx
-<Button 
-  variant="urgent"
-  size="lg"
-  animate
-  icon={<PhoneIcon />}
-  onClick={handleClick}
->
+<Button variant="urgent" size="lg" animate icon={<PhoneIcon />} onClick={handleClick}>
   Call Now - Save $500
 </Button>
 ```
 
 #### 2. Card Component
+
 **Location:** `/components/ui/Card.tsx`
 
 **Variants:**
+
 - `default` - Basic card with shadow
 - `elevated` - Enhanced shadow for prominence
 - `bordered` - Border emphasis
 - `gradient` - Gradient background
 
 **Usage:**
+
 ```tsx
 <Card variant="elevated" hover>
   <h3>Service Details</h3>
@@ -110,20 +115,25 @@ This document outlines the complete design system implementation for Wild West C
 ```
 
 #### 3. Badge Component
+
 **Location:** `/components/ui/Badge.tsx`
 
 **Variants:**
+
 - `default`, `success`, `warning`, `error`, `info`, `trust`
 
 **Features:**
+
 - Optional pulse animation
 - Icon support
 - Size variations (sm, md, lg)
 
 #### 4. TrustIndicator Component
+
 **Location:** `/components/ui/TrustIndicator.tsx`
 
 **Types:**
+
 - `rating` - Star ratings
 - `license` - Licensed & insured
 - `warranty` - Warranty period
@@ -132,9 +142,11 @@ This document outlines the complete design system implementation for Wild West C
 - `experience` - Years in business
 
 #### 5. ProgressiveForm Component
+
 **Location:** `/components/ui/ProgressiveForm.tsx`
 
 **Features:**
+
 - Multi-step form flow
 - Progress indicator
 - Field validation
@@ -142,6 +154,7 @@ This document outlines the complete design system implementation for Wild West C
 - Phone-first approach
 
 **Usage:**
+
 ```tsx
 <ProgressiveForm
   steps={[
@@ -161,9 +174,11 @@ This document outlines the complete design system implementation for Wild West C
 ```
 
 #### 6. StickyMobileCTA Component
+
 **Location:** `/components/ui/StickyMobileCTA.tsx`
 
 **Features:**
+
 - Context-aware messaging
 - Quick form toggle
 - Floating action buttons
@@ -172,9 +187,11 @@ This document outlines the complete design system implementation for Wild West C
 ## Page Templates
 
 ### 1. Enhanced Homepage Template
+
 **Location:** `/components/templates/EnhancedHomepageTemplate.tsx`
 
 **Key Features:**
+
 - Hero with instant quote form
 - Progressive disclosure (3 steps)
 - Real-time activity ticker
@@ -183,15 +200,18 @@ This document outlines the complete design system implementation for Wild West C
 - City-based SEO sections
 
 **Conversion Elements:**
+
 - Above-fold CTA form
 - Social proof badges
 - Urgency timer
 - $500 savings callout
 
 ### 2. Enhanced City Page Template
+
 **Location:** `/components/templates/EnhancedCityPageTemplate.tsx`
 
 **Local SEO Features:**
+
 - City-specific H1 tags
 - Local statistics display
 - Population-based trust signals
@@ -199,15 +219,18 @@ This document outlines the complete design system implementation for Wild West C
 - Nearby cities navigation
 
 **Conversion Elements:**
+
 - Emergency service banner
 - Local activity ticker
 - Office hours display
 - Local guarantee badge
 
 ### 3. Enhanced Category Page Template
+
 **Location:** `/components/templates/EnhancedCategoryPageTemplate.tsx`
 
 **Authority Building:**
+
 - Service comparison table
 - Interactive cost calculator
 - Process timeline
@@ -215,15 +238,18 @@ This document outlines the complete design system implementation for Wild West C
 - Grid/table view toggle
 
 **Conversion Elements:**
+
 - Price range display
 - Popular choice badges
 - Timeline expectations
 - Benefits checklist
 
 ### 4. Enhanced Service Page Template
+
 **Location:** `/components/templates/EnhancedServicePageTemplate.tsx`
 
 **Conversion Optimization:**
+
 - Urgency timer (15 min)
 - Exit intent popup ($250 off)
 - Special offer slide-in
@@ -231,6 +257,7 @@ This document outlines the complete design system implementation for Wild West C
 - FAQ accordion
 
 **Trust Elements:**
+
 - Gallery showcase
 - Video testimonials
 - Process timeline
@@ -239,9 +266,11 @@ This document outlines the complete design system implementation for Wild West C
 ## Performance Optimizations
 
 ### Web Vitals Monitoring
+
 **Location:** `/components/performance/WebVitalsReporter.tsx`
 
 **Metrics Tracked:**
+
 - CLS (Cumulative Layout Shift) < 0.1
 - FCP (First Contentful Paint) < 1.8s
 - FID (First Input Delay) < 100ms
@@ -250,9 +279,11 @@ This document outlines the complete design system implementation for Wild West C
 - TTFB (Time to First Byte) < 800ms
 
 ### Performance Utilities
+
 **Location:** `/lib/performance.ts`
 
 **Optimizations:**
+
 - Resource preloading
 - Image lazy loading
 - CSS deferring
@@ -261,9 +292,11 @@ This document outlines the complete design system implementation for Wild West C
 - Memory monitoring
 
 ### Next.js Configuration
+
 **Location:** `/next.config.js`
 
 **Optimizations:**
+
 - Image formats: AVIF, WebP
 - Bundle splitting
 - Cache headers
@@ -283,7 +316,7 @@ import { EnhancedHomepageTemplate } from '@/components/templates';
 export default function HomePage() {
   // Fetch your data
   const { categories, services, cities } = await getData();
-  
+
   return (
     <EnhancedHomepageTemplate
       categories={categories}
@@ -299,6 +332,7 @@ export default function HomePage() {
 ### Step 2: Configure Environment Variables
 
 Add to `.env.local`:
+
 ```env
 NEXT_PUBLIC_GA_ID=your-ga-id
 NEXT_PUBLIC_GTM_ID=your-gtm-id
@@ -309,6 +343,7 @@ NEXT_PUBLIC_ANALYTICS_ENDPOINT=https://api.wildwestconstruction.com/analytics
 ### Step 3: Update Global Styles
 
 Ensure `/app/globals.css` imports design system:
+
 ```css
 @import '../styles/design-system.css';
 ```
@@ -316,6 +351,7 @@ Ensure `/app/globals.css` imports design system:
 ### Step 4: Configure Analytics
 
 Analytics automatically tracks:
+
 - Page views
 - Web Vitals
 - Conversion events
@@ -325,6 +361,7 @@ Analytics automatically tracks:
 ### Step 5: Test Mobile Experience
 
 Use Chrome DevTools to test:
+
 1. Mobile viewport (375px, 667px)
 2. Touch interactions
 3. Network throttling (3G)
@@ -333,6 +370,7 @@ Use Chrome DevTools to test:
 ## Testing Checklist
 
 ### Functionality Tests
+
 - [ ] All forms submit correctly
 - [ ] Phone links work on mobile
 - [ ] WhatsApp button opens chat
@@ -342,6 +380,7 @@ Use Chrome DevTools to test:
 - [ ] City/service pages load
 
 ### Performance Tests
+
 - [ ] Lighthouse score > 90
 - [ ] LCP < 2.5s
 - [ ] FID < 100ms
@@ -349,6 +388,7 @@ Use Chrome DevTools to test:
 - [ ] TTFB < 800ms
 
 ### Mobile Tests
+
 - [ ] Touch targets >= 48px
 - [ ] Sticky CTA visible
 - [ ] Forms keyboard-accessible
@@ -356,6 +396,7 @@ Use Chrome DevTools to test:
 - [ ] Responsive text scales
 
 ### Conversion Tests
+
 - [ ] CTAs above fold
 - [ ] Forms have minimal fields
 - [ ] Trust indicators visible
@@ -365,6 +406,7 @@ Use Chrome DevTools to test:
 ## Metrics & KPIs
 
 ### Conversion Metrics
+
 Track these KPIs after implementation:
 
 1. **Form Completion Rate**
@@ -404,6 +446,7 @@ Track these KPIs after implementation:
 ## Deployment Checklist
 
 ### Pre-Deployment
+
 - [ ] Run `npm run build` successfully
 - [ ] Run `npm run type-check` - no errors
 - [ ] Test all pages locally
@@ -413,6 +456,7 @@ Track these KPIs after implementation:
 - [ ] Verify analytics tracking
 
 ### Post-Deployment
+
 - [ ] Monitor Web Vitals dashboard
 - [ ] Check Google Search Console
 - [ ] Verify form submissions work
@@ -424,6 +468,7 @@ Track these KPIs after implementation:
 ## Support & Maintenance
 
 ### Regular Tasks
+
 - Monitor Web Vitals weekly
 - Review conversion metrics
 - Update content as needed
@@ -431,12 +476,14 @@ Track these KPIs after implementation:
 - Optimize based on data
 
 ### Performance Monitoring
+
 - Use Web Vitals Reporter data
 - Check Lighthouse scores monthly
 - Monitor server response times
 - Review bundle sizes
 
 ### Conversion Optimization
+
 - A/B test CTA variations
 - Optimize form fields
 - Test urgency messaging
@@ -445,6 +492,7 @@ Track these KPIs after implementation:
 ## Conclusion
 
 The Master Design System is now fully implemented with:
+
 - ✅ Cohesive visual language
 - ✅ Mobile-first responsive design
 - ✅ Conversion optimization features
@@ -452,6 +500,7 @@ The Master Design System is now fully implemented with:
 - ✅ Production-ready components
 
 Expected impact:
+
 - **+40-50% Conversion Rate**
 - **-60% Form Abandonment**
 - **+25% Mobile Conversions**
@@ -462,5 +511,5 @@ The system is designed to scale with your business needs while maintaining consi
 
 ---
 
-*Last Updated: January 2025*
-*Version: 1.0.0*
+_Last Updated: January 2025_
+_Version: 1.0.0_

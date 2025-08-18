@@ -11,11 +11,13 @@
 The following environment variables must be configured in Vercel:
 
 ### Supabase Configuration
+
 - `NEXT_PUBLIC_SUPABASE_URL` - Your Supabase project URL
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY` - Your Supabase anonymous key
 - `SUPABASE_SERVICE_ROLE_KEY` - Your Supabase service role key (server-side only)
 
 ### Third-Party Services
+
 - `OPENAI_API_KEY` - OpenAI API key for chat functionality
 - `SLACK_WEBHOOK_URL` - Slack webhook for lead notifications
 - `RESEND_API_KEY` - Resend API key for email services
@@ -24,6 +26,7 @@ The following environment variables must be configured in Vercel:
 - `TURNSTILE_SECRET_KEY` - Cloudflare Turnstile secret key
 
 ### Additional Configuration
+
 - `NEXT_PUBLIC_SITE_URL` - Set to `https://wildwestslc.com`
 
 ## Deployment Steps
@@ -60,11 +63,13 @@ The following environment variables must be configured in Vercel:
 ### 4. Deploy from GitHub
 
 #### Option A: Automatic Deployment (Recommended)
+
 1. Push code to main branch
 2. Vercel automatically builds and deploys
 3. Monitor deployment in Vercel dashboard
 
 #### Option B: Manual Deployment
+
 1. Install Vercel CLI: `npm i -g vercel`
 2. Login: `vercel login`
 3. Deploy: `vercel --prod`
@@ -97,16 +102,19 @@ For CI/CD pipeline, add these secrets to GitHub repository:
 ## Monitoring & Maintenance
 
 ### Performance Monitoring
+
 - Vercel Analytics (built-in)
 - Google Analytics 4
 - Lighthouse CI reports
 
 ### Error Tracking
+
 - Check Vercel Functions logs
 - Monitor Supabase logs
 - Review Slack notifications
 
 ### Regular Maintenance
+
 - Update dependencies monthly
 - Review and optimize database queries
 - Monitor API usage and costs
@@ -115,18 +123,21 @@ For CI/CD pipeline, add these secrets to GitHub repository:
 ## Troubleshooting
 
 ### Build Failures
+
 1. Check build logs in Vercel
 2. Verify all environment variables are set
 3. Ensure TypeScript errors are resolved
 4. Check for missing dependencies
 
 ### Runtime Errors
+
 1. Check Vercel Functions logs
 2. Verify API endpoints are accessible
 3. Check Supabase connection
 4. Review browser console errors
 
 ### Performance Issues
+
 1. Enable ISR for dynamic pages
 2. Optimize images with next/image
 3. Review bundle size
@@ -145,6 +156,7 @@ If issues occur after deployment:
 ## Support
 
 For deployment issues:
+
 - Vercel Support: https://vercel.com/support
 - Next.js Documentation: https://nextjs.org/docs
 - Project Issues: Create GitHub issue

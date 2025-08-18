@@ -16,7 +16,7 @@ export interface TranslationStrings {
     getQuote: string;
     callNow: string;
   };
-  
+
   // Common
   common: {
     phone: string;
@@ -215,7 +215,7 @@ const ENGLISH_TRANSLATIONS: TranslationStrings = {
     about: 'About',
     contact: 'Contact',
     getQuote: 'Get Quote',
-    callNow: 'Call Now'
+    callNow: 'Call Now',
   },
   common: {
     phone: 'Phone',
@@ -239,30 +239,36 @@ const ENGLISH_TRANSLATIONS: TranslationStrings = {
     projects: 'Projects',
     completed: 'Completed',
     customers: 'Customers',
-    satisfied: 'Satisfied'
+    satisfied: 'Satisfied',
   },
   cityPage: {
     heroTitle: 'Professional Construction Services in {city}',
-    heroDescription: 'Wild West Construction is your trusted partner for quality flooring, demolition, and junk removal services in {city}, Utah. With years of experience serving {county}, we deliver exceptional craftsmanship and reliable service you can count on.',
+    heroDescription:
+      'Wild West Construction is your trusted partner for quality flooring, demolition, and junk removal services in {city}, Utah. With years of experience serving {county}, we deliver exceptional craftsmanship and reliable service you can count on.',
     whyChooseUs: 'Why Choose Wild West Construction in {city}?',
     localExpertise: 'Local Expertise',
-    localExpertiseDesc: 'We understand the unique construction needs of {city} residents. From the local building codes to the climate considerations, our team has the knowledge and experience to handle any project in {county}.',
+    localExpertiseDesc:
+      'We understand the unique construction needs of {city} residents. From the local building codes to the climate considerations, our team has the knowledge and experience to handle any project in {county}.',
     fastResponse: 'Fast Response Times',
-    fastResponseDesc: 'Located nearby, we can quickly respond to your construction needs in {city}. Our local presence means faster project starts, better communication, and more personalized service for every customer.',
+    fastResponseDesc:
+      'Located nearby, we can quickly respond to your construction needs in {city}. Our local presence means faster project starts, better communication, and more personalized service for every customer.',
     qualityCraftsmanship: 'Quality Craftsmanship',
-    qualityCraftsmanshipDesc: 'Every project in {city} is completed with attention to detail and quality materials. We take pride in our work and stand behind every installation, demolition, and cleanup service we provide.',
+    qualityCraftsmanshipDesc:
+      'Every project in {city} is completed with attention to detail and quality materials. We take pride in our work and stand behind every installation, demolition, and cleanup service we provide.',
     licensedInsured: 'Licensed & Insured',
-    licensedInsuredDesc: 'Wild West Construction is fully licensed and insured to work in {city} and throughout Utah. You can trust that your property and investment are protected when you choose our services.',
+    licensedInsuredDesc:
+      'Wild West Construction is fully licensed and insured to work in {city} and throughout Utah. You can trust that your property and investment are protected when you choose our services.',
     ourServices: 'Our Construction Services in {city}',
     recentProjects: 'Recent Projects in {city}',
     getFreeQuote: 'Get Your Free Quote Today',
     readyToTransform: 'Ready to Transform Your Space in {city}?',
-    joinSatisfiedCustomers: 'Join hundreds of satisfied customers who have trusted Wild West Construction with their projects. Contact us today to get started!',
+    joinSatisfiedCustomers:
+      'Join hundreds of satisfied customers who have trusted Wild West Construction with their projects. Contact us today to get started!',
     neighborhoods: 'Neighborhoods We Serve',
     serviceAreas: 'Service Areas',
     emergencyServices: 'Emergency Services',
     buildingCodes: 'Building Codes & Permits',
-    localPartnerships: 'Local Partnerships'
+    localPartnerships: 'Local Partnerships',
   },
   services: {
     flooring: {
@@ -274,7 +280,7 @@ const ENGLISH_TRANSLATIONS: TranslationStrings = {
       tileInstallation: 'Tile Installation',
       carpetInstallation: 'Carpet Installation',
       floorRefinishing: 'Floor Refinishing',
-      subfloorRepair: 'Subfloor Repair'
+      subfloorRepair: 'Subfloor Repair',
     },
     demolition: {
       title: 'Demolition Services',
@@ -284,7 +290,7 @@ const ENGLISH_TRANSLATIONS: TranslationStrings = {
       bathroomDemolition: 'Bathroom Demolition',
       concreteRemoval: 'Concrete Removal',
       structuralDemolition: 'Structural Demolition',
-      safeDemolition: 'Safe Demolition'
+      safeDemolition: 'Safe Demolition',
     },
     junkRemoval: {
       title: 'Junk Removal Services',
@@ -294,8 +300,8 @@ const ENGLISH_TRANSLATIONS: TranslationStrings = {
       applianceRemoval: 'Appliance Removal',
       basementCleanout: 'Basement Cleanout',
       yardWaste: 'Yard Waste',
-      commercialCleanup: 'Commercial Cleanup'
-    }
+      commercialCleanup: 'Commercial Cleanup',
+    },
   },
   forms: {
     name: 'Name',
@@ -317,14 +323,14 @@ const ENGLISH_TRANSLATIONS: TranslationStrings = {
     submitQuote: 'Submit Quote Request',
     required: 'Required',
     sending: 'Sending...',
-    success: 'Thank you! We\'ll contact you soon.',
+    success: "Thank you! We'll contact you soon.",
     error: 'Sorry, there was an error. Please try again.',
     tryAgain: 'Try Again',
     bestTimeToCall: 'Best Time to Call',
     morning: 'Morning',
     afternoon: 'Afternoon',
     evening: 'Evening',
-    weekend: 'Weekend'
+    weekend: 'Weekend',
   },
   testimonials: {
     title: 'Customer Testimonials',
@@ -337,10 +343,10 @@ const ENGLISH_TRANSLATIONS: TranslationStrings = {
     completedOn: 'Completed on',
     rating: 'Rating',
     outOf: 'out of',
-    stars: 'stars'
+    stars: 'stars',
   },
   footer: {
-    tagline: 'Building Utah\'s Future, One Project at a Time',
+    tagline: "Building Utah's Future, One Project at a Time",
     quickLinks: 'Quick Links',
     serviceAreas: 'Service Areas',
     contactInfo: 'Contact Information',
@@ -354,16 +360,19 @@ const ENGLISH_TRANSLATIONS: TranslationStrings = {
     allRightsReserved: 'All rights reserved.',
     privacy: 'Privacy Policy',
     terms: 'Terms of Service',
-    sitemap: 'Sitemap'
+    sitemap: 'Sitemap',
   },
   seo: {
     homeTitle: 'Wild West Construction - Professional Building Services',
-    homeDescription: 'Wild West Construction provides professional construction services including flooring, demolition, and junk removal. Quality craftsmanship you can trust.',
+    homeDescription:
+      'Wild West Construction provides professional construction services including flooring, demolition, and junk removal. Quality craftsmanship you can trust.',
     cityTitle: '{city} Construction Services | Wild West Construction',
-    cityDescription: 'Professional construction services in {city}, Utah. Wild West Construction provides flooring, demolition, and junk removal services throughout Salt Lake County. Get your free quote today!',
+    cityDescription:
+      'Professional construction services in {city}, Utah. Wild West Construction provides flooring, demolition, and junk removal services throughout Salt Lake County. Get your free quote today!',
     serviceTitle: '{service} Services in {city} | Wild West Construction',
-    serviceDescription: 'Professional {service} services in {city}, Utah. Expert craftsmanship, licensed and insured. Contact Wild West Construction for your free estimate today.',
-    keywords: 'construction, contractor, flooring, demolition, junk removal, Utah, {city}'
+    serviceDescription:
+      'Professional {service} services in {city}, Utah. Expert craftsmanship, licensed and insured. Contact Wild West Construction for your free estimate today.',
+    keywords: 'construction, contractor, flooring, demolition, junk removal, Utah, {city}',
   },
   cta: {
     readyToStart: 'Ready to Start Your Project?',
@@ -373,7 +382,7 @@ const ENGLISH_TRANSLATIONS: TranslationStrings = {
     schedule: 'Schedule',
     consultation: 'Consultation',
     freeInspection: 'Free Inspection',
-    noObligation: 'No Obligation'
+    noObligation: 'No Obligation',
   },
   about: {
     ourStory: 'Our Story',
@@ -384,8 +393,8 @@ const ENGLISH_TRANSLATIONS: TranslationStrings = {
     team: 'Our Team',
     certifications: 'Certifications',
     awards: 'Awards',
-    community: 'Community Involvement'
-  }
+    community: 'Community Involvement',
+  },
 };
 
 const SPANISH_TRANSLATIONS: TranslationStrings = {
@@ -398,7 +407,7 @@ const SPANISH_TRANSLATIONS: TranslationStrings = {
     about: 'Acerca de',
     contact: 'Contacto',
     getQuote: 'Cotización',
-    callNow: 'Llamar Ahora'
+    callNow: 'Llamar Ahora',
   },
   common: {
     phone: 'Teléfono',
@@ -422,30 +431,36 @@ const SPANISH_TRANSLATIONS: TranslationStrings = {
     projects: 'Proyectos',
     completed: 'Completados',
     customers: 'Clientes',
-    satisfied: 'Satisfechos'
+    satisfied: 'Satisfechos',
   },
   cityPage: {
     heroTitle: 'Servicios de Construcción Profesional en {city}',
-    heroDescription: 'Wild West Construction es su socio confiable para servicios de calidad en pisos, demolición y remoción de basura en {city}, Utah. Con años de experiencia sirviendo en {county}, entregamos artesanía excepcional y servicio confiable en el que puede confiar.',
+    heroDescription:
+      'Wild West Construction es su socio confiable para servicios de calidad en pisos, demolición y remoción de basura en {city}, Utah. Con años de experiencia sirviendo en {county}, entregamos artesanía excepcional y servicio confiable en el que puede confiar.',
     whyChooseUs: '¿Por Qué Elegir Wild West Construction en {city}?',
     localExpertise: 'Experiencia Local',
-    localExpertiseDesc: 'Entendemos las necesidades únicas de construcción de los residentes de {city}. Desde los códigos de construcción locales hasta las consideraciones climáticas, nuestro equipo tiene el conocimiento y experiencia para manejar cualquier proyecto en {county}.',
+    localExpertiseDesc:
+      'Entendemos las necesidades únicas de construcción de los residentes de {city}. Desde los códigos de construcción locales hasta las consideraciones climáticas, nuestro equipo tiene el conocimiento y experiencia para manejar cualquier proyecto en {county}.',
     fastResponse: 'Tiempos de Respuesta Rápidos',
-    fastResponseDesc: 'Ubicados cerca, podemos responder rápidamente a sus necesidades de construcción en {city}. Nuestra presencia local significa inicios de proyectos más rápidos, mejor comunicación y servicio más personalizado para cada cliente.',
+    fastResponseDesc:
+      'Ubicados cerca, podemos responder rápidamente a sus necesidades de construcción en {city}. Nuestra presencia local significa inicios de proyectos más rápidos, mejor comunicación y servicio más personalizado para cada cliente.',
     qualityCraftsmanship: 'Artesanía de Calidad',
-    qualityCraftsmanshipDesc: 'Cada proyecto en {city} se completa con atención al detalle y materiales de calidad. Nos enorgullecemos de nuestro trabajo y respaldamos cada instalación, demolición y servicio de limpieza que proporcionamos.',
+    qualityCraftsmanshipDesc:
+      'Cada proyecto en {city} se completa con atención al detalle y materiales de calidad. Nos enorgullecemos de nuestro trabajo y respaldamos cada instalación, demolición y servicio de limpieza que proporcionamos.',
     licensedInsured: 'Licenciado y Asegurado',
-    licensedInsuredDesc: 'Wild West Construction está completamente licenciado y asegurado para trabajar en {city} y en todo Utah. Puede confiar en que su propiedad e inversión están protegidas cuando elige nuestros servicios.',
+    licensedInsuredDesc:
+      'Wild West Construction está completamente licenciado y asegurado para trabajar en {city} y en todo Utah. Puede confiar en que su propiedad e inversión están protegidas cuando elige nuestros servicios.',
     ourServices: 'Nuestros Servicios de Construcción en {city}',
     recentProjects: 'Proyectos Recientes en {city}',
     getFreeQuote: 'Obtenga Su Cotización Gratuita Hoy',
     readyToTransform: '¿Listo Para Transformar Su Espacio en {city}?',
-    joinSatisfiedCustomers: 'Únase a cientos de clientes satisfechos que han confiado en Wild West Construction con sus proyectos. ¡Contáctenos hoy para comenzar!',
+    joinSatisfiedCustomers:
+      'Únase a cientos de clientes satisfechos que han confiado en Wild West Construction con sus proyectos. ¡Contáctenos hoy para comenzar!',
     neighborhoods: 'Vecindarios Que Servimos',
     serviceAreas: 'Áreas de Servicio',
     emergencyServices: 'Servicios de Emergencia',
     buildingCodes: 'Códigos de Construcción y Permisos',
-    localPartnerships: 'Asociaciones Locales'
+    localPartnerships: 'Asociaciones Locales',
   },
   services: {
     flooring: {
@@ -457,7 +472,7 @@ const SPANISH_TRANSLATIONS: TranslationStrings = {
       tileInstallation: 'Instalación de Azulejo',
       carpetInstallation: 'Instalación de Alfombra',
       floorRefinishing: 'Refinamiento de Pisos',
-      subfloorRepair: 'Reparación de Subpiso'
+      subfloorRepair: 'Reparación de Subpiso',
     },
     demolition: {
       title: 'Servicios de Demolición',
@@ -467,7 +482,7 @@ const SPANISH_TRANSLATIONS: TranslationStrings = {
       bathroomDemolition: 'Demolición de Baño',
       concreteRemoval: 'Remoción de Concreto',
       structuralDemolition: 'Demolición Estructural',
-      safeDemolition: 'Demolición Segura'
+      safeDemolition: 'Demolición Segura',
     },
     junkRemoval: {
       title: 'Servicios de Remoción de Basura',
@@ -477,8 +492,8 @@ const SPANISH_TRANSLATIONS: TranslationStrings = {
       applianceRemoval: 'Remoción de Electrodomésticos',
       basementCleanout: 'Limpieza de Sótano',
       yardWaste: 'Desechos de Jardín',
-      commercialCleanup: 'Limpieza Comercial'
-    }
+      commercialCleanup: 'Limpieza Comercial',
+    },
   },
   forms: {
     name: 'Nombre',
@@ -507,7 +522,7 @@ const SPANISH_TRANSLATIONS: TranslationStrings = {
     morning: 'Mañana',
     afternoon: 'Tarde',
     evening: 'Noche',
-    weekend: 'Fin de Semana'
+    weekend: 'Fin de Semana',
   },
   testimonials: {
     title: 'Testimonios de Clientes',
@@ -520,7 +535,7 @@ const SPANISH_TRANSLATIONS: TranslationStrings = {
     completedOn: 'Completado el',
     rating: 'Calificación',
     outOf: 'de',
-    stars: 'estrellas'
+    stars: 'estrellas',
   },
   footer: {
     tagline: 'Construyendo el Futuro de Utah, Un Proyecto a la Vez',
@@ -537,16 +552,19 @@ const SPANISH_TRANSLATIONS: TranslationStrings = {
     allRightsReserved: 'Todos los derechos reservados.',
     privacy: 'Política de Privacidad',
     terms: 'Términos de Servicio',
-    sitemap: 'Mapa del Sitio'
+    sitemap: 'Mapa del Sitio',
   },
   seo: {
     homeTitle: 'Wild West Construction - Servicios Profesionales de Construcción',
-    homeDescription: 'Wild West Construction proporciona servicios profesionales de construcción incluyendo pisos, demolición y remoción de basura. Artesanía de calidad en la que puede confiar.',
+    homeDescription:
+      'Wild West Construction proporciona servicios profesionales de construcción incluyendo pisos, demolición y remoción de basura. Artesanía de calidad en la que puede confiar.',
     cityTitle: 'Servicios de Construcción en {city} | Wild West Construction',
-    cityDescription: 'Servicios profesionales de construcción en {city}, Utah. Wild West Construction proporciona servicios de pisos, demolición y remoción de basura en todo el Condado de Salt Lake. ¡Obtenga su cotización gratuita hoy!',
+    cityDescription:
+      'Servicios profesionales de construcción en {city}, Utah. Wild West Construction proporciona servicios de pisos, demolición y remoción de basura en todo el Condado de Salt Lake. ¡Obtenga su cotización gratuita hoy!',
     serviceTitle: 'Servicios de {service} en {city} | Wild West Construction',
-    serviceDescription: 'Servicios profesionales de {service} en {city}, Utah. Artesanía experta, licenciado y asegurado. Contacte a Wild West Construction para su estimación gratuita hoy.',
-    keywords: 'construcción, contratista, pisos, demolición, remoción de basura, Utah, {city}'
+    serviceDescription:
+      'Servicios profesionales de {service} en {city}, Utah. Artesanía experta, licenciado y asegurado. Contacte a Wild West Construction para su estimación gratuita hoy.',
+    keywords: 'construcción, contratista, pisos, demolición, remoción de basura, Utah, {city}',
   },
   cta: {
     readyToStart: '¿Listo Para Comenzar Su Proyecto?',
@@ -556,7 +574,7 @@ const SPANISH_TRANSLATIONS: TranslationStrings = {
     schedule: 'Programar',
     consultation: 'Consulta',
     freeInspection: 'Inspección Gratuita',
-    noObligation: 'Sin Obligación'
+    noObligation: 'Sin Obligación',
   },
   about: {
     ourStory: 'Nuestra Historia',
@@ -567,13 +585,13 @@ const SPANISH_TRANSLATIONS: TranslationStrings = {
     team: 'Nuestro Equipo',
     certifications: 'Certificaciones',
     awards: 'Premios',
-    community: 'Participación Comunitaria'
-  }
+    community: 'Participación Comunitaria',
+  },
 };
 
 export const TRANSLATIONS = {
   en: ENGLISH_TRANSLATIONS,
-  es: SPANISH_TRANSLATIONS
+  es: SPANISH_TRANSLATIONS,
 };
 
 /**
@@ -587,23 +605,23 @@ export function getTranslations(language: string = 'en'): TranslationStrings {
  * Translate a string with variable interpolation
  */
 export function translate(
-  key: string, 
-  language: string = 'en', 
+  key: string,
+  language: string = 'en',
   variables: Record<string, string> = {}
 ): string {
   const translations = getTranslations(language);
   const keys = key.split('.');
-  
+
   let value: any = translations;
   for (const k of keys) {
     value = value?.[k];
   }
-  
+
   if (typeof value !== 'string') {
     console.warn(`Translation key '${key}' not found for language '${language}'`);
     return key;
   }
-  
+
   // Replace variables in the format {variableName}
   return value.replace(/\{(\w+)\}/g, (match, varName) => {
     return variables[varName] || match;
@@ -618,10 +636,10 @@ export function getHreflangAlternatives(basePath: string): Array<{
   href: string;
 }> {
   const supportedLanguages = Object.keys(TRANSLATIONS);
-  
-  return supportedLanguages.map(lang => ({
+
+  return supportedLanguages.map((lang) => ({
     hreflang: lang,
-    href: lang === 'en' ? basePath : `/${lang}${basePath}`
+    href: lang === 'en' ? basePath : `/${lang}${basePath}`,
   }));
 }
 

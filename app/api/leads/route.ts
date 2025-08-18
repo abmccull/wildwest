@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createServiceClient } from '@/lib/supabase';
+import { createServerServiceClient } from '@/lib/supabase-server';
 import {
   withApiMiddleware,
   leadValidationSchema,
@@ -15,7 +15,7 @@ import type { LeadInsert, AttachmentInsert } from '@/lib/supabase';
 
 export const POST = withApiMiddleware(
   async (req: NextRequest) => {
-    const supabase = createServiceClient();
+    const supabase = createServerServiceClient();
 
     try {
       // Parse request body

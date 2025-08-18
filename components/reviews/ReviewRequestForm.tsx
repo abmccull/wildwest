@@ -32,14 +32,14 @@ export interface ReviewFormData {
 
 const SERVICES = [
   'Flooring Installation',
-  'Hardwood Installation', 
+  'Hardwood Installation',
   'Laminate Installation',
   'Vinyl Plank Installation',
   'Tile Installation',
   'Carpet Installation',
   'Floor Refinishing',
   'Interior Demolition',
-  'Kitchen Demolition', 
+  'Kitchen Demolition',
   'Bathroom Demolition',
   'Concrete Removal',
   'Junk Removal',
@@ -51,14 +51,14 @@ const SERVICES = [
   'Basement Finishing',
   'Kitchen Remodeling',
   'Bathroom Remodeling',
-  'General Construction'
+  'General Construction',
 ];
 
-export function ReviewRequestForm({ 
+export function ReviewRequestForm({
   city = '',
   service = '',
   onSubmit,
-  className = ''
+  className = '',
 }: ReviewRequestFormProps) {
   const [formData, setFormData] = useState<ReviewFormData>({
     customerName: '',
@@ -73,7 +73,7 @@ export function ReviewRequestForm({
     completionDate: '',
     wouldRecommend: true,
     consentToDisplay: false,
-    consentToContact: false
+    consentToContact: false,
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -129,7 +129,7 @@ export function ReviewRequestForm({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       return;
     }
@@ -149,7 +149,7 @@ export function ReviewRequestForm({
           city,
           submittedAt: new Date().toISOString(),
           ipAddress: '', // Will be filled by server
-          userAgent: navigator.userAgent
+          userAgent: navigator.userAgent,
         }),
       });
 
@@ -168,7 +168,7 @@ export function ReviewRequestForm({
           completionDate: '',
           wouldRecommend: true,
           consentToDisplay: false,
-          consentToContact: false
+          consentToContact: false,
         });
         onSubmit?.(formData);
       } else {
@@ -183,10 +183,10 @@ export function ReviewRequestForm({
   };
 
   const handleInputChange = (field: keyof ReviewFormData, value: any) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
+    setFormData((prev) => ({ ...prev, [field]: value }));
     // Clear error when user starts typing
     if (errors[field]) {
-      setErrors(prev => ({ ...prev, [field]: undefined }));
+      setErrors((prev) => ({ ...prev, [field]: undefined }));
     }
   };
 
@@ -203,9 +203,7 @@ export function ReviewRequestForm({
             type="button"
             onClick={() => handleInputChange('rating', star)}
             className={`w-8 h-8 ${
-              star <= formData.rating
-                ? 'text-yellow-400 fill-current'
-                : 'text-gray-300'
+              star <= formData.rating ? 'text-yellow-400 fill-current' : 'text-gray-300'
             } hover:text-yellow-400 transition-colors`}
           >
             <svg viewBox="0 0 20 20" className="w-full h-full">
@@ -223,20 +221,25 @@ export function ReviewRequestForm({
 
   if (submitStatus === 'success') {
     return (
-      <div className={`bg-green-50 border border-green-200 rounded-lg p-8 text-center ${className}`}>
+      <div
+        className={`bg-green-50 border border-green-200 rounded-lg p-8 text-center ${className}`}
+      >
         <div className="w-16 h-16 mx-auto mb-4 bg-green-100 rounded-full flex items-center justify-center">
-          <svg className="w-8 h-8 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg
+            className="w-8 h-8 text-green-500"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
           </svg>
         </div>
         <h3 className="text-xl font-semibold text-green-800 mb-2">Thank You for Your Review!</h3>
         <p className="text-green-700 mb-4">
-          Your review has been submitted successfully. We appreciate your feedback and will review it for publication on our website.
+          Your review has been submitted successfully. We appreciate your feedback and will review
+          it for publication on our website.
         </p>
-        <button
-          onClick={() => setSubmitStatus('idle')}
-          className="btn-primary"
-        >
+        <button onClick={() => setSubmitStatus('idle')} className="btn-primary">
           Submit Another Review
         </button>
       </div>
@@ -250,7 +253,8 @@ export function ReviewRequestForm({
           Share Your Experience {city && `in ${city}`}
         </h2>
         <p className="text-gray-600">
-          Help other customers by sharing your experience with Wild West Construction. Your feedback helps us improve our services.
+          Help other customers by sharing your experience with Wild West Construction. Your feedback
+          helps us improve our services.
         </p>
       </div>
 
@@ -270,7 +274,9 @@ export function ReviewRequestForm({
               }`}
               placeholder="Enter your full name"
             />
-            {errors.customerName && <p className="text-red-500 text-sm mt-1">{errors.customerName}</p>}
+            {errors.customerName && (
+              <p className="text-red-500 text-sm mt-1">{errors.customerName}</p>
+            )}
           </div>
 
           {/* Email */}
@@ -318,7 +324,9 @@ export function ReviewRequestForm({
               }`}
               placeholder="e.g., Sugar House, The Avenues"
             />
-            {errors.neighborhood && <p className="text-red-500 text-sm mt-1">{errors.neighborhood}</p>}
+            {errors.neighborhood && (
+              <p className="text-red-500 text-sm mt-1">{errors.neighborhood}</p>
+            )}
           </div>
 
           {/* Service */}
@@ -351,7 +359,12 @@ export function ReviewRequestForm({
             <input
               type="number"
               value={formData.projectValue || ''}
-              onChange={(e) => handleInputChange('projectValue', e.target.value ? parseInt(e.target.value) : undefined)}
+              onChange={(e) =>
+                handleInputChange(
+                  'projectValue',
+                  e.target.value ? parseInt(e.target.value) : undefined
+                )
+              }
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
               placeholder="25000"
               min="0"
@@ -377,7 +390,9 @@ export function ReviewRequestForm({
             }`}
             max={new Date().toISOString().split('T')[0]}
           />
-          {errors.completionDate && <p className="text-red-500 text-sm mt-1">{errors.completionDate}</p>}
+          {errors.completionDate && (
+            <p className="text-red-500 text-sm mt-1">{errors.completionDate}</p>
+          )}
         </div>
 
         {/* Review Title */}
@@ -447,10 +462,14 @@ export function ReviewRequestForm({
                 className="w-5 h-5 mt-0.5 text-primary border-gray-300 rounded focus:ring-primary"
               />
               <span className="text-sm text-gray-700">
-                <span className="text-red-500">*</span> I consent to display my review on the Wild West Construction website and marketing materials. I understand that my first name and last initial may be shown publicly.
+                <span className="text-red-500">*</span> I consent to display my review on the Wild
+                West Construction website and marketing materials. I understand that my first name
+                and last initial may be shown publicly.
               </span>
             </label>
-            {errors.consentToDisplay && <p className="text-red-500 text-sm ml-8">{errors.consentToDisplay}</p>}
+            {errors.consentToDisplay && (
+              <p className="text-red-500 text-sm ml-8">{errors.consentToDisplay}</p>
+            )}
           </div>
 
           <div>
@@ -462,7 +481,8 @@ export function ReviewRequestForm({
                 className="w-5 h-5 mt-0.5 text-primary border-gray-300 rounded focus:ring-primary"
               />
               <span className="text-sm text-gray-700">
-                I consent to be contacted by Wild West Construction for follow-up or testimonial opportunities.
+                I consent to be contacted by Wild West Construction for follow-up or testimonial
+                opportunities.
               </span>
             </label>
           </div>
@@ -477,8 +497,18 @@ export function ReviewRequestForm({
           >
             {isSubmitting ? (
               <>
-                <svg className="animate-spin w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v12m6-6H6" />
+                <svg
+                  className="animate-spin w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 6v12m6-6H6"
+                  />
                 </svg>
                 <span>Submitting...</span>
               </>
@@ -490,7 +520,12 @@ export function ReviewRequestForm({
           {submitStatus === 'error' && (
             <div className="flex items-center text-red-600 text-sm">
               <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
               </svg>
               There was an error submitting your review. Please try again.
             </div>

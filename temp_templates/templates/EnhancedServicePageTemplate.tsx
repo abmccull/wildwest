@@ -3,7 +3,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { ParsedServiceData } from '@/lib/data-parser';
-import { Button, Card, Badge, TrustIndicator, ProgressiveForm, StickyMobileCTA } from '@/components/ui';
+import {
+  Button,
+  Card,
+  Badge,
+  TrustIndicator,
+  ProgressiveForm,
+  StickyMobileCTA,
+} from '@/components/ui';
 
 interface EnhancedServicePageTemplateProps {
   service: ParsedServiceData;
@@ -98,11 +105,13 @@ export const EnhancedServicePageTemplate: React.FC<EnhancedServicePageTemplatePr
     },
     {
       question: 'Are you licensed and insured?',
-      answer: 'Yes, Wild West Construction is fully licensed, bonded, and insured in Utah. We carry comprehensive liability insurance and all our work comes with a 2-year warranty.',
+      answer:
+        'Yes, Wild West Construction is fully licensed, bonded, and insured in Utah. We carry comprehensive liability insurance and all our work comes with a 2-year warranty.',
     },
     {
       question: 'Do you offer financing?',
-      answer: 'Yes, we offer flexible financing options with approved credit. Many customers qualify for 0% interest for 12 months on projects over $2,500.',
+      answer:
+        'Yes, we offer flexible financing options with approved credit. Many customers qualify for 0% interest for 12 months on projects over $2,500.',
     },
   ];
 
@@ -113,7 +122,7 @@ export const EnhancedServicePageTemplate: React.FC<EnhancedServicePageTemplatePr
 
       {/* Progress Bar */}
       <div className="fixed top-0 left-0 right-0 h-1 bg-gray-200 z-50">
-        <div 
+        <div
           className="h-full bg-gradient-to-r from-cta to-cta-hover transition-all duration-300"
           style={{ width: `${scrollProgress}%` }}
         />
@@ -137,13 +146,21 @@ export const EnhancedServicePageTemplate: React.FC<EnhancedServicePageTemplatePr
         <div className="container">
           {/* Breadcrumbs */}
           <nav className="flex flex-wrap items-center gap-2 text-sm mb-6">
-            <Link href="/" className="text-gray-600 hover:text-gray-900">Home</Link>
+            <Link href="/" className="text-gray-600 hover:text-gray-900">
+              Home
+            </Link>
             <span className="text-gray-400">/</span>
-            <Link href={`/${service.city.toLowerCase().replace(' ', '-')}-ut`} className="text-gray-600 hover:text-gray-900">
+            <Link
+              href={`/${service.city.toLowerCase().replace(' ', '-')}-ut`}
+              className="text-gray-600 hover:text-gray-900"
+            >
               {cityName}
             </Link>
             <span className="text-gray-400">/</span>
-            <Link href={`/${service.category.toLowerCase()}`} className="text-gray-600 hover:text-gray-900">
+            <Link
+              href={`/${service.category.toLowerCase()}`}
+              className="text-gray-600 hover:text-gray-900"
+            >
               {service.category}
             </Link>
             <span className="text-gray-400">/</span>
@@ -166,9 +183,7 @@ export const EnhancedServicePageTemplate: React.FC<EnhancedServicePageTemplatePr
               </div>
 
               {/* Service Description */}
-              <p className="text-lg text-gray-600 mb-8">
-                {service.metaDescription}
-              </p>
+              <p className="text-lg text-gray-600 mb-8">{service.metaDescription}</p>
 
               {/* Price & Value Box */}
               <Card variant="gradient" className="mb-8">
@@ -178,18 +193,14 @@ export const EnhancedServicePageTemplate: React.FC<EnhancedServicePageTemplatePr
                     <div className="text-3xl font-bold text-brand-primary">
                       ${(service as any).averagePrice?.toLocaleString() || '2,999'}
                     </div>
-                    <div className="text-xs text-gray-500 mt-1">
-                      Save $500 today!
-                    </div>
+                    <div className="text-xs text-gray-500 mt-1">Save $500 today!</div>
                   </div>
                   <div>
                     <div className="text-sm text-gray-600 mb-1">Timeline</div>
                     <div className="text-3xl font-bold text-cta">
                       {(service as any).duration || '2-3 days'}
                     </div>
-                    <div className="text-xs text-gray-500 mt-1">
-                      Same-day start available
-                    </div>
+                    <div className="text-xs text-gray-500 mt-1">Same-day start available</div>
                   </div>
                 </div>
               </Card>
@@ -197,7 +208,9 @@ export const EnhancedServicePageTemplate: React.FC<EnhancedServicePageTemplatePr
               {/* Desktop CTAs */}
               <div className="hidden md:flex flex-col gap-3">
                 <Button
-                  onClick={() => document.getElementById('quote-form')?.scrollIntoView({ behavior: 'smooth' })}
+                  onClick={() =>
+                    document.getElementById('quote-form')?.scrollIntoView({ behavior: 'smooth' })
+                  }
                   variant="urgent"
                   size="lg"
                   fullWidth
@@ -212,8 +225,18 @@ export const EnhancedServicePageTemplate: React.FC<EnhancedServicePageTemplatePr
                     variant="outline"
                     fullWidth
                     icon={
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                      <svg
+                        className="w-5 h-5"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+                        />
                       </svg>
                     }
                   >
@@ -224,9 +247,24 @@ export const EnhancedServicePageTemplate: React.FC<EnhancedServicePageTemplatePr
                     variant="outline"
                     fullWidth
                     icon={
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      <svg
+                        className="w-5 h-5"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"
+                        />
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                        />
                       </svg>
                     }
                   >
@@ -328,26 +366,66 @@ export const EnhancedServicePageTemplate: React.FC<EnhancedServicePageTemplatePr
                 </h3>
                 <ul className="space-y-3">
                   <li className="flex items-start gap-2">
-                    <svg className="w-5 h-5 text-cta mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    <svg
+                      className="w-5 h-5 text-cta mt-0.5 flex-shrink-0"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M5 13l4 4L19 7"
+                      />
                     </svg>
                     <span>Professional {service.category.toLowerCase()} experts</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <svg className="w-5 h-5 text-cta mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    <svg
+                      className="w-5 h-5 text-cta mt-0.5 flex-shrink-0"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M5 13l4 4L19 7"
+                      />
                     </svg>
                     <span>Premium materials and equipment</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <svg className="w-5 h-5 text-cta mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    <svg
+                      className="w-5 h-5 text-cta mt-0.5 flex-shrink-0"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M5 13l4 4L19 7"
+                      />
                     </svg>
                     <span>Clean, efficient work process</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <svg className="w-5 h-5 text-cta mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    <svg
+                      className="w-5 h-5 text-cta mt-0.5 flex-shrink-0"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M5 13l4 4L19 7"
+                      />
                     </svg>
                     <span>Detailed project documentation</span>
                   </li>
@@ -362,26 +440,66 @@ export const EnhancedServicePageTemplate: React.FC<EnhancedServicePageTemplatePr
                 </h3>
                 <ul className="space-y-3">
                   <li className="flex items-start gap-2">
-                    <svg className="w-5 h-5 text-cta mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    <svg
+                      className="w-5 h-5 text-cta mt-0.5 flex-shrink-0"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M5 13l4 4L19 7"
+                      />
                     </svg>
                     <span>Save up to $500 on your project</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <svg className="w-5 h-5 text-cta mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    <svg
+                      className="w-5 h-5 text-cta mt-0.5 flex-shrink-0"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M5 13l4 4L19 7"
+                      />
                     </svg>
                     <span>2-year warranty on all work</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <svg className="w-5 h-5 text-cta mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    <svg
+                      className="w-5 h-5 text-cta mt-0.5 flex-shrink-0"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M5 13l4 4L19 7"
+                      />
                     </svg>
                     <span>Flexible scheduling options</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <svg className="w-5 h-5 text-cta mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    <svg
+                      className="w-5 h-5 text-cta mt-0.5 flex-shrink-0"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M5 13l4 4L19 7"
+                      />
                     </svg>
                     <span>100% satisfaction guarantee</span>
                   </li>
@@ -398,7 +516,12 @@ export const EnhancedServicePageTemplate: React.FC<EnhancedServicePageTemplatePr
                 {[
                   { step: 1, title: 'Free Quote', desc: 'Get instant pricing', time: '30 seconds' },
                   { step: 2, title: 'Schedule', desc: 'Pick convenient time', time: 'Same day' },
-                  { step: 3, title: 'Service', desc: 'Professional work', time: (service as any).duration || '2-3 days' },
+                  {
+                    step: 3,
+                    title: 'Service',
+                    desc: 'Professional work',
+                    time: (service as any).duration || '2-3 days',
+                  },
                   { step: 4, title: 'Guarantee', desc: '2-year warranty', time: 'Ongoing' },
                 ].map((item) => (
                   <div key={item.step} className="text-center">
@@ -407,7 +530,9 @@ export const EnhancedServicePageTemplate: React.FC<EnhancedServicePageTemplatePr
                     </div>
                     <h4 className="font-semibold mb-1">{item.title}</h4>
                     <p className="text-sm text-gray-600 mb-1">{item.desc}</p>
-                    <Badge variant="info" size="sm">{item.time}</Badge>
+                    <Badge variant="info" size="sm">
+                      {item.time}
+                    </Badge>
                   </div>
                 ))}
               </div>
@@ -508,15 +633,25 @@ export const EnhancedServicePageTemplate: React.FC<EnhancedServicePageTemplatePr
             <h2 className="text-3xl-responsive font-bold text-center mb-12">
               Frequently Asked Questions
             </h2>
-            
+
             <div className="space-y-4">
               {faqs.map((faq, idx) => (
                 <Card key={idx} variant="bordered">
                   <details className="group">
                     <summary className="flex items-center justify-between cursor-pointer list-none">
                       <h3 className="font-semibold text-lg pr-4">{faq.question}</h3>
-                      <svg className="w-5 h-5 text-gray-400 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      <svg
+                        className="w-5 h-5 text-gray-400 group-open:rotate-180 transition-transform"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M19 9l-7 7-7-7"
+                        />
                       </svg>
                     </summary>
                     <p className="mt-4 text-gray-600">{faq.answer}</p>
@@ -541,14 +676,10 @@ export const EnhancedServicePageTemplate: React.FC<EnhancedServicePageTemplatePr
                 variant="bordered"
                 hover
                 className="cursor-pointer"
-                onClick={() => window.location.href = related.urlSlug}
+                onClick={() => (window.location.href = related.urlSlug)}
               >
-                <h3 className="font-semibold mb-2 text-brand-primary">
-                  {related.keyword}
-                </h3>
-                <p className="text-sm text-gray-600 line-clamp-2 mb-3">
-                  {related.metaDescription}
-                </p>
+                <h3 className="font-semibold mb-2 text-brand-primary">{related.keyword}</h3>
+                <p className="text-sm text-gray-600 line-clamp-2 mb-3">{related.metaDescription}</p>
                 <Button variant="outline" size="sm" fullWidth>
                   Learn More →
                 </Button>
@@ -573,12 +704,7 @@ export const EnhancedServicePageTemplate: React.FC<EnhancedServicePageTemplatePr
             <p className="text-sm text-gray-600 mb-4">
               Limited time offer for {cityName} residents. Call now!
             </p>
-            <Button
-              href="tel:18016914065"
-              variant="urgent"
-              fullWidth
-              animate
-            >
+            <Button href="tel:18016914065" variant="urgent" fullWidth animate>
               Claim Offer Now
             </Button>
           </Card>
@@ -595,7 +721,7 @@ export const EnhancedServicePageTemplate: React.FC<EnhancedServicePageTemplatePr
               <p className="text-gray-600 mb-6">
                 Get an instant $250 discount on your {service.keyword} project!
               </p>
-              
+
               <div className="bg-cta/10 rounded-lg p-4 mb-6">
                 <div className="text-sm text-gray-600 mb-1">Your Exclusive Discount</div>
                 <div className="text-3xl font-bold text-cta">$250 OFF</div>
@@ -637,7 +763,12 @@ export const EnhancedServicePageTemplate: React.FC<EnhancedServicePageTemplatePr
                 className="absolute top-4 right-4 text-white hover:text-gray-300 z-10"
               >
                 <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
                 </svg>
               </button>
               <div className="aspect-w-16 aspect-h-9">

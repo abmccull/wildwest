@@ -3,11 +3,13 @@
 ## Build Issues to Resolve
 
 ### 1. TypeScript Errors (MUST FIX)
+
 - [ ] Fix type error in `/app/api/chat/route.ts` (line 79)
   - The response type mismatch between tokensUsed and fallback properties
   - Solution: Ensure consistent return type in the chat API handler
 
 ### 2. Warnings (Optional but Recommended)
+
 - [ ] ESLint warning in `/components/forms/FileUpload.tsx` (line 171)
   - Replace `<img>` with Next.js `<Image>` component
 - [ ] React Hook dependency warning in `/components/ui/TurnstileWidget.tsx` (line 124)
@@ -18,6 +20,7 @@
 ## Environment Variables Setup
 
 ### Required in Vercel Dashboard
+
 1. **Supabase**
    - [ ] NEXT_PUBLIC_SUPABASE_URL
    - [ ] NEXT_PUBLIC_SUPABASE_ANON_KEY
@@ -39,6 +42,7 @@
 ## GitHub Repository Setup
 
 ### Secrets for GitHub Actions
+
 - [ ] VERCEL_TOKEN
 - [ ] VERCEL_ORG_ID
 - [ ] VERCEL_PROJECT_ID
@@ -48,6 +52,7 @@
 ## Pre-Deployment Steps
 
 1. **Fix Critical Build Errors**
+
    ```bash
    # Fix TypeScript errors first
    # Then run:
@@ -57,6 +62,7 @@
    ```
 
 2. **Verify Local Build**
+
    ```bash
    npm run build && npm start
    # Test at http://localhost:3000

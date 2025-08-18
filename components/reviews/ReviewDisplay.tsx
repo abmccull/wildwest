@@ -26,7 +26,7 @@ export function ReviewDisplay({
   limit = 6,
   showSchemaMarkup = true,
   city,
-  className = ''
+  className = '',
 }: ReviewDisplayProps) {
   const displayedReviews = showAll ? reviews : reviews.slice(0, limit);
 
@@ -39,7 +39,7 @@ export function ReviewDisplay({
     const sizeClasses = {
       sm: 'w-4 h-4',
       md: 'w-5 h-5',
-      lg: 'w-6 h-6'
+      lg: 'w-6 h-6',
     };
 
     return (
@@ -81,11 +81,9 @@ export function ReviewDisplay({
           </p>
         </div>
       </div>
-      
-      <blockquote className="text-gray-700 italic mb-4">
-        "{review.quote}"
-      </blockquote>
-      
+
+      <blockquote className="text-gray-700 italic mb-4">"{review.quote}"</blockquote>
+
       <div className="border-t pt-4 text-sm text-gray-600">
         <div className="flex justify-between items-center">
           <span className="font-medium">{review.service}</span>
@@ -110,26 +108,26 @@ export function ReviewDisplay({
                 address: {
                   '@type': 'PostalAddress',
                   addressLocality: city || 'Salt Lake City',
-                  addressRegion: 'UT'
-                }
+                  addressRegion: 'UT',
+                },
               },
               reviewRating: {
                 '@type': 'Rating',
                 ratingValue: review.rating,
                 bestRating: 5,
-                worstRating: 1
+                worstRating: 1,
               },
               author: {
                 '@type': 'Person',
-                name: review.customerName
+                name: review.customerName,
               },
               reviewBody: review.quote,
               datePublished: review.completionDate,
               publisher: {
                 '@type': 'LocalBusiness',
-                name: 'Wild West Construction'
-              }
-            })
+                name: 'Wild West Construction',
+              },
+            }),
           }}
         />
       )}
@@ -157,9 +155,7 @@ export function ReviewDisplay({
 
         {!showAll && reviews.length > limit && (
           <div className="text-center">
-            <button className="btn-secondary">
-              View All Reviews ({reviews.length})
-            </button>
+            <button className="btn-secondary">View All Reviews ({reviews.length})</button>
           </div>
         )}
 
@@ -179,15 +175,15 @@ export function ReviewDisplay({
                   ).toFixed(1),
                   reviewCount: reviews.length,
                   bestRating: 5,
-                  worstRating: 1
+                  worstRating: 1,
                 },
                 address: {
                   '@type': 'PostalAddress',
                   addressLocality: city || 'Salt Lake City',
                   addressRegion: 'UT',
-                  addressCountry: 'US'
-                }
-              })
+                  addressCountry: 'US',
+                },
+              }),
             }}
           />
         )}
@@ -204,9 +200,11 @@ export function ReviewDisplay({
             Customer Testimonials {city && `from ${city}`}
           </h2>
           <div className="flex items-center justify-center space-x-2">
-            <StarRating 
-              rating={Math.round(reviews.reduce((sum, review) => sum + review.rating, 0) / reviews.length)} 
-              size="md" 
+            <StarRating
+              rating={Math.round(
+                reviews.reduce((sum, review) => sum + review.rating, 0) / reviews.length
+              )}
+              size="md"
             />
             <span className="text-gray-600">({reviews.length} reviews)</span>
           </div>
@@ -218,7 +216,9 @@ export function ReviewDisplay({
               <div className="flex items-start justify-between mb-3">
                 <div>
                   <h4 className="font-semibold text-gray-900">{review.customerName}</h4>
-                  <p className="text-sm text-gray-600">{review.neighborhood} • {review.service}</p>
+                  <p className="text-sm text-gray-600">
+                    {review.neighborhood} • {review.service}
+                  </p>
                 </div>
                 <StarRating rating={review.rating} />
               </div>
@@ -242,9 +242,12 @@ export function ReviewDisplay({
           What Our Customers Say {city && `in ${city}`}
         </h2>
       </div>
-      
+
       <div className="overflow-x-auto">
-        <div className="flex space-x-6 pb-4" style={{ width: `${displayedReviews.length * 320}px` }}>
+        <div
+          className="flex space-x-6 pb-4"
+          style={{ width: `${displayedReviews.length * 320}px` }}
+        >
           {displayedReviews.map((review, index) => (
             <div key={index} className="flex-shrink-0 w-80">
               <ReviewCard review={review} index={index} />

@@ -59,7 +59,16 @@ export function generateLocalBusinessSchema({
       },
     ],
     priceRange: '$$',
-    paymentAccepted: ['Cash', 'Check', 'Credit Card', 'Debit Card', 'Visa', 'MasterCard', 'American Express', 'Discover'],
+    paymentAccepted: [
+      'Cash',
+      'Check',
+      'Credit Card',
+      'Debit Card',
+      'Visa',
+      'MasterCard',
+      'American Express',
+      'Discover',
+    ],
     currenciesAccepted: 'USD',
     aggregateRating: {
       '@type': 'AggregateRating',
@@ -80,7 +89,8 @@ export function generateLocalBusinessSchema({
           name: 'John Smith',
         },
         datePublished: '2025-01-15',
-        reviewBody: 'Excellent flooring installation! The team was professional, on time, and the quality exceeded expectations.',
+        reviewBody:
+          'Excellent flooring installation! The team was professional, on time, and the quality exceeded expectations.',
       },
       {
         '@type': 'Review',
@@ -93,7 +103,8 @@ export function generateLocalBusinessSchema({
           name: 'Sarah Johnson',
         },
         datePublished: '2025-01-10',
-        reviewBody: 'Wild West Construction did an amazing job with our demolition project. Clean, efficient, and fairly priced.',
+        reviewBody:
+          'Wild West Construction did an amazing job with our demolition project. Clean, efficient, and fairly priced.',
       },
     ],
     areaServed: [
@@ -132,7 +143,8 @@ export function generateLocalBusinessSchema({
           itemOffered: {
             '@type': 'Service',
             name: service || 'Flooring Installation',
-            description: 'Professional flooring installation including hardwood, laminate, vinyl, and tile',
+            description:
+              'Professional flooring installation including hardwood, laminate, vinyl, and tile',
             provider: {
               '@type': 'LocalBusiness',
               name: 'Wild West Construction',

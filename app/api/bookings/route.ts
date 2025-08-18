@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createServiceClient } from '@/lib/supabase';
+import { createServerServiceClient } from '@/lib/supabase-server';
 import {
   withApiMiddleware,
   bookingValidationSchema,
@@ -78,7 +78,7 @@ function generateICSFile(booking: any, lead?: Lead): string | null {
 
 export const POST = withApiMiddleware(
   async (req: NextRequest) => {
-    const supabase = createServiceClient();
+    const supabase = createServerServiceClient();
 
     try {
       // Parse request body
@@ -294,7 +294,7 @@ export const POST = withApiMiddleware(
 // GET endpoint to check slot availability
 export const GET = withApiMiddleware(
   async (req: NextRequest) => {
-    const supabase = createServiceClient();
+    const supabase = createServerServiceClient();
 
     try {
       const { searchParams } = new URL(req.url);

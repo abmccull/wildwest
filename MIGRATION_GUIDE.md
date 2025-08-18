@@ -7,6 +7,7 @@ This guide helps you migrate from the existing components to the new enhanced de
 ## Migration Overview
 
 ### Phase 1: Parallel Implementation (Recommended)
+
 Run both old and new components side-by-side during transition:
 
 1. **Keep existing components** in place
@@ -16,14 +17,14 @@ Run both old and new components side-by-side during transition:
 
 ### Phase 2: Component Mapping
 
-| Old Component | New Component | Key Changes |
-|--------------|---------------|------------|
-| `HomepageTemplate` | `EnhancedHomepageTemplate` | Progressive forms, activity ticker, urgency elements |
-| `CityPageTemplate` | `EnhancedCityPageTemplate` | Local SEO, emergency banner, office hours |
-| `CategoryPageTemplate` | `EnhancedCategoryPageTemplate` | Cost calculator, comparison table, process timeline |
-| `ServicePageTemplate` | `EnhancedServicePageTemplate` | Exit intent, urgency timer, progress bar |
-| `LeadForm` | `ProgressiveForm` | Multi-step, validation, phone-first |
-| `ServiceCard` | `Card` + `Button` | Variants, hover effects, badges |
+| Old Component          | New Component                  | Key Changes                                          |
+| ---------------------- | ------------------------------ | ---------------------------------------------------- |
+| `HomepageTemplate`     | `EnhancedHomepageTemplate`     | Progressive forms, activity ticker, urgency elements |
+| `CityPageTemplate`     | `EnhancedCityPageTemplate`     | Local SEO, emergency banner, office hours            |
+| `CategoryPageTemplate` | `EnhancedCategoryPageTemplate` | Cost calculator, comparison table, process timeline  |
+| `ServicePageTemplate`  | `EnhancedServicePageTemplate`  | Exit intent, urgency timer, progress bar             |
+| `LeadForm`             | `ProgressiveForm`              | Multi-step, validation, phone-first                  |
+| `ServiceCard`          | `Card` + `Button`              | Variants, hover effects, badges                      |
 
 ## Step-by-Step Migration
 
@@ -42,6 +43,7 @@ The Tailwind config has been enhanced with new design tokens. The existing style
 #### Homepage Migration
 
 **Before:**
+
 ```tsx
 // app/page.tsx
 import HomepageTemplate from '@/components/templates/HomepageTemplate';
@@ -52,6 +54,7 @@ export default function Home() {
 ```
 
 **After:**
+
 ```tsx
 // app/page.tsx
 import { EnhancedHomepageTemplate } from '@/components/templates';
@@ -64,6 +67,7 @@ export default function Home() {
 #### City Page Migration
 
 **Before:**
+
 ```tsx
 // app/[city-ut]/page.tsx
 import CityPageTemplate from '@/components/templates/CityPageTemplate';
@@ -75,6 +79,7 @@ export default function CityPage({ params }) {
 ```
 
 **After:**
+
 ```tsx
 // app/[city-ut]/page.tsx
 import { EnhancedCityPageTemplate } from '@/components/templates';
@@ -82,9 +87,9 @@ import { EnhancedCityPageTemplate } from '@/components/templates';
 export default function CityPage({ params }) {
   const cityData = getCityData(params.city);
   const nearbyCities = getNearbyCities(cityData.id);
-  
+
   return (
-    <EnhancedCityPageTemplate 
+    <EnhancedCityPageTemplate
       city={cityData}
       services={services}
       categories={categories}
@@ -100,16 +105,15 @@ export default function CityPage({ params }) {
 #### Lead Form Migration
 
 **Before:**
+
 ```tsx
 import LeadForm from '@/components/forms/LeadForm';
 
-<LeadForm 
-  onSubmit={handleSubmit}
-  fields={['name', 'phone', 'email', 'service']}
-/>
+<LeadForm onSubmit={handleSubmit} fields={['name', 'phone', 'email', 'service']} />;
 ```
 
 **After:**
+
 ```tsx
 import { ProgressiveForm } from '@/components/ui';
 
@@ -124,9 +128,9 @@ import { ProgressiveForm } from '@/components/ui';
           label: 'Service Type',
           type: 'radio',
           options: serviceOptions,
-          required: true
-        }
-      ]
+          required: true,
+        },
+      ],
     },
     {
       id: 'contact',
@@ -136,13 +140,13 @@ import { ProgressiveForm } from '@/components/ui';
           name: 'phone',
           label: 'Phone Number',
           type: 'tel',
-          required: true
-        }
-      ]
-    }
+          required: true,
+        },
+      ],
+    },
   ]}
   onSubmit={handleSubmit}
-/>
+/>;
 ```
 
 ### Step 5: Add Performance Monitoring
@@ -152,10 +156,9 @@ Add to your root layout (`app/layout.tsx`):
 ```tsx
 import dynamic from 'next/dynamic';
 
-const WebVitalsReporter = dynamic(
-  () => import('@/components/performance/WebVitalsReporter'),
-  { ssr: false }
-);
+const WebVitalsReporter = dynamic(() => import('@/components/performance/WebVitalsReporter'), {
+  ssr: false,
+});
 
 export default function RootLayout({ children }) {
   return (
@@ -193,10 +196,10 @@ import { Button, Card, Badge, TrustIndicator } from '@/components/ui';
 </Badge>
 
 // Trust indicator
-<TrustIndicator 
-  type="rating" 
-  value="4.9★" 
-  label="(127 Reviews)" 
+<TrustIndicator
+  type="rating"
+  value="4.9★"
+  label="(127 Reviews)"
 />
 ```
 
@@ -206,10 +209,7 @@ import { Button, Card, Badge, TrustIndicator } from '@/components/ui';
 import { StickyMobileCTA } from '@/components/ui';
 
 // Add to any page for mobile conversions
-<StickyMobileCTA 
-  primaryPhone="18016914065"
-  showQuickForm={true}
-/>
+<StickyMobileCTA primaryPhone="18016914065" showQuickForm={true} />;
 ```
 
 ## Data Structure Updates
@@ -224,13 +224,13 @@ interface EnhancedServiceData {
   service: string;
   slug: string;
   category: string;
-  
+
   // New optional fields
-  popular?: boolean;        // Shows "Popular" badge
-  averagePrice?: number;     // Display pricing
-  duration?: string;         // Timeline estimate
-  savings?: number;          // Discount amount
-  urgency?: boolean;         // Shows urgency timer
+  popular?: boolean; // Shows "Popular" badge
+  averagePrice?: number; // Display pricing
+  duration?: string; // Timeline estimate
+  savings?: number; // Discount amount
+  urgency?: boolean; // Shows urgency timer
 }
 ```
 
@@ -241,10 +241,10 @@ interface EnhancedCityData {
   // Existing fields
   name: string;
   slug: string;
-  
+
   // New optional fields
-  population?: number;       // For trust signals
-  established?: string;      // Years in business
+  population?: number; // For trust signals
+  established?: string; // Years in business
   stats?: {
     projectsCompleted: number;
     averageRating: number;
@@ -302,6 +302,7 @@ import HomepageTemplate from '@/components/templates/HomepageTemplate';
 ### Issue: Type errors with new components
 
 **Solution:** Install missing types:
+
 ```bash
 npm install --save-dev @types/react @types/node
 ```
@@ -309,6 +310,7 @@ npm install --save-dev @types/react @types/node
 ### Issue: Styles not applying
 
 **Solution:** Ensure Tailwind config is updated and CSS is imported:
+
 ```tsx
 // app/globals.css
 @import '../styles/design-system.css';
@@ -317,6 +319,7 @@ npm install --save-dev @types/react @types/node
 ### Issue: Forms not submitting
 
 **Solution:** Check Progressive Form expects different structure:
+
 ```tsx
 // Old: Single object
 onSubmit={(data) => console.log(data))
@@ -334,21 +337,25 @@ onSubmit={(data) => {
 ## Timeline Recommendation
 
 ### Week 1: Setup & Testing
+
 - Install dependencies
 - Update configs
 - Test on staging
 
 ### Week 2: Gradual Migration
+
 - Migrate homepage
 - Monitor metrics
 - Gather feedback
 
 ### Week 3: Complete Migration
+
 - Migrate remaining pages
 - Update documentation
 - Remove old components
 
 ### Week 4: Optimization
+
 - A/B test variations
 - Fine-tune based on data
 - Document learnings
@@ -356,11 +363,13 @@ onSubmit={(data) => {
 ## Support
 
 ### Resources
+
 - [Design System Documentation](./DESIGN_SYSTEM_IMPLEMENTATION.md)
 - [Component Examples](./app/example-implementation.tsx)
 - [Performance Guide](./lib/performance.ts)
 
 ### Getting Help
+
 - Check existing implementations in `/components/templates/`
 - Review type definitions in component files
 - Test components in isolation first
@@ -370,18 +379,21 @@ onSubmit={(data) => {
 Monitor these after migration:
 
 ### Immediate (Day 1)
+
 - ✅ No console errors
 - ✅ Forms submit successfully
 - ✅ Analytics tracking works
 - ✅ Mobile CTAs visible
 
 ### Short-term (Week 1)
+
 - 📈 Conversion rate improvement
 - 📉 Bounce rate reduction
 - ⚡ Core Web Vitals passing
 - 📱 Mobile engagement up
 
 ### Long-term (Month 1)
+
 - 💰 +40% form completion
 - 📞 +30% phone calls
 - ⭐ Higher quality scores
@@ -390,6 +402,7 @@ Monitor these after migration:
 ## Final Notes
 
 The new design system is built to be:
+
 - **Backward compatible**: Existing code continues to work
 - **Incrementally adoptable**: Migrate at your own pace
 - **Performance focused**: Every component optimized
@@ -399,5 +412,5 @@ Remember: You don't need to migrate everything at once. Start with high-traffic 
 
 ---
 
-*Migration Guide Version: 1.0.0*
-*Last Updated: January 2025*
+_Migration Guide Version: 1.0.0_
+_Last Updated: January 2025_

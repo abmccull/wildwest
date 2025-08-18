@@ -14,14 +14,14 @@ interface LocalSchemaMarkupProps {
   showReviews?: boolean;
 }
 
-export function LocalSchemaMarkup({ 
-  city, 
+export function LocalSchemaMarkup({
+  city,
   service = 'Construction Services',
   showNeighborhoods = true,
-  showReviews = true 
+  showReviews = true,
 }: LocalSchemaMarkupProps) {
   const cityContent = getCityContent(city.slug);
-  
+
   if (!cityContent) return null;
 
   // Main Local Business Schema
@@ -36,7 +36,7 @@ export function LocalSchemaMarkup({
     email: 'info@wildwestconstruction.com',
     image: [
       `${process.env.NEXT_PUBLIC_SITE_URL}/images/wildwest-construction-logo.jpg`,
-      `${process.env.NEXT_PUBLIC_SITE_URL}/images/construction-work-${city.slug}.jpg`
+      `${process.env.NEXT_PUBLIC_SITE_URL}/images/construction-work-${city.slug}.jpg`,
     ],
     priceRange: '$$',
     currenciesAccepted: 'USD',
@@ -45,7 +45,7 @@ export function LocalSchemaMarkup({
       '@type': 'City',
       name: city.name,
       addressRegion: 'UT',
-      addressCountry: 'US'
+      addressCountry: 'US',
     },
     address: {
       '@type': 'PostalAddress',
@@ -53,37 +53,34 @@ export function LocalSchemaMarkup({
       addressLocality: 'Salt Lake City',
       addressRegion: 'UT',
       postalCode: '84101',
-      addressCountry: 'US'
+      addressCountry: 'US',
     },
     geo: {
       '@type': 'GeoCoordinates',
       latitude: city.latitude,
-      longitude: city.longitude
+      longitude: city.longitude,
     },
-    openingHours: [
-      'Mo-Fr 07:00-18:00',
-      'Sa 08:00-16:00'
-    ],
+    openingHours: ['Mo-Fr 07:00-18:00', 'Sa 08:00-16:00'],
     openingHoursSpecification: [
       {
         '@type': 'OpeningHoursSpecification',
         dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
         opens: '07:00',
-        closes: '18:00'
+        closes: '18:00',
       },
       {
         '@type': 'OpeningHoursSpecification',
         dayOfWeek: 'Saturday',
         opens: '08:00',
-        closes: '16:00'
-      }
+        closes: '16:00',
+      },
     ],
     aggregateRating: {
       '@type': 'AggregateRating',
       ratingValue: '4.9',
       reviewCount: cityContent.testimonials.length + 127,
       bestRating: '5',
-      worstRating: '1'
+      worstRating: '1',
     },
     hasOfferCatalog: {
       '@type': 'OfferCatalog',
@@ -97,12 +94,12 @@ export function LocalSchemaMarkup({
           description: service.description,
           provider: {
             '@type': 'LocalBusiness',
-            name: 'Wild West Construction'
+            name: 'Wild West Construction',
           },
           areaServed: {
             '@type': 'City',
             name: city.name,
-            addressRegion: 'UT'
+            addressRegion: 'UT',
           },
           offers: {
             '@type': 'Offer',
@@ -112,32 +109,32 @@ export function LocalSchemaMarkup({
               '@type': 'PriceSpecification',
               priceCurrency: 'USD',
               price: service.averageProject,
-              valueAddedTaxIncluded: false
+              valueAddedTaxIncluded: false,
             },
             availability: 'InStock',
-            itemCondition: 'NewCondition'
-          }
+            itemCondition: 'NewCondition',
+          },
         },
-        position: index + 1
-      }))
+        position: index + 1,
+      })),
     },
     sameAs: [
       'https://www.facebook.com/wildwestconstruction',
       'https://www.linkedin.com/company/wild-west-construction',
       'https://www.yelp.com/biz/wild-west-construction-salt-lake-city',
-      'https://www.bbb.org/us/ut/salt-lake-city/profile/general-contractor/wild-west-construction'
+      'https://www.bbb.org/us/ut/salt-lake-city/profile/general-contractor/wild-west-construction',
     ],
     founder: {
       '@type': 'Person',
       name: 'John Smith',
-      jobTitle: 'Owner & General Contractor'
+      jobTitle: 'Owner & General Contractor',
     },
     numberOfEmployees: {
       '@type': 'QuantitativeValue',
-      value: '15-25'
+      value: '15-25',
     },
     yearEstablished: '2014',
-    slogan: 'Building Utah\'s Future, One Project at a Time'
+    slogan: "Building Utah's Future, One Project at a Time",
   };
 
   // Service Area Schema
@@ -150,27 +147,27 @@ export function LocalSchemaMarkup({
         '@type': 'City',
         name: city.name,
         addressRegion: 'UT',
-        addressCountry: 'US'
+        addressCountry: 'US',
       },
-      ...cityContent.neighborhoods.map(neighborhood => ({
+      ...cityContent.neighborhoods.map((neighborhood) => ({
         '@type': 'Place',
         name: `${neighborhood.name}, ${city.name}`,
         containedInPlace: {
           '@type': 'City',
           name: city.name,
-          addressRegion: 'UT'
-        }
-      }))
+          addressRegion: 'UT',
+        },
+      })),
     ],
-    availableService: cityContent.popularServices.map(service => ({
+    availableService: cityContent.popularServices.map((service) => ({
       '@type': 'Service',
       name: service.service,
       description: service.description,
       provider: {
         '@type': 'LocalBusiness',
-        name: 'Wild West Construction'
-      }
-    }))
+        name: 'Wild West Construction',
+      },
+    })),
   };
 
   // Organization Schema
@@ -185,7 +182,7 @@ export function LocalSchemaMarkup({
       '@type': 'ImageObject',
       url: `${process.env.NEXT_PUBLIC_SITE_URL}/images/wildwest-logo.png`,
       width: 300,
-      height: 100
+      height: 100,
     },
     contactPoint: [
       {
@@ -193,15 +190,15 @@ export function LocalSchemaMarkup({
         telephone: cityContent.localPhoneNumbers.main,
         contactType: 'customer service',
         areaServed: 'UT',
-        availableLanguage: ['English', 'Spanish']
+        availableLanguage: ['English', 'Spanish'],
       },
       {
         '@type': 'ContactPoint',
         telephone: cityContent.localPhoneNumbers.emergency,
         contactType: 'emergency',
         areaServed: city.name,
-        availableLanguage: 'English'
-      }
+        availableLanguage: 'English',
+      },
     ],
     address: {
       '@type': 'PostalAddress',
@@ -209,43 +206,46 @@ export function LocalSchemaMarkup({
       addressLocality: 'Salt Lake City',
       addressRegion: 'UT',
       postalCode: '84101',
-      addressCountry: 'US'
+      addressCountry: 'US',
     },
     sameAs: [
       'https://www.facebook.com/wildwestconstruction',
-      'https://www.linkedin.com/company/wild-west-construction'
-    ]
+      'https://www.linkedin.com/company/wild-west-construction',
+    ],
   };
 
   // Reviews Schema (if enabled)
-  const reviewsSchema = showReviews && cityContent.testimonials.length > 0 ? {
-    '@context': 'https://schema.org',
-    '@type': 'Review',
-    '@id': `${process.env.NEXT_PUBLIC_SITE_URL}/${city.slug}#reviews`,
-    itemReviewed: {
-      '@type': 'LocalBusiness',
-      name: 'Wild West Construction',
-      '@id': `${process.env.NEXT_PUBLIC_SITE_URL}/${city.slug}#business`
-    },
-    reviewBody: cityContent.testimonials.map(testimonial => ({
-      '@type': 'Review',
-      reviewRating: {
-        '@type': 'Rating',
-        ratingValue: testimonial.rating,
-        bestRating: 5
-      },
-      author: {
-        '@type': 'Person',
-        name: testimonial.customerName
-      },
-      reviewBody: testimonial.quote,
-      datePublished: testimonial.completionDate,
-      publisher: {
-        '@type': 'LocalBusiness',
-        name: 'Wild West Construction'
-      }
-    }))
-  } : null;
+  const reviewsSchema =
+    showReviews && cityContent.testimonials.length > 0
+      ? {
+          '@context': 'https://schema.org',
+          '@type': 'Review',
+          '@id': `${process.env.NEXT_PUBLIC_SITE_URL}/${city.slug}#reviews`,
+          itemReviewed: {
+            '@type': 'LocalBusiness',
+            name: 'Wild West Construction',
+            '@id': `${process.env.NEXT_PUBLIC_SITE_URL}/${city.slug}#business`,
+          },
+          reviewBody: cityContent.testimonials.map((testimonial) => ({
+            '@type': 'Review',
+            reviewRating: {
+              '@type': 'Rating',
+              ratingValue: testimonial.rating,
+              bestRating: 5,
+            },
+            author: {
+              '@type': 'Person',
+              name: testimonial.customerName,
+            },
+            reviewBody: testimonial.quote,
+            datePublished: testimonial.completionDate,
+            publisher: {
+              '@type': 'LocalBusiness',
+              name: 'Wild West Construction',
+            },
+          })),
+        }
+      : null;
 
   // FAQ Schema for common city-specific questions
   const faqSchema = {
@@ -258,34 +258,37 @@ export function LocalSchemaMarkup({
         name: `Do you provide construction services in ${city.name}?`,
         acceptedAnswer: {
           '@type': 'Answer',
-          text: `Yes, Wild West Construction provides comprehensive construction services throughout ${city.name}, Utah. We serve all neighborhoods including ${cityContent.neighborhoods.map(n => n.name).join(', ')}.`
-        }
+          text: `Yes, Wild West Construction provides comprehensive construction services throughout ${city.name}, Utah. We serve all neighborhoods including ${cityContent.neighborhoods.map((n) => n.name).join(', ')}.`,
+        },
       },
       {
         '@type': 'Question',
         name: `What's your response time in ${city.name}?`,
         acceptedAnswer: {
           '@type': 'Answer',
-          text: `Our typical response time in ${city.name} is ${cityContent.emergencyResponse.responseTime}. We offer ${cityContent.emergencyResponse.coverage24_7 ? '24/7 emergency services' : 'emergency services during business hours'}.`
-        }
+          text: `Our typical response time in ${city.name} is ${cityContent.emergencyResponse.responseTime}. We offer ${cityContent.emergencyResponse.coverage24_7 ? '24/7 emergency services' : 'emergency services during business hours'}.`,
+        },
       },
       {
         '@type': 'Question',
         name: `Do you handle permits in ${city.name}?`,
         acceptedAnswer: {
           '@type': 'Answer',
-          text: `Yes, we handle all permit requirements through the ${cityContent.buildingCodes.permitOffice}. Average permit processing time is ${cityContent.buildingCodes.averagePermitTime}.`
-        }
+          text: `Yes, we handle all permit requirements through the ${cityContent.buildingCodes.permitOffice}. Average permit processing time is ${cityContent.buildingCodes.averagePermitTime}.`,
+        },
       },
       {
         '@type': 'Question',
         name: `What are the most popular services in ${city.name}?`,
         acceptedAnswer: {
           '@type': 'Answer',
-          text: `Our most popular services in ${city.name} include ${cityContent.popularServices.slice(0, 3).map(s => s.service).join(', ')}. We customize our services based on local needs and preferences.`
-        }
-      }
-    ]
+          text: `Our most popular services in ${city.name} include ${cityContent.popularServices
+            .slice(0, 3)
+            .map((s) => s.service)
+            .join(', ')}. We customize our services based on local needs and preferences.`,
+        },
+      },
+    ],
   };
 
   return (
@@ -294,7 +297,7 @@ export function LocalSchemaMarkup({
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(localBusinessSchema)
+          __html: JSON.stringify(localBusinessSchema),
         }}
       />
 
@@ -302,7 +305,7 @@ export function LocalSchemaMarkup({
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(serviceAreaSchema)
+          __html: JSON.stringify(serviceAreaSchema),
         }}
       />
 
@@ -310,7 +313,7 @@ export function LocalSchemaMarkup({
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(organizationSchema)
+          __html: JSON.stringify(organizationSchema),
         }}
       />
 
@@ -319,7 +322,7 @@ export function LocalSchemaMarkup({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify(reviewsSchema)
+            __html: JSON.stringify(reviewsSchema),
           }}
         />
       )}
@@ -328,7 +331,7 @@ export function LocalSchemaMarkup({
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(faqSchema)
+          __html: JSON.stringify(faqSchema),
         }}
       />
     </>

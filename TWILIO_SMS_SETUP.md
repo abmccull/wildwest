@@ -52,6 +52,7 @@ supabase migration up
 ## Features
 
 ### 1. SMS Button Component
+
 - **Consent Modal**: TCPA-compliant consent collection
 - **Custom Message Input**: Users can customize their message
 - **Phone Number Input**: Users provide their own phone number
@@ -59,6 +60,7 @@ supabase migration up
 - **Multiple Variants**: Floating, inline, and icon button styles
 
 ### 2. API Endpoint
+
 - **Rate Limiting**: 5 requests per minute per IP
 - **Input Validation**: Comprehensive validation using Zod schemas
 - **Error Handling**: Detailed error responses and logging
@@ -66,12 +68,14 @@ supabase migration up
 - **Slack Notifications**: Success/failure notifications
 
 ### 3. Analytics Tracking
+
 - **Button Clicks**: Track when users click the SMS button
 - **Message Sends**: Track successful and failed SMS sends
 - **Consent Events**: Track consent given/declined
 - **UTM Parameters**: Capture marketing attribution data
 
 ### 4. Database Storage
+
 - **SMS Interactions**: Complete record of all SMS communications
 - **Status Tracking**: Pending, sent, delivered, failed statuses
 - **Cost Tracking**: SMS cost tracking for analytics
@@ -80,6 +84,7 @@ supabase migration up
 ## Usage Examples
 
 ### Basic SMS Button (Floating)
+
 ```tsx
 import { SmsButton } from '@/components/sms';
 
@@ -94,13 +99,14 @@ export default function Page() {
 ```
 
 ### Inline SMS Button
+
 ```tsx
 import { SmsButton } from '@/components/sms';
 
 export default function ContactSection() {
   return (
     <div className="contact-options">
-      <SmsButton 
+      <SmsButton
         variant="inline"
         showText={true}
         message="I'm interested in your construction services. Please text me back with more information."
@@ -111,6 +117,7 @@ export default function ContactSection() {
 ```
 
 ### SMS Button with Lead Context
+
 ```tsx
 import { SmsButton } from '@/components/sms';
 
@@ -121,7 +128,7 @@ export default function LeadConfirmation({ leadId }: { leadId: number }) {
         variant="inline"
         leadId={leadId}
         messageType="quote_request"
-        templateData={{ name: "John Doe", service: "Concrete Work" }}
+        templateData={{ name: 'John Doe', service: 'Concrete Work' }}
         message="Thanks for the quote request! I'd like to get more details about the concrete work."
       />
     </div>
@@ -130,6 +137,7 @@ export default function LeadConfirmation({ leadId }: { leadId: number }) {
 ```
 
 ### Custom SMS Integration
+
 ```tsx
 import { twilioService } from '@/lib/services';
 
@@ -166,23 +174,27 @@ Templates automatically include opt-out instructions as required by TCPA regulat
 ## Compliance & Best Practices
 
 ### TCPA Compliance
+
 - ✅ Express written consent collection
 - ✅ Clear opt-out instructions in every message
 - ✅ Consent storage and tracking
 - ✅ Proper disclosures about message/data rates
 
 ### Rate Limiting
+
 - 5 SMS requests per minute per IP address
 - Additional rate limiting at Twilio level
 - Proper error messages for rate limit exceeded
 
 ### Privacy & Security
+
 - Phone numbers are masked in logs (show only last 4 digits)
 - Input sanitization to prevent XSS attacks
 - Secure environment variable storage
 - CORS protection for API endpoints
 
 ### Error Handling
+
 - Network failures: Graceful degradation
 - Twilio API errors: Detailed error messages
 - Validation errors: Clear user feedback
@@ -191,6 +203,7 @@ Templates automatically include opt-out instructions as required by TCPA regulat
 ## Monitoring & Analytics
 
 ### Key Metrics Tracked
+
 - SMS button clicks
 - Consent acceptance/decline rates
 - Message send success rates
@@ -199,14 +212,18 @@ Templates automatically include opt-out instructions as required by TCPA regulat
 - User engagement by traffic source
 
 ### Slack Notifications
+
 The system sends Slack notifications for:
+
 - Successful SMS sends
 - Failed SMS attempts
 - System errors
 - Rate limit violations
 
 ### Database Analytics
+
 Query the `sms_interactions` table for:
+
 - Message volume by date/time
 - Success/failure rates
 - Cost analysis
@@ -216,6 +233,7 @@ Query the `sms_interactions` table for:
 ## Testing
 
 ### Test SMS Configuration
+
 ```bash
 # Add test phone number to environment
 TWILIO_TEST_PHONE_NUMBER=+15551234567
@@ -232,6 +250,7 @@ curl -X POST http://localhost:3000/api/sms \
 ```
 
 ### Manual Testing Checklist
+
 - [ ] SMS button appears correctly on all pages
 - [ ] Consent modal shows on first click
 - [ ] Phone number validation works
@@ -267,6 +286,7 @@ curl -X POST http://localhost:3000/api/sms \
    - Consider adjusting rate limits for development
 
 ### Logs to Check
+
 - Browser console for client-side errors
 - Next.js server logs for API errors
 - Supabase logs for database errors
@@ -276,11 +296,13 @@ curl -X POST http://localhost:3000/api/sms \
 ## Cost Optimization
 
 ### SMS Pricing
+
 - Twilio charges per SMS sent (typically $0.0075 per message in US)
 - Failed messages may still incur charges
 - Consider implementing message queuing for high volume
 
 ### Best Practices
+
 - Use message templates to reduce errors
 - Implement proper validation to prevent spam
 - Monitor usage with Twilio webhooks
@@ -298,6 +320,7 @@ curl -X POST http://localhost:3000/api/sms \
 ## Support
 
 For issues with the SMS integration:
+
 1. Check this documentation first
 2. Review error logs and console output
 3. Test with Twilio's API explorer

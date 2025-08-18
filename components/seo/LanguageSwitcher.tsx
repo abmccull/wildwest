@@ -21,14 +21,14 @@ const SUPPORTED_LANGUAGES: Language[] = [
     code: 'en',
     name: 'English',
     flag: '🇺🇸',
-    nativeName: 'English'
+    nativeName: 'English',
   },
   {
     code: 'es',
     name: 'Spanish',
     flag: '🇪🇸',
-    nativeName: 'Español'
-  }
+    nativeName: 'Español',
+  },
 ];
 
 interface LanguageSwitcherProps {
@@ -38,11 +38,11 @@ interface LanguageSwitcherProps {
   showFlags?: boolean;
 }
 
-export function LanguageSwitcher({ 
+export function LanguageSwitcher({
   currentLang = 'en',
   className = '',
   variant = 'dropdown',
-  showFlags = true 
+  showFlags = true,
 }: LanguageSwitcherProps) {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
@@ -50,7 +50,7 @@ export function LanguageSwitcher({
 
   // Extract the current path without language prefix
   const getPathWithoutLang = (path: string) => {
-    const langPrefixes = SUPPORTED_LANGUAGES.map(lang => `/${lang.code}`);
+    const langPrefixes = SUPPORTED_LANGUAGES.map((lang) => `/${lang.code}`);
     for (const prefix of langPrefixes) {
       if (path.startsWith(prefix)) {
         return path.substring(prefix.length) || '/';
@@ -65,8 +65,9 @@ export function LanguageSwitcher({
     return langCode === 'en' ? pathWithoutLang : `/${langCode}${pathWithoutLang}`;
   };
 
-  const currentLanguage = SUPPORTED_LANGUAGES.find(lang => lang.code === currentLang) || SUPPORTED_LANGUAGES[0];
-  const otherLanguages = SUPPORTED_LANGUAGES.filter(lang => lang.code !== currentLang);
+  const currentLanguage =
+    SUPPORTED_LANGUAGES.find((lang) => lang.code === currentLang) || SUPPORTED_LANGUAGES[0];
+  const otherLanguages = SUPPORTED_LANGUAGES.filter((lang) => lang.code !== currentLang);
 
   if (variant === 'inline') {
     return (
@@ -135,12 +136,7 @@ export function LanguageSwitcher({
       )}
 
       {/* Click outside to close */}
-      {isOpen && (
-        <div
-          className="fixed inset-0 z-40"
-          onClick={() => setIsOpen(false)}
-        />
-      )}
+      {isOpen && <div className="fixed inset-0 z-40" onClick={() => setIsOpen(false)} />}
     </div>
   );
 }
@@ -150,9 +146,9 @@ export function LanguageSwitcher({
  */
 export function useLanguage() {
   const pathname = usePathname();
-  
+
   const getCurrentLanguage = (): string => {
-    const langPrefixes = SUPPORTED_LANGUAGES.map(lang => `/${lang.code}`);
+    const langPrefixes = SUPPORTED_LANGUAGES.map((lang) => `/${lang.code}`);
     for (const prefix of langPrefixes) {
       if (pathname.startsWith(prefix)) {
         return prefix.substring(1);
@@ -164,13 +160,13 @@ export function useLanguage() {
   const getTranslatedPath = (langCode: string, path?: string): string => {
     const targetPath = path || pathname;
     const currentLang = getCurrentLanguage();
-    
+
     // Remove current language prefix
     let cleanPath = targetPath;
     if (currentLang !== 'en') {
       cleanPath = targetPath.replace(`/${currentLang}`, '') || '/';
     }
-    
+
     // Add new language prefix (except for English)
     return langCode === 'en' ? cleanPath : `/${langCode}${cleanPath}`;
   };
@@ -184,7 +180,7 @@ export function useLanguage() {
     currentLanguage: getCurrentLanguage(),
     getTranslatedPath,
     isRTL,
-    supportedLanguages: SUPPORTED_LANGUAGES
+    supportedLanguages: SUPPORTED_LANGUAGES,
   };
 }
 

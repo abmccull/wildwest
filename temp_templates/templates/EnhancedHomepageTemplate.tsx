@@ -4,7 +4,14 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ServiceData, CityData } from '@/lib/data-parser';
-import { Button, Card, Badge, TrustIndicator, ProgressiveForm, StickyMobileCTA } from '@/components/ui';
+import {
+  Button,
+  Card,
+  Badge,
+  TrustIndicator,
+  ProgressiveForm,
+  StickyMobileCTA,
+} from '@/components/ui';
 import { OptimizedImage } from '@/components/ui';
 
 interface EnhancedHomepageTemplateProps {
@@ -194,9 +201,7 @@ export const EnhancedHomepageTemplate: React.FC<EnhancedHomepageTemplateProps> =
               {/* Main Headline */}
               <h1 className="text-4xl-responsive md:text-5xl-responsive lg:text-5xl-responsive font-bold leading-tight">
                 Salt Lake County's
-                <span className="block text-rating mt-2">
-                  #1 Rated Construction Team
-                </span>
+                <span className="block text-rating mt-2">#1 Rated Construction Team</span>
               </h1>
 
               {/* Trust Indicators Row */}
@@ -247,7 +252,7 @@ export const EnhancedHomepageTemplate: React.FC<EnhancedHomepageTemplateProps> =
                 onSubmit={handleFormSubmit}
                 submitText="Get My Free Quote →"
               />
-              
+
               {/* Urgency Timer */}
               <div className="absolute -top-4 right-4 bg-cta-urgent text-white px-4 py-2 rounded-full text-sm font-semibold animate-bounce-slow">
                 🔥 Offer expires in 24:00:00
@@ -270,12 +275,10 @@ export const EnhancedHomepageTemplate: React.FC<EnhancedHomepageTemplateProps> =
       <section className="py-20 bg-gray-50">
         <div className="container">
           <div className="text-center mb-12">
-            <h2 className="text-3xl-responsive font-bold mb-4">
-              Our Premium Services
-            </h2>
+            <h2 className="text-3xl-responsive font-bold mb-4">Our Premium Services</h2>
             <p className="text-lg-responsive text-gray-600 max-w-3xl mx-auto">
-              Choose from our comprehensive range of construction services. 
-              All work is guaranteed and performed by licensed professionals.
+              Choose from our comprehensive range of construction services. All work is guaranteed
+              and performed by licensed professionals.
             </p>
           </div>
 
@@ -313,8 +316,18 @@ export const EnhancedHomepageTemplate: React.FC<EnhancedHomepageTemplateProps> =
                 <div className="space-y-3 mb-6">
                   {service.features.map((feature) => (
                     <div key={feature} className="flex items-center gap-2">
-                      <svg className="w-5 h-5 text-cta flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      <svg
+                        className="w-5 h-5 text-cta flex-shrink-0"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M5 13l4 4L19 7"
+                        />
                       </svg>
                       <span className="text-gray-700">{feature}</span>
                     </div>
@@ -348,12 +361,15 @@ export const EnhancedHomepageTemplate: React.FC<EnhancedHomepageTemplateProps> =
       <section className="py-20 bg-white">
         <div className="container">
           <div className="text-center mb-12">
-            <h2 className="text-3xl-responsive font-bold mb-4">
-              What Our Customers Say
-            </h2>
+            <h2 className="text-3xl-responsive font-bold mb-4">What Our Customers Say</h2>
             <div className="flex justify-center gap-2 mb-4">
               {[...Array(5)].map((_, i) => (
-                <svg key={i} className="w-8 h-8 text-rating" fill="currentColor" viewBox="0 0 20 20">
+                <svg
+                  key={i}
+                  className="w-8 h-8 text-rating"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
                   <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                 </svg>
               ))}
@@ -366,7 +382,7 @@ export const EnhancedHomepageTemplate: React.FC<EnhancedHomepageTemplateProps> =
               <div className="absolute top-4 right-4">
                 <Badge variant="success">Verified Customer</Badge>
               </div>
-              
+
               <div className="mb-4">
                 <div className="flex items-center gap-4 mb-3">
                   <div className="w-12 h-12 bg-brand-primary text-white rounded-full flex items-center justify-center font-bold">
@@ -374,14 +390,16 @@ export const EnhancedHomepageTemplate: React.FC<EnhancedHomepageTemplateProps> =
                   </div>
                   <div>
                     <div className="font-semibold">{testimonials[activeTestimonial].name}</div>
-                    <div className="text-sm text-gray-600">{testimonials[activeTestimonial].location}</div>
+                    <div className="text-sm text-gray-600">
+                      {testimonials[activeTestimonial].location}
+                    </div>
                   </div>
                 </div>
-                
+
                 <p className="text-lg text-gray-700 italic mb-4">
                   "{testimonials[activeTestimonial].text}"
                 </p>
-                
+
                 <div className="flex items-center gap-6 text-sm">
                   <div>
                     <span className="text-gray-600">Project: </span>
@@ -389,7 +407,9 @@ export const EnhancedHomepageTemplate: React.FC<EnhancedHomepageTemplateProps> =
                   </div>
                   <div>
                     <span className="text-gray-600">Saved: </span>
-                    <span className="font-semibold text-cta">{testimonials[activeTestimonial].savings}</span>
+                    <span className="font-semibold text-cta">
+                      {testimonials[activeTestimonial].savings}
+                    </span>
                   </div>
                 </div>
               </div>
@@ -415,9 +435,7 @@ export const EnhancedHomepageTemplate: React.FC<EnhancedHomepageTemplateProps> =
       <section className="py-20 bg-gray-50">
         <div className="container">
           <div className="text-center mb-12">
-            <h2 className="text-3xl-responsive font-bold mb-4">
-              Serving All of Salt Lake County
-            </h2>
+            <h2 className="text-3xl-responsive font-bold mb-4">Serving All of Salt Lake County</h2>
             <p className="text-lg-responsive text-gray-600 max-w-3xl mx-auto">
               We provide premium construction services to all cities in the greater Salt Lake area.
               Click your city for local pricing and availability.
@@ -450,14 +468,12 @@ export const EnhancedHomepageTemplate: React.FC<EnhancedHomepageTemplateProps> =
       {/* Final CTA Section */}
       <section className="py-20 bg-cta-gradient text-white">
         <div className="container text-center">
-          <h2 className="text-3xl-responsive font-bold mb-4">
-            Ready to Start Your Project?
-          </h2>
+          <h2 className="text-3xl-responsive font-bold mb-4">Ready to Start Your Project?</h2>
           <p className="text-xl-responsive mb-8 opacity-90 max-w-2xl mx-auto">
-            Join thousands of satisfied customers who trust Wild West Construction
-            for all their home improvement needs.
+            Join thousands of satisfied customers who trust Wild West Construction for all their
+            home improvement needs.
           </p>
-          
+
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button
               href="tel:18016914065"
@@ -466,14 +482,21 @@ export const EnhancedHomepageTemplate: React.FC<EnhancedHomepageTemplateProps> =
               animate
               icon={
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+                  />
                 </svg>
               }
             >
               Call Now: (801) 691-4065
             </Button>
             <Button
-              onClick={() => document.getElementById('quote-form')?.scrollIntoView({ behavior: 'smooth' })}
+              onClick={() =>
+                document.getElementById('quote-form')?.scrollIntoView({ behavior: 'smooth' })
+              }
               variant="secondary"
               size="xl"
               className="bg-white text-brand-primary hover:bg-gray-100"

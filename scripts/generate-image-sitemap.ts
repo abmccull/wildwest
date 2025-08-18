@@ -34,7 +34,7 @@ class ImageSitemapGenerator {
 
     try {
       const imageEntries = await this.findAllImages();
-      
+
       if (imageEntries.length === 0) {
         console.log('No images found to include in sitemap');
         return;
@@ -42,7 +42,7 @@ class ImageSitemapGenerator {
 
       const xml = this.generateImageSitemapXML(imageEntries);
       const filePath = path.join(this.outputDir, 'sitemap-images.xml');
-      
+
       fs.writeFileSync(filePath, xml, 'utf8');
       console.log(`✅ Generated image sitemap with ${imageEntries.length} entries`);
       console.log(`📍 Image sitemap saved to: ${filePath}`);
@@ -57,7 +57,7 @@ class ImageSitemapGenerator {
    */
   private async findAllImages(): Promise<ImageEntry[]> {
     const imageEntries: ImageEntry[] = [];
-    
+
     // Define image patterns to search for
     const imagePatterns = [
       'public/**/*.{jpg,jpeg,png,gif,webp,svg}',
@@ -78,7 +78,7 @@ class ImageSitemapGenerator {
         {
           loc: `${this.baseUrl}/og-image.jpg`,
           title: 'Wild West Construction - Professional Building Services',
-          caption: 'Utah\'s trusted construction experts for flooring, demolition, and junk removal',
+          caption: "Utah's trusted construction experts for flooring, demolition, and junk removal",
         },
         {
           loc: `${this.baseUrl}/logo.png`,
@@ -126,11 +126,17 @@ class ImageSitemapGenerator {
         <image:loc>${this.escapeXml(img.loc)}</image:loc>${
           img.title ? `\n        <image:title>${this.escapeXml(img.title)}</image:title>` : ''
         }${
-          img.caption ? `\n        <image:caption>${this.escapeXml(img.caption)}</image:caption>` : ''
+          img.caption
+            ? `\n        <image:caption>${this.escapeXml(img.caption)}</image:caption>`
+            : ''
         }${
-          img.geo_location ? `\n        <image:geo_location>${this.escapeXml(img.geo_location)}</image:geo_location>` : ''
+          img.geo_location
+            ? `\n        <image:geo_location>${this.escapeXml(img.geo_location)}</image:geo_location>`
+            : ''
         }${
-          img.license ? `\n        <image:license>${this.escapeXml(img.license)}</image:license>` : ''
+          img.license
+            ? `\n        <image:license>${this.escapeXml(img.license)}</image:license>`
+            : ''
         }
       </image:image>`
           )
@@ -186,7 +192,7 @@ class VideoSitemapGenerator {
     console.log('🎥 Starting video sitemap generation...');
 
     const videoEntries = this.getVideoEntries();
-    
+
     if (videoEntries.length === 0) {
       console.log('No videos configured for sitemap');
       return;
@@ -194,7 +200,7 @@ class VideoSitemapGenerator {
 
     const xml = this.generateVideoSitemapXML(videoEntries);
     const filePath = path.join(this.outputDir, 'sitemap-videos.xml');
-    
+
     fs.writeFileSync(filePath, xml, 'utf8');
     console.log(`✅ Generated video sitemap with ${videoEntries.length} entries`);
     console.log(`📍 Video sitemap saved to: ${filePath}`);

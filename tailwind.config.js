@@ -9,21 +9,21 @@ module.exports = {
     extend: {
       colors: {
         // Legacy colors for backward compatibility
-        primary: '#7C5035',      // Deep Saddle Brown - original
-        secondary: '#C59D5F',    // Wheat Gold - original
-        accent: '#D4AF37',       // Metallic Gold - original
-        background: '#f7f1e3',   // Ivory - for existing components
+        primary: '#7C5035', // Deep Saddle Brown - original
+        secondary: '#C59D5F', // Wheat Gold - original
+        accent: '#D4AF37', // Metallic Gold - original
+        background: '#f7f1e3', // Ivory - for existing components
         'text-dark': '#333333',
         'text-light': '#FFFFFF',
         // Brand Colors - Trust & Action
         brand: {
-          primary: '#1e40af',   // Deep Blue - Trust/Reliability
-          secondary: '#059669',  // Green - Success/Action
-          accent: '#dc2626',     // Red - Urgency/Limited
-          warning: '#f59e0b',    // Amber - Attention/Ratings
-          info: '#3b82f6',       // Sky Blue - Information
-          dark: '#1f2937',       // Charcoal - Text
-          light: '#f9fafb',      // Off-white - Background
+          primary: '#1e40af', // Deep Blue - Trust/Reliability
+          secondary: '#059669', // Green - Success/Action
+          accent: '#dc2626', // Red - Urgency/Limited
+          warning: '#f59e0b', // Amber - Attention/Ratings
+          info: '#3b82f6', // Sky Blue - Information
+          dark: '#1f2937', // Charcoal - Text
+          light: '#f9fafb', // Off-white - Background
         },
         // Semantic Colors
         cta: {
@@ -58,17 +58,17 @@ module.exports = {
         '5xl-responsive': 'clamp(3rem, 8vw, 5rem)',
       },
       spacing: {
-        '18': '4.5rem',
-        '22': '5.5rem',
-        'header': '64px',
+        18: '4.5rem',
+        22: '5.5rem',
+        header: '64px',
         'mobile-cta': '72px',
         'safe-bottom': 'env(safe-area-inset-bottom)',
         'safe-top': 'env(safe-area-inset-top)',
       },
       maxWidth: {
-        'container': '1280px',
-        'content': '1024px',
-        'narrow': '768px',
+        container: '1280px',
+        content: '1024px',
+        narrow: '768px',
       },
       animation: {
         'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
@@ -102,19 +102,19 @@ module.exports = {
         },
       },
       boxShadow: {
-        'trust': '0 4px 14px 0 rgba(30, 64, 175, 0.15)',
-        'cta': '0 4px 14px 0 rgba(5, 150, 105, 0.2)',
-        'urgent': '0 4px 14px 0 rgba(220, 38, 38, 0.25)',
-        'float': '0 10px 40px rgba(0, 0, 0, 0.15)',
+        trust: '0 4px 14px 0 rgba(30, 64, 175, 0.15)',
+        cta: '0 4px 14px 0 rgba(5, 150, 105, 0.2)',
+        urgent: '0 4px 14px 0 rgba(220, 38, 38, 0.25)',
+        float: '0 10px 40px rgba(0, 0, 0, 0.15)',
       },
       borderRadius: {
-        'xl': '1rem',
+        xl: '1rem',
         '2xl': '1.5rem',
         '3xl': '2rem',
       },
       transitionDuration: {
-        '250': '250ms',
-        '350': '350ms',
+        250: '250ms',
+        350: '350ms',
       },
       transitionTimingFunction: {
         'bounce-in': 'cubic-bezier(0.68, -0.55, 0.265, 1.55)',
@@ -131,17 +131,17 @@ module.exports = {
         'auto-fit-300': 'repeat(auto-fit, minmax(300px, 1fr))',
       },
       zIndex: {
-        'dropdown': '1000',
-        'sticky': '1020',
-        'fixed': '1030',
+        dropdown: '1000',
+        sticky: '1020',
+        fixed: '1030',
         'modal-backdrop': '1040',
-        'modal': '1050',
-        'popover': '1060',
-        'tooltip': '1070',
-        'notification': '1080',
+        modal: '1050',
+        popover: '1060',
+        tooltip: '1070',
+        notification: '1080',
       },
       screens: {
-        'xs': '475px',
+        xs: '475px',
         '3xl': '1920px',
       },
     },

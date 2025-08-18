@@ -27,19 +27,23 @@ interface EnhancedOptimizedImageProps {
 // Generate descriptive alt text based on context and filename
 function generateAltText(src: string, context?: string): string {
   // Extract filename without extension
-  const filename = src.split('/').pop()?.replace(/\.[^/.]+$/, '') || '';
-  
+  const filename =
+    src
+      .split('/')
+      .pop()
+      ?.replace(/\.[^/.]+$/, '') || '';
+
   // Replace hyphens and underscores with spaces
   const cleanName = filename.replace(/[-_]/g, ' ');
-  
+
   // Capitalize first letter of each word
   const titleCase = cleanName.replace(/\b\w/g, (char) => char.toUpperCase());
-  
+
   // Add context if provided
   if (context) {
     return `${titleCase} - ${context}`;
   }
-  
+
   // Default patterns for common image types
   if (filename.includes('hero')) {
     return `${titleCase} Hero Image`;
@@ -62,7 +66,7 @@ function generateAltText(src: string, context?: string): string {
   if (filename.includes('service')) {
     return `${titleCase} Service`;
   }
-  
+
   return titleCase || 'Image';
 }
 
@@ -101,7 +105,7 @@ export const EnhancedOptimizedImage: React.FC<EnhancedOptimizedImageProps> = ({
   const handleLoad = () => {
     setIsLoading(false);
     onLoad?.();
-    
+
     // Log successful image load for monitoring
     if (typeof window !== 'undefined' && (window as any).gtag) {
       (window as any).gtag('event', 'image_load', {
@@ -115,7 +119,7 @@ export const EnhancedOptimizedImage: React.FC<EnhancedOptimizedImageProps> = ({
     setIsLoading(false);
     setHasError(true);
     onError?.();
-    
+
     // Log image error for monitoring
     if (typeof window !== 'undefined' && (window as any).gtag) {
       (window as any).gtag('event', 'image_error', {
@@ -187,17 +191,13 @@ export const EnhancedOptimizedImage: React.FC<EnhancedOptimizedImageProps> = ({
     return (
       <figure className={`relative ${isLoading ? 'animate-pulse bg-gray-200' : ''}`}>
         {imageElement}
-        <figcaption className="text-sm text-gray-600 mt-2 text-center">
-          {caption}
-        </figcaption>
+        <figcaption className="text-sm text-gray-600 mt-2 text-center">{caption}</figcaption>
       </figure>
     );
   }
 
   return (
-    <div className={`relative ${isLoading ? 'animate-pulse bg-gray-200' : ''}`}>
-      {imageElement}
-    </div>
+    <div className={`relative ${isLoading ? 'animate-pulse bg-gray-200' : ''}`}>{imageElement}</div>
   );
 };
 

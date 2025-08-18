@@ -11,7 +11,11 @@ import {
   getServicesByCategory,
 } from '@/lib/data-parser';
 import { findServiceByUrl, findClosestServiceMatch } from '@/lib/service-url-mapper';
-import { getServiceContent, getLocationSpecificContent, getRelatedServiceContent } from '@/lib/service-content';
+import {
+  getServiceContent,
+  getLocationSpecificContent,
+  getRelatedServiceContent,
+} from '@/lib/service-content';
 import { findBestMatch } from '@/lib/service-slug-mapper';
 import { Breadcrumbs } from '@/components/layout/Breadcrumbs';
 import { NAPBlock } from '@/components/pages/NAPBlock';
@@ -183,16 +187,18 @@ export default function ServicePage({ params }: ServicePageProps) {
   }
 
   const cityName = getCityNameFromSlug(citySlug);
-  
+
   // Get enhanced content from the service content system
   // First try to find a best match using the slug mapper
   const mappedSlug = findBestMatch(serviceSlug);
-  const enhancedContent = mappedSlug 
-    ? (getLocationSpecificContent(mappedSlug, cityName) || getServiceContent(mappedSlug))
-    : (getLocationSpecificContent(serviceSlug, cityName) || getServiceContent(serviceSlug));
-  
+  const enhancedContent = mappedSlug
+    ? getLocationSpecificContent(mappedSlug, cityName) || getServiceContent(mappedSlug)
+    : getLocationSpecificContent(serviceSlug, cityName) || getServiceContent(serviceSlug);
+
   // Get related service content
-  const relatedServiceContent = enhancedContent ? getRelatedServiceContent(enhancedContent.slug) : [];
+  const relatedServiceContent = enhancedContent?.slug
+    ? getRelatedServiceContent(enhancedContent.slug)
+    : [];
 
   // Get related services in the same category
   const relatedServices = getServicesByCategory(serviceData.category)
@@ -315,12 +321,14 @@ export default function ServicePage({ params }: ServicePageProps) {
               {/* Enhanced Service Description */}
               {enhancedContent && (
                 <div className="mb-8">
-                  <div 
+                  <div
                     className="text-gray-700 leading-relaxed"
                     dangerouslySetInnerHTML={{
-                      __html: enhancedContent.longDescription
-                        .replace(/Utah/g, cityName + ', Utah')
-                        .substring(0, 800) + (enhancedContent.longDescription.length > 800 ? '...' : '')
+                      __html:
+                        (enhancedContent.longDescription || '')
+                          .replace(/Utah/g, cityName + ', Utah')
+                          .substring(0, 800) +
+                        ((enhancedContent.longDescription?.length || 0) > 800 ? '...' : ''),
                     }}
                   />
                 </div>
@@ -336,11 +344,21 @@ export default function ServicePage({ params }: ServicePageProps) {
                     {enhancedContent.benefits.slice(0, 6).map((benefit, index) => (
                       <div key={index} className="flex items-start gap-3">
                         <div className="flex-shrink-0 w-5 h-5 bg-primary/20 rounded-full flex items-center justify-center mt-0.5">
-                          <svg className="w-3 h-3 text-primary" fill="currentColor" viewBox="0 0 20 20">
-                            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                          <svg
+                            className="w-3 h-3 text-primary"
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                          >
+                            <path
+                              fillRule="evenodd"
+                              d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                              clipRule="evenodd"
+                            />
                           </svg>
                         </div>
-                        <p className="text-gray-600 text-sm">{benefit.replace(/Utah/g, cityName)}</p>
+                        <p className="text-gray-600 text-sm">
+                          {benefit.replace(/Utah/g, cityName)}
+                        </p>
                       </div>
                     ))}
                   </div>
@@ -350,7 +368,9 @@ export default function ServicePage({ params }: ServicePageProps) {
               {/* Our Process Section */}
               {enhancedContent?.process && (
                 <div className="bg-primary/5 p-6 rounded-lg mb-8">
-                  <h3 className="text-xl font-semibold text-text-dark mb-4">Our {serviceData.keyword} Process</h3>
+                  <h3 className="text-xl font-semibold text-text-dark mb-4">
+                    Our {serviceData.keyword} Process
+                  </h3>
                   <div className="space-y-4">
                     {enhancedContent.process.map((step, index) => (
                       <div key={index} className="flex items-start gap-3">
@@ -377,15 +397,21 @@ export default function ServicePage({ params }: ServicePageProps) {
               {/* Problems We Solve Section */}
               {enhancedContent?.problemsSolved && (
                 <div className="bg-red-50 p-6 rounded-lg mb-8">
-                  <h3 className="text-xl font-semibold text-text-dark mb-4">
-                    Problems We Solve
-                  </h3>
+                  <h3 className="text-xl font-semibold text-text-dark mb-4">Problems We Solve</h3>
                   <div className="grid md:grid-cols-2 gap-3">
                     {enhancedContent.problemsSolved.slice(0, 6).map((problem, index) => (
                       <div key={index} className="flex items-start gap-3">
                         <div className="flex-shrink-0 w-5 h-5 bg-red-100 rounded-full flex items-center justify-center mt-0.5">
-                          <svg className="w-3 h-3 text-red-600" fill="currentColor" viewBox="0 0 20 20">
-                            <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                          <svg
+                            className="w-3 h-3 text-red-600"
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                          >
+                            <path
+                              fillRule="evenodd"
+                              d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                              clipRule="evenodd"
+                            />
                           </svg>
                         </div>
                         <p className="text-gray-600 text-sm">{problem}</p>
@@ -405,8 +431,16 @@ export default function ServicePage({ params }: ServicePageProps) {
                     {enhancedContent.whyChooseWildwest.map((reason, index) => (
                       <div key={index} className="flex items-start gap-3">
                         <div className="flex-shrink-0 w-5 h-5 bg-green-100 rounded-full flex items-center justify-center mt-0.5">
-                          <svg className="w-3 h-3 text-green-600" fill="currentColor" viewBox="0 0 20 20">
-                            <path fillRule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                          <svg
+                            className="w-3 h-3 text-green-600"
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                          >
+                            <path
+                              fillRule="evenodd"
+                              d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                              clipRule="evenodd"
+                            />
                           </svg>
                         </div>
                         <p className="text-gray-600 text-sm">{reason.replace(/Utah/g, cityName)}</p>
@@ -533,18 +567,29 @@ export default function ServicePage({ params }: ServicePageProps) {
                 Frequently Asked Questions - {serviceData.keyword} in {cityName}
               </h2>
               <p className="text-gray-600 text-lg">
-                Get answers to common questions about {serviceData.keyword.toLowerCase()} services in {cityName}.
+                Get answers to common questions about {serviceData.keyword.toLowerCase()} services
+                in {cityName}.
               </p>
             </div>
-            
+
             {enhancedContent?.faqs ? (
               <div className="space-y-4">
                 {enhancedContent.faqs.map((faq, index) => (
                   <details key={index} className="bg-gray-50 rounded-lg p-6 group">
                     <summary className="font-semibold text-text-dark cursor-pointer list-none flex justify-between items-center">
                       <span>{faq.question.replace(/Utah/g, cityName)}</span>
-                      <svg className="w-5 h-5 text-gray-500 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      <svg
+                        className="w-5 h-5 text-gray-500 group-open:rotate-180 transition-transform"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M19 9l-7 7-7-7"
+                        />
                       </svg>
                     </summary>
                     <div className="mt-4 text-gray-600">
@@ -577,20 +622,26 @@ export default function ServicePage({ params }: ServicePageProps) {
                 {cityName}. We'll provide a detailed quote and answer any questions you have about
                 your project.
               </p>
-              
+
               {/* Enhanced Service Info */}
               {enhancedContent && (
                 <div className="grid md:grid-cols-3 gap-6 mt-8 max-w-3xl mx-auto">
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-primary mb-1">{enhancedContent.priceRange}</div>
+                    <div className="text-2xl font-bold text-primary mb-1">
+                      {enhancedContent.priceRange}
+                    </div>
                     <div className="text-sm text-gray-600">Typical Investment</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-primary mb-1">{enhancedContent.timeline}</div>
+                    <div className="text-2xl font-bold text-primary mb-1">
+                      {enhancedContent.timeline}
+                    </div>
                     <div className="text-sm text-gray-600">Project Timeline</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-primary mb-1">{enhancedContent.warranty}</div>
+                    <div className="text-2xl font-bold text-primary mb-1">
+                      {enhancedContent.warranty}
+                    </div>
                     <div className="text-sm text-gray-600">Warranty Coverage</div>
                   </div>
                 </div>

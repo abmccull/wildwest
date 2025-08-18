@@ -26,7 +26,7 @@ export default function ContactOptions() {
   return (
     <div className="bg-white rounded-lg shadow-lg p-6">
       <h3 className="text-xl font-semibold text-gray-900 mb-4">Contact Us</h3>
-      
+
       <div className="space-y-4">
         {/* Phone Call */}
         <a
@@ -94,7 +94,7 @@ export default function DemolitionPage() {
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-4xl font-bold mb-8">Demolition Services</h1>
-      
+
       {/* Service content */}
       <div className="mb-8">
         <p>Professional demolition services for residential and commercial properties...</p>
@@ -104,21 +104,21 @@ export default function DemolitionPage() {
       <div className="bg-blue-50 rounded-lg p-6 mb-8">
         <h2 className="text-2xl font-semibold mb-4">Get Your Demolition Quote</h2>
         <p className="text-gray-600 mb-6">
-          Ready to start your demolition project? Text us your details and we'll send you a 
+          Ready to start your demolition project? Text us your details and we'll send you a
           personalized quote within 24 hours.
         </p>
-        
+
         <div className="flex flex-wrap gap-4">
           <SmsButton
             variant="inline"
             messageType="quote_request"
             templateData={{
-              service: "Demolition Services",
-              name: "Customer" // This would be dynamic in real implementation
+              service: 'Demolition Services',
+              name: 'Customer', // This would be dynamic in real implementation
             }}
             message="Hi! I'm interested in getting a quote for demolition services. Please text me back with pricing information and next steps."
           />
-          
+
           <button className="bg-gray-200 hover:bg-gray-300 text-gray-800 px-6 py-3 rounded-lg font-medium transition-colors">
             Call (801) 691-4065
           </button>
@@ -154,9 +154,7 @@ export default function LeadFormSection() {
   return (
     <div className="max-w-2xl mx-auto">
       {/* Lead form */}
-      <form onSubmit={handleFormSubmit}>
-        {/* Form fields... */}
-      </form>
+      <form onSubmit={handleFormSubmit}>{/* Form fields... */}</form>
 
       {/* Success message with SMS option */}
       {leadId && (
@@ -165,17 +163,17 @@ export default function LeadFormSection() {
             Thanks for your interest, {customerName}!
           </h3>
           <p className="text-green-700 mb-4">
-            We've received your request for {selectedService}. For faster service, 
-            you can also text us directly.
+            We've received your request for {selectedService}. For faster service, you can also text
+            us directly.
           </p>
-          
+
           <SmsButton
             variant="inline"
             leadId={leadId}
             messageType="quote_request"
             templateData={{
               name: customerName,
-              service: selectedService
+              service: selectedService,
             }}
             message={`Hi! I just submitted a lead form for ${selectedService}. Please text me back with more information about the next steps and timeline.`}
           />
@@ -199,10 +197,7 @@ export default function MobileFooter() {
     <div className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-4 py-2">
       <div className="flex justify-around items-center">
         {/* Call Button */}
-        <a
-          href="tel:+18016914065"
-          className="flex flex-col items-center p-2 text-green-600"
-        >
+        <a href="tel:+18016914065" className="flex flex-col items-center p-2 text-green-600">
           <svg className="w-6 h-6 mb-1" fill="currentColor" viewBox="0 0 20 20">
             <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.155 6.155l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
           </svg>
@@ -263,7 +258,11 @@ export default function BookingConfirmation({ bookingId }: { bookingId: number }
         <div className="text-center mb-8">
           <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
             <svg className="w-8 h-8 text-green-500" fill="currentColor" viewBox="0 0 20 20">
-              <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+              <path
+                fillRule="evenodd"
+                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                clipRule="evenodd"
+              />
             </svg>
           </div>
           <h1 className="text-2xl font-bold text-gray-900 mb-2">Booking Confirmed!</h1>
@@ -289,7 +288,7 @@ export default function BookingConfirmation({ bookingId }: { bookingId: number }
           <p className="text-gray-600 mb-4">
             We'll send you a reminder, but you can also text us with any questions:
           </p>
-          
+
           <div className="flex flex-wrap gap-4">
             <SmsButton
               variant="inline"
@@ -298,12 +297,12 @@ export default function BookingConfirmation({ bookingId }: { bookingId: number }
               templateData={{
                 name: booking.customerName,
                 date: booking.date,
-                time: booking.time
+                time: booking.time,
               }}
               message={`Hi! I have an appointment scheduled for ${booking.date} at ${booking.time}. I wanted to confirm this is still good and ask if there's anything I should prepare.`}
             />
-            
-            <button 
+
+            <button
               onClick={() => window.print()}
               className="bg-gray-200 hover:bg-gray-300 text-gray-800 px-6 py-3 rounded-lg font-medium transition-colors"
             >
@@ -331,7 +330,11 @@ export default function EmergencyContact() {
       <div className="flex items-start">
         <div className="flex-shrink-0">
           <svg className="w-8 h-8 text-red-500" fill="currentColor" viewBox="0 0 20 20">
-            <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+            <path
+              fillRule="evenodd"
+              d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
+              clipRule="evenodd"
+            />
           </svg>
         </div>
         <div className="ml-4 flex-1">
@@ -339,7 +342,7 @@ export default function EmergencyContact() {
           <p className="text-red-700 mb-4">
             Need immediate assistance? Call us now or send an urgent text message.
           </p>
-          
+
           <div className="flex flex-wrap gap-3">
             <a
               href="tel:+18016914065"
@@ -350,7 +353,7 @@ export default function EmergencyContact() {
               </svg>
               Call Emergency Line
             </a>
-            
+
             <SmsButton
               variant="inline"
               className="bg-orange-600 hover:bg-orange-700"
@@ -392,25 +395,27 @@ export default function SmsAnalytics() {
   return (
     <div className="bg-white rounded-lg shadow p-6">
       <h2 className="text-xl font-semibold mb-6">SMS Analytics</h2>
-      
+
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
         <div className="bg-blue-50 rounded-lg p-4">
           <div className="text-2xl font-bold text-blue-600">{analytics.totalMessages}</div>
           <div className="text-sm text-blue-600">Total Messages</div>
         </div>
-        
+
         <div className="bg-green-50 rounded-lg p-4">
           <div className="text-2xl font-bold text-green-600">{analytics.deliveredMessages}</div>
           <div className="text-sm text-green-600">Delivered</div>
         </div>
-        
+
         <div className="bg-red-50 rounded-lg p-4">
           <div className="text-2xl font-bold text-red-600">{analytics.failedMessages}</div>
           <div className="text-sm text-red-600">Failed</div>
         </div>
-        
+
         <div className="bg-gray-50 rounded-lg p-4">
-          <div className="text-2xl font-bold text-gray-600">${(analytics.totalCost / 100).toFixed(2)}</div>
+          <div className="text-2xl font-bold text-gray-600">
+            ${(analytics.totalCost / 100).toFixed(2)}
+          </div>
           <div className="text-sm text-gray-600">Total Cost</div>
         </div>
       </div>

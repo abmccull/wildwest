@@ -7,16 +7,19 @@ Your project is suffering from **overengineering** and **outdated dependencies**
 ## Core Issues
 
 ### 1. Version Mismatches
+
 - Next.js 14.2 is outdated (current: 15.4)
 - Using React 18 when 19 is available
 - Version conflicts causing webpack errors
 
 ### 2. Architectural Confusion
+
 - Mixing Server/Client components incorrectly
 - Every component marked as 'use client' (defeats SSR)
 - Complex dynamic imports causing runtime errors
 
 ### 3. Unnecessary Complexity
+
 - CSV-based page generation for 2,700+ pages
 - Multiple build scripts
 - Heavy dependencies (38 in production!)
@@ -24,7 +27,9 @@ Your project is suffering from **overengineering** and **outdated dependencies**
 ## Simplification Strategy
 
 ### Phase 1: Immediate Fixes (1 hour)
+
 1. **Update to Next.js 15**
+
    ```bash
    npm install next@latest react@latest react-dom@latest
    ```
@@ -41,6 +46,7 @@ Your project is suffering from **overengineering** and **outdated dependencies**
    - Remove experimental flags
 
 ### Phase 2: Architecture Cleanup (2-3 hours)
+
 1. **Embrace Server Components**
    - Remove 'use client' from most components
    - Only use for interactive elements
@@ -60,6 +66,7 @@ Your project is suffering from **overengineering** and **outdated dependencies**
    ```
 
 ### Phase 3: Modern Patterns (2-3 hours)
+
 1. **Use App Router properly**
    - Server Components by default
    - Client Components only when needed
@@ -78,16 +85,19 @@ Your project is suffering from **overengineering** and **outdated dependencies**
 ## Expected Results
 
 ### Performance
+
 - 50% faster initial load
 - 80% smaller JavaScript bundle
 - Better Core Web Vitals
 
 ### Developer Experience
+
 - Simpler mental model
 - Faster builds
 - Easier debugging
 
 ### Maintenance
+
 - Fewer dependencies to update
 - Clearer architecture
 - Standard Next.js patterns
@@ -95,11 +105,13 @@ Your project is suffering from **overengineering** and **outdated dependencies**
 ## Migration Path
 
 ### Step 1: Create New Branch
+
 ```bash
 git checkout -b simplification
 ```
 
 ### Step 2: Update Dependencies
+
 ```bash
 # Remove old lockfile
 rm -rf node_modules package-lock.json
@@ -110,11 +122,13 @@ npm install -D @types/react@latest @types/react-dom@latest
 ```
 
 ### Step 3: Fix Breaking Changes
+
 1. Update `next.config.js` to minimal config
 2. Remove 'use client' from server components
 3. Fix any type errors
 
 ### Step 4: Test & Deploy
+
 1. Test all pages work
 2. Check performance metrics
 3. Deploy to staging
@@ -122,6 +136,7 @@ npm install -D @types/react@latest @types/react-dom@latest
 ## Alternative: Fresh Start
 
 Given the complexity, consider:
+
 1. Create new Next.js 15 project
 2. Copy over only essential code
 3. Rebuild with modern patterns
@@ -130,6 +145,7 @@ Given the complexity, consider:
 ## Recommended Approach
 
 **I recommend the fresh start approach** because:
+
 - Your current setup has too much technical debt
 - Fixing all issues will take longer than rebuilding
 - You'll learn modern patterns properly
