@@ -273,7 +273,7 @@ export function validateImageSeo(image: ImageMetadata): {
   };
 }
 
-export default {
+const imageOptimization = {
   generateSeoAltText,
   generateImageStructuredData,
   getImageLoadingStrategy,
@@ -286,3 +286,5 @@ export default {
   checkImageFormatSupport,
   validateImageSeo,
 };
+
+export default imageOptimization;

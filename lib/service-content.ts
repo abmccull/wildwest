@@ -2438,7 +2438,7 @@ export function getServiceSEOData(serviceSlug: string, cityName?: string) {
   };
 }
 
-export default {
+const serviceContentUtils = {
   getServiceContent,
   getAllServiceContent,
   getServiceContentByCategory,
@@ -2447,3 +2447,5 @@ export default {
   searchServiceContent,
   getServiceSEOData,
 };
+
+export default serviceContentUtils;

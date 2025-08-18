@@ -179,7 +179,7 @@ export function getServiceCategory(slug: string): string | null {
   return null;
 }
 
-export default {
+const serviceSlugMapperUtils = {
   getEnhancedSlugFromCSV,
   hasEnhancedContent,
   getCSVSlugsForEnhanced,
@@ -190,3 +190,5 @@ export default {
   reverseSlugMapping,
   categoryMapping,
 };
+
+export default serviceSlugMapperUtils;
