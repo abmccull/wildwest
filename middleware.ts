@@ -1,17 +1,18 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
-// Service name redirects map
+// Service name redirects map - only include actual redirects needed for old URLs
 const SERVICE_REDIRECTS: Record<string, string> = {
-  'junk-removal': 'junk-removal-service',
   'hardwood-flooring': 'hardwood-floor-installation',
   'vinyl-flooring': 'vinyl-plank-installation',
   'laminate-flooring': 'laminate-installation',
-  demolition: 'interior-demolition',
   'construction-cleanup': 'construction-debris-removal',
   'bathroom-remodel': 'bathroom-remodeling',
   'kitchen-remodel': 'kitchen-remodeling',
-  flooring: 'flooring-installation',
+  // Removed these as they cause redirect loops:
+  // 'junk-removal': 'junk-removal-service', // Already using junk-removal-service in URLs
+  // demolition: 'interior-demolition', // Already using interior-demolition in URLs
+  // flooring: 'flooring-installation', // Already using flooring-installation in URLs
 };
 
 // Valid city slugs that should have -ut appended
@@ -68,13 +69,19 @@ export function middleware(request: NextRequest) {
 
   // First, check if this is a malformed city URL without -ut suffix
   // Pattern: /city-name-service-name (all combined without proper separation)
-  const malformedMatch = pathname.match(/^\/([a-z-]+)$/);
+  const malformedMatch = pathname.match(/^\/([a-z-]+)\/?$/);
 
   if (malformedMatch) {
     const fullSlug = malformedMatch[1];
 
     // Skip if it already ends with -ut (valid city page)
     if (fullSlug.endsWith('-ut')) {
+      // Just ensure trailing slash for city-only pages
+      if (!pathname.endsWith('/')) {
+        const newUrl = new URL(request.url);
+        newUrl.pathname = pathname + '/';
+        return NextResponse.redirect(newUrl, { status: 301 });
+      }
       return NextResponse.next();
     }
 
@@ -101,8 +108,8 @@ export function middleware(request: NextRequest) {
   if (match) {
     const [, city, service] = match;
 
-    // Check if this service needs a redirect
-    if (SERVICE_REDIRECTS[service]) {
+    // Check if this service needs a redirect - but skip if already redirected
+    if (SERVICE_REDIRECTS[service] && SERVICE_REDIRECTS[service] !== service) {
       const newUrl = new URL(request.url);
       newUrl.pathname = `/${city}/${SERVICE_REDIRECTS[service]}/`;
       return NextResponse.redirect(newUrl, { status: 301 });
