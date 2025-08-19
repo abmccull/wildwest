@@ -116,8 +116,9 @@
     },
     {
       "source": "/locations/:city/:service",
-      "destination": "/:city-ut/:service/",
+      "destination": "/:city-ut/:service",
       "permanent": true
     }
-  ]
+  ],
+  "trailingSlash": true
 }

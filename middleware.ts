@@ -64,7 +64,8 @@ export function middleware(request: NextRequest) {
 
     // Map city names to city-ut format
     const citySlug = city + '-ut';
-    newUrl.pathname = `/${citySlug}/${service}/`;
+    // Don't add trailing slash - let Next.js handle it
+    newUrl.pathname = `/${citySlug}/${service}`;
     return NextResponse.redirect(newUrl, { status: 301 });
   }
 
@@ -88,9 +89,10 @@ export function middleware(request: NextRequest) {
         const servicePart = fullSlug.substring(servicePartStart);
 
         if (servicePart) {
-          // Redirect to the correct format: /city-ut/service/
+          // Redirect to the correct format: /city-ut/service
           const newUrl = new URL(request.url);
-          newUrl.pathname = `/${city}-ut/${servicePart}/`;
+          // Don't add trailing slash - let Next.js handle it
+          newUrl.pathname = `/${city}-ut/${servicePart}`;
           return NextResponse.redirect(newUrl, { status: 301 });
         }
       }
@@ -106,11 +108,10 @@ export function middleware(request: NextRequest) {
     // Check if this service needs a redirect - but skip if already redirected
     if (SERVICE_REDIRECTS[service] && SERVICE_REDIRECTS[service] !== service) {
       const newUrl = new URL(request.url);
-      newUrl.pathname = `/${city}/${SERVICE_REDIRECTS[service]}/`;
+      // Don't add trailing slash - let Next.js handle it
+      newUrl.pathname = `/${city}/${SERVICE_REDIRECTS[service]}`;
       return NextResponse.redirect(newUrl, { status: 301 });
     }
-
-    // Don't force trailing slashes - let Next.js handle this to avoid conflicts
   }
 
   return NextResponse.next();
