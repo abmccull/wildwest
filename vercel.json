@@ -118,11 +118,6 @@
       "source": "/locations/:city/:service",
       "destination": "/:city-ut/:service/",
       "permanent": true
-    },
-    {
-      "source": "/:city(west-valley-city|south-salt-lake|draper|south-jordan|midvale|cottonwood-heights|taylorsville|sandy|riverton|holladay|murray|west-jordan|herriman|bluffdale)-:service",
-      "destination": "/:city-ut/:service/",
-      "permanent": true
     }
   ]
 }
