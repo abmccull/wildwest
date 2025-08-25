@@ -145,13 +145,6 @@ export const LeadForm: React.FC<LeadFormProps> = ({ onSubmit, className = '' }) 
   return (
     <div className={`max-w-2xl mx-auto ${className}`}>
       <div className="bg-white p-6 rounded-lg shadow-lg border border-gray-200">
-        <div className="mb-8 text-center">
-          <h2 className="text-3xl font-bold text-primary mb-2">Get Your Free Quote</h2>
-          <p className="text-gray-600">
-            Tell us about your project and we'll provide a free, no-obligation estimate.
-          </p>
-        </div>
-
         <form onSubmit={handleSubmit(handleFormSubmit)} noValidate>
           {/* Status Messages */}
           <div role="status" aria-live="polite" className="sr-only">

@@ -730,38 +730,12 @@ export default async function ServicePage({ params }: ServicePageProps) {
       <section id="quote-form" className="py-12 bg-primary/5">
         <div className="container-custom">
           <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-8">
-              <h2 className="text-3xl font-bold text-text-dark mb-4">Ready to Get Started?</h2>
-              <p className="text-gray-600 text-lg">
-                {databaseContent.cta_text ||
-                  `Contact us today for your free ${serviceData.keyword.toLowerCase()} estimate in ${cityName}. We'll provide a detailed quote and answer any questions you have about your project.`}
-              </p>
-
-              {/* Enhanced Service Info */}
-              {enhancedContent && (
-                <div className="grid md:grid-cols-3 gap-6 mt-8 max-w-3xl mx-auto">
-                  <div className="text-center">
-                    <div className="text-2xl font-bold text-primary mb-1">
-                      {enhancedContent.priceRange}
-                    </div>
-                    <div className="text-sm text-gray-600">Typical Investment</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-2xl font-bold text-primary mb-1">
-                      {enhancedContent.timeline}
-                    </div>
-                    <div className="text-sm text-gray-600">Project Timeline</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-2xl font-bold text-primary mb-1">
-                      {enhancedContent.warranty}
-                    </div>
-                    <div className="text-sm text-gray-600">Warranty Coverage</div>
-                  </div>
-                </div>
-              )}
-            </div>
-            <LeadFormSection cityDisplayName={cityName} />
+            <LeadFormSection 
+              cityDisplayName={cityName}
+              serviceData={serviceData}
+              enhancedContent={enhancedContent}
+              ctaText={databaseContent.cta_text}
+            />
           </div>
         </div>
       </section>
