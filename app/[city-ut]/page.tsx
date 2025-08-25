@@ -246,8 +246,8 @@ export default function CityPage({ params }: CityPageProps) {
     name: 'Wild West Construction',
     description: `Professional construction services in ${cityDisplayName}, Utah`,
     url: `${process.env.NEXT_PUBLIC_SITE_URL}/${citySlug}`,
-    telephone: '+18015550123',
-    email: 'info@wildwestconstruction.com',
+    telephone: '+18016914065',
+    email: 'info@wildwestslc.com',
     areaServed: {
       '@type': 'City',
       name: cityDisplayName,
@@ -256,10 +256,10 @@ export default function CityPage({ params }: CityPageProps) {
     },
     address: {
       '@type': 'PostalAddress',
-      streetAddress: '123 Construction Blvd',
+      streetAddress: '4097 S 420 W',
       addressLocality: 'Salt Lake City',
       addressRegion: 'UT',
-      postalCode: '84101',
+      postalCode: '84123',
       addressCountry: 'US',
     },
     geo: {
@@ -326,7 +326,7 @@ export default function CityPage({ params }: CityPageProps) {
               junk removal services in ${cityDisplayName}, Utah. With years of experience serving ${countyName}, we deliver exceptional craftsmanship and reliable service you can count on.`}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a href="tel:+18015550123" className="btn-primary text-center">
+              <a href="tel:+18016914065" className="btn-primary text-center">
                 <svg
                   className="w-5 h-5 inline-block mr-2"
                   fill="none"
@@ -340,7 +340,7 @@ export default function CityPage({ params }: CityPageProps) {
                     d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
                   />
                 </svg>
-                Call Now: (801) 555-0123
+                Call Now: (801) 691-4065
               </a>
               <a href="#quote-form" className="btn-secondary text-center">
                 Get Free Quote
@@ -512,7 +512,7 @@ export default function CityPage({ params }: CityPageProps) {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a
-                href="tel:+18015550123"
+                href="tel:+18016914065"
                 className="bg-white text-primary px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
               >
                 <svg
@@ -528,7 +528,7 @@ export default function CityPage({ params }: CityPageProps) {
                     d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
                   />
                 </svg>
-                Call (801) 555-0123
+                Call (801) 691-4065
               </a>
               <a
                 href="#quote-form"

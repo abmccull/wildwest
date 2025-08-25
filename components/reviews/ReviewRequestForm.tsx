@@ -306,7 +306,7 @@ export function ReviewRequestForm({
               value={formData.phone}
               onChange={(e) => handleInputChange('phone', e.target.value)}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
-              placeholder="(801) 555-0123"
+              placeholder="(801) 691-4065"
             />
           </div>
 

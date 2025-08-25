@@ -33,7 +33,7 @@ export function LocalSchemaMarkup({
     description: `Professional construction services in ${city.name}, Utah. Specializing in flooring, demolition, and junk removal with over 10 years of local experience.`,
     url: `${process.env.NEXT_PUBLIC_SITE_URL}/${city.slug}`,
     telephone: cityContent.localPhoneNumbers.main,
-    email: 'info@wildwestconstruction.com',
+    email: 'info@wildwestslc.com',
     image: [
       `${process.env.NEXT_PUBLIC_SITE_URL}/images/wildwest-construction-logo.jpg`,
       `${process.env.NEXT_PUBLIC_SITE_URL}/images/construction-work-${city.slug}.jpg`,
@@ -49,10 +49,10 @@ export function LocalSchemaMarkup({
     },
     address: {
       '@type': 'PostalAddress',
-      streetAddress: '123 Construction Blvd',
+      streetAddress: '4097 S 420 W',
       addressLocality: 'Salt Lake City',
       addressRegion: 'UT',
-      postalCode: '84101',
+      postalCode: '84123',
       addressCountry: 'US',
     },
     geo: {
@@ -202,10 +202,10 @@ export function LocalSchemaMarkup({
     ],
     address: {
       '@type': 'PostalAddress',
-      streetAddress: '123 Construction Blvd',
+      streetAddress: '4097 S 420 W',
       addressLocality: 'Salt Lake City',
       addressRegion: 'UT',
-      postalCode: '84101',
+      postalCode: '84123',
       addressCountry: 'US',
     },
     sameAs: [

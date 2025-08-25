@@ -39,17 +39,17 @@ interface BusinessInfo {
 const businessInfo: BusinessInfo = {
   name: 'Wild West Construction',
   address: {
-    street: '123 Construction Blvd',
+    street: '4097 S 420 W',
     city: 'Salt Lake City',
     state: 'UT',
-    zipCode: '84101',
-    full: '123 Construction Blvd, Salt Lake City, UT 84101',
+    zipCode: '84123',
+    full: '4097 S 420 W, Salt Lake City, UT 84123',
   },
   phone: {
-    display: '(801) 555-0123',
-    tel: '+18015550123',
+    display: '(801) 691-4065',
+    tel: '+18016914065',
   },
-  email: 'info@wildwestconstruction.com',
+  email: 'info@wildwestslc.com',
   hours: {
     monday: '7:00 AM - 6:00 PM',
     tuesday: '7:00 AM - 6:00 PM',

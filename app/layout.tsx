@@ -225,14 +225,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               url: process.env.NEXT_PUBLIC_SITE_URL,
               logo: `${process.env.NEXT_PUBLIC_SITE_URL}/images/wildwest-logo.png`,
               image: `${process.env.NEXT_PUBLIC_SITE_URL}/images/wildwest-construction-team.jpg`,
-              telephone: '+18015550123',
-              email: 'info@wildwestconstruction.com',
+              telephone: '+18016914065',
+              email: 'info@wildwestslc.com',
               address: {
                 '@type': 'PostalAddress',
-                streetAddress: '123 Construction Blvd',
+                streetAddress: '4097 S 420 W',
                 addressLocality: 'Salt Lake City',
                 addressRegion: 'UT',
-                postalCode: '84101',
+                postalCode: '84123',
                 addressCountry: 'US',
               },
               geo: {
@@ -342,7 +342,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               contactPoint: [
                 {
                   '@type': 'ContactPoint',
-                  telephone: '+18015550123',
+                  telephone: '+18016914065',
                   contactType: 'customer service',
                   areaServed: 'US-UT',
                   availableLanguage: ['English', 'Spanish'],
@@ -350,10 +350,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               ],
               address: {
                 '@type': 'PostalAddress',
-                streetAddress: '123 Construction Blvd',
+                streetAddress: '4097 S 420 W',
                 addressLocality: 'Salt Lake City',
                 addressRegion: 'UT',
-                postalCode: '84101',
+                postalCode: '84123',
                 addressCountry: 'US',
               },
               sameAs: [

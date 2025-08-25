@@ -29,14 +29,14 @@ export function generateLocalBusinessSchema({
       height: 200,
     },
     url: 'https://wildwestslc.com',
-    telephone: '+1-801-555-0123',
-    email: 'info@wildwestconstruction.com',
+    telephone: '+1-801-691-4065',
+    email: 'info@wildwestslc.com',
     address: {
       '@type': 'PostalAddress',
-      streetAddress: '123 Construction Blvd',
+      streetAddress: '4097 S 420 W',
       addressLocality: city || 'Salt Lake City',
       addressRegion: 'UT',
-      postalCode: '84101',
+      postalCode: '84123',
       addressCountry: 'US',
     },
     geo: {

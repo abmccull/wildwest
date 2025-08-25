@@ -239,9 +239,9 @@ export const CITY_CONTENT: Record<string, CityContent> = {
       emergencyOnly: ['East Bench', 'Federal Heights'],
     },
     localPhoneNumbers: {
-      main: '(801) 555-0123',
-      emergency: '(801) 555-0911',
-      permits: '(801) 555-0124',
+      main: '(801) 691-4065',
+      emergency: '(801) 691-4065',
+      permits: '(801) 691-4065',
     },
     drivingDirections: [
       {
@@ -365,9 +365,9 @@ export const CITY_CONTENT: Record<string, CityContent> = {
       emergencyOnly: [],
     },
     localPhoneNumbers: {
-      main: '(801) 555-0125',
-      emergency: '(801) 555-0912',
-      permits: '(801) 555-0126',
+      main: '(801) 691-4065',
+      emergency: '(801) 691-4065',
+      permits: '(801) 691-4065',
     },
     drivingDirections: [
       {
@@ -480,9 +480,9 @@ export const CITY_CONTENT: Record<string, CityContent> = {
       emergencyOnly: [],
     },
     localPhoneNumbers: {
-      main: '(801) 555-0127',
-      emergency: '(801) 555-0913',
-      permits: '(801) 555-0128',
+      main: '(801) 691-4065',
+      emergency: '(801) 691-4065',
+      permits: '(801) 691-4065',
     },
     drivingDirections: [
       {
@@ -601,9 +601,9 @@ export const CITY_CONTENT: Record<string, CityContent> = {
       emergencyOnly: ['Upper Elevation Areas'],
     },
     localPhoneNumbers: {
-      main: '(801) 555-0129',
-      emergency: '(801) 555-0914',
-      permits: '(801) 555-0130',
+      main: '(801) 691-4065',
+      emergency: '(801) 691-4065',
+      permits: '(801) 691-4065',
     },
     drivingDirections: [
       {
@@ -727,9 +727,9 @@ export const CITY_CONTENT: Record<string, CityContent> = {
       emergencyOnly: ['Steep Terrain Areas'],
     },
     localPhoneNumbers: {
-      main: '(801) 555-0131',
-      emergency: '(801) 555-0915',
-      permits: '(801) 555-0132',
+      main: '(801) 691-4065',
+      emergency: '(801) 691-4065',
+      permits: '(801) 691-4065',
     },
     drivingDirections: [
       {
@@ -850,9 +850,9 @@ export const CITY_CONTENT: Record<string, CityContent> = {
       emergencyOnly: [],
     },
     localPhoneNumbers: {
-      main: '(801) 555-0133',
-      emergency: '(801) 555-0916',
-      permits: '(801) 555-0134',
+      main: '(801) 691-4065',
+      emergency: '(801) 691-4065',
+      permits: '(801) 691-4065',
     },
     drivingDirections: [
       {

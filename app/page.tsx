@@ -14,13 +14,13 @@ const structuredData = {
     'Professional construction services for residential and commercial projects in Salt Lake County, Utah.',
   address: {
     '@type': 'PostalAddress',
-    streetAddress: '123 Construction Blvd',
+    streetAddress: '4097 S 420 W',
     addressLocality: 'Salt Lake City',
     addressRegion: 'UT',
-    postalCode: '84101',
+    postalCode: '84123',
     addressCountry: 'US',
   },
-  telephone: '+18015550123',
+  telephone: '+18016914065',
   url: 'https://wildwestconstruction.com',
   areaServed: [
     { '@type': 'City', name: 'Salt Lake City', addressRegion: 'UT', addressCountry: 'US' },
