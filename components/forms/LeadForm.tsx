@@ -56,7 +56,6 @@ export const LeadForm: React.FC<LeadFormProps> = ({ onSubmit, className = '' }) 
     }
   }, [mobileValue, setValue]);
 
-
   const handleFormSubmit = async (data: LeadFormData) => {
     // Turnstile verification temporarily disabled
     // if (!turnstileToken) {
@@ -146,9 +145,7 @@ export const LeadForm: React.FC<LeadFormProps> = ({ onSubmit, className = '' }) 
 
           {/* Contact Information */}
           <div className="mb-6">
-            <h3 className="text-lg font-semibold text-text-dark mb-4">
-              Contact Information
-            </h3>
+            <h3 className="text-lg font-semibold text-text-dark mb-4">Contact Information</h3>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <FormField label="Full Name" error={errors.name?.message} required>
@@ -160,11 +157,7 @@ export const LeadForm: React.FC<LeadFormProps> = ({ onSubmit, className = '' }) 
                 />
               </FormField>
 
-              <FormField
-                label="Mobile Number"
-                error={errors.mobile?.message}
-                required
-              >
+              <FormField label="Mobile Number" error={errors.mobile?.message} required>
                 <input
                   {...register('mobile')}
                   type="tel"
@@ -177,9 +170,7 @@ export const LeadForm: React.FC<LeadFormProps> = ({ onSubmit, className = '' }) 
 
           {/* Service & Location */}
           <div className="mb-6">
-            <h3 className="text-lg font-semibold text-text-dark mb-4">
-              Project Details
-            </h3>
+            <h3 className="text-lg font-semibold text-text-dark mb-4">Project Details</h3>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <FormField label="Service Type" error={errors.serviceType?.message} required>
@@ -230,8 +221,6 @@ export const LeadForm: React.FC<LeadFormProps> = ({ onSubmit, className = '' }) 
               />
             </FormField>
           </div>
-
-
 
           {/* Submit Button */}
           <button

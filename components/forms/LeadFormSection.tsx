@@ -43,9 +43,7 @@ export const LeadFormSection: React.FC<LeadFormSectionProps> = ({
     <div className={className}>
       {/* Main Heading */}
       <div className="text-center mb-8">
-        <h2 className="text-3xl font-bold text-primary mb-4">
-          Get Your Free Quote in Minutes
-        </h2>
+        <h2 className="text-3xl font-bold text-primary mb-4">Get Your Free Quote in Minutes</h2>
         <p className="text-lg text-gray-700 max-w-2xl mx-auto">
           {serviceData
             ? `Fill out the quick form below for your free ${serviceData.keyword?.toLowerCase()} estimate in ${cityDisplayName}. We'll contact you within 24 hours.`
