@@ -730,7 +730,7 @@ export default async function ServicePage({ params }: ServicePageProps) {
       <section id="quote-form" className="py-12 bg-primary/5">
         <div className="container-custom">
           <div className="max-w-4xl mx-auto">
-            <LeadFormSection 
+            <LeadFormSection
               cityDisplayName={cityName}
               serviceData={serviceData}
               enhancedContent={enhancedContent}

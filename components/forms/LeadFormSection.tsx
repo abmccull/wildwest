@@ -45,26 +45,20 @@ export const LeadFormSection: React.FC<LeadFormSectionProps> = ({
       {enhancedContent && (
         <div className="grid md:grid-cols-3 gap-6 mb-8 max-w-3xl mx-auto">
           <div className="text-center">
-            <div className="text-2xl font-bold text-primary mb-1">
-              {enhancedContent.priceRange}
-            </div>
+            <div className="text-2xl font-bold text-primary mb-1">{enhancedContent.priceRange}</div>
             <div className="text-sm text-gray-600">Typical Investment</div>
           </div>
           <div className="text-center">
-            <div className="text-2xl font-bold text-primary mb-1">
-              {enhancedContent.timeline}
-            </div>
+            <div className="text-2xl font-bold text-primary mb-1">{enhancedContent.timeline}</div>
             <div className="text-sm text-gray-600">Project Timeline</div>
           </div>
           <div className="text-center">
-            <div className="text-2xl font-bold text-primary mb-1">
-              {enhancedContent.warranty}
-            </div>
+            <div className="text-2xl font-bold text-primary mb-1">{enhancedContent.warranty}</div>
             <div className="text-sm text-gray-600">Warranty Coverage</div>
           </div>
         </div>
       )}
-      
+
       {/* CTA Text */}
       <div className="text-center mb-8">
         <p className="text-lg text-gray-700 max-w-3xl mx-auto">
@@ -74,7 +68,7 @@ export const LeadFormSection: React.FC<LeadFormSectionProps> = ({
               : `Ready to start your construction project in ${cityDisplayName}? Contact Wild West Construction at (801) 691-4065 or email info@wildwestslc.com for a free estimate!`)}
         </p>
       </div>
-      
+
       <LeadForm onSubmit={handleLeadSubmission} className="max-w-2xl mx-auto" />
     </div>
   );
