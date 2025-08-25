@@ -249,7 +249,6 @@ export const leadValidationSchema = z.object({
   whatsapp_consent: z.boolean().default(false),
   utm_params: z.record(z.string(), z.unknown()).optional(),
   page_path: z.string().max(500).optional(),
-  turnstile_token: z.string().optional(),
 });
 
 export const bookingValidationSchema = z.object({

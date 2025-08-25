@@ -14,12 +14,9 @@ import {
 import { FormField } from './FormField';
 import { FileUpload, FileWithPreview } from './FileUpload';
 import { DateTimePicker } from './DateTimePicker';
-import TurnstileWidget from '../ui/TurnstileWidget';
 
 export interface LeadFormProps {
-  onSubmit: (
-    data: LeadFormData & { utmParams: Record<string, string>; turnstile_token: string }
-  ) => Promise<void>;
+  onSubmit: (data: LeadFormData & { utmParams: Record<string, string> }) => Promise<void>;
   className?: string;
 }
 
@@ -28,7 +25,7 @@ export const LeadForm: React.FC<LeadFormProps> = ({ onSubmit, className = '' }) 
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [submitError, setSubmitError] = useState('');
   const [files, setFiles] = useState<FileWithPreview[]>([]);
-  const [turnstileToken, setTurnstileToken] = useState<string>('');
+  // const [turnstileToken, setTurnstileToken] = useState<string>(''); // Turnstile not implemented yet
 
   const {
     register,
@@ -76,22 +73,23 @@ export const LeadForm: React.FC<LeadFormProps> = ({ onSubmit, className = '' }) 
   }, [files, setValue]);
 
   const handleFormSubmit = async (data: LeadFormData) => {
-    if (!turnstileToken) {
-      setSubmitError('Please complete the verification challenge before submitting.');
-      return;
-    }
+    // Turnstile verification temporarily disabled
+    // if (!turnstileToken) {
+    //   setSubmitError('Please complete the verification challenge before submitting.');
+    //   return;
+    // }
 
     setIsSubmitting(true);
     setSubmitError('');
 
     try {
       const utmParams = extractUTMParams();
-      await onSubmit({ ...data, utmParams, turnstile_token: turnstileToken });
+      await onSubmit({ ...data, utmParams });
 
       setSubmitSuccess(true);
       reset();
       setFiles([]);
-      setTurnstileToken('');
+      // setTurnstileToken('');
 
       // Hide success message after 5 seconds
       setTimeout(() => setSubmitSuccess(false), 5000);
@@ -362,33 +360,12 @@ export const LeadForm: React.FC<LeadFormProps> = ({ onSubmit, className = '' }) 
             </div>
           </div>
 
-          {/* Anti-Spam Verification */}
-          <div className="mb-8">
-            <h3 className="text-lg font-semibold text-text-dark mb-4 border-b border-gray-200 pb-2">
-              Security Verification
-            </h3>
-
-            <FormField
-              label=""
-              error=""
-              helpText="Please complete the verification to submit your request"
-            >
-              <TurnstileWidget
-                onVerify={setTurnstileToken}
-                onError={() => setTurnstileToken('')}
-                onExpire={() => setTurnstileToken('')}
-                onTimeout={() => setTurnstileToken('')}
-                className="flex justify-center"
-              />
-            </FormField>
-          </div>
-
           {/* Submit Button */}
           <button
             type="submit"
-            disabled={isSubmitting || !isValid || !turnstileToken}
+            disabled={isSubmitting || !isValid}
             className={`w-full py-4 px-6 rounded-lg font-semibold text-lg transition-all duration-200 min-h-[52px] focus:outline-none focus:ring-2 focus:ring-offset-2 ${
-              isSubmitting || !isValid || !turnstileToken
+              isSubmitting || !isValid
                 ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
                 : 'bg-primary hover:bg-primary/90 text-white focus:ring-primary shadow-lg hover:shadow-xl'
             }`}

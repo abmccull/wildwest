@@ -171,6 +171,8 @@ export function transformPageToServiceData(page: PageData) {
     normalizedCity: citySlug,
     normalizedCategory: mapServiceToCategory(page.service).toLowerCase(),
     parsedJsonLd: page.content?.jsonLd ? JSON.parse(page.content.jsonLd) : null,
+    // Include all database content fields
+    databaseContent: page.content || {},
   };
 }
 

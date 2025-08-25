@@ -209,7 +209,11 @@ export default async function ServicePage({ params }: ServicePageProps) {
 
   const cityName = getCityNameFromSlug(citySlug);
 
-  // Get enhanced content from the service content system
+  // Get database content if available
+  const databaseContent = (serviceData as any).databaseContent || {};
+  const hasDbContent = Object.keys(databaseContent).length > 0;
+
+  // Get enhanced content from the service content system as fallback
   // First try to find a best match using the slug mapper
   const mappedSlug = findBestMatch(serviceSlug);
   const enhancedContent = mappedSlug
@@ -262,14 +266,14 @@ export default async function ServicePage({ params }: ServicePageProps) {
         '@type': 'LocalBusiness',
         '@id': `${process.env.NEXT_PUBLIC_SITE_URL}/#business`,
         name: 'Wild West Construction',
-        telephone: '+18015550123',
-        email: 'info@wildwestconstruction.com',
+        telephone: '+18016914065',
+        email: 'info@wildwestslc.com',
         address: {
           '@type': 'PostalAddress',
-          streetAddress: '123 Construction Blvd',
+          streetAddress: '4097 S 420 W',
           addressLocality: 'Salt Lake City',
           addressRegion: 'UT',
-          postalCode: '84101',
+          postalCode: '84123',
           addressCountry: 'US',
         },
       },
@@ -306,7 +310,7 @@ export default async function ServicePage({ params }: ServicePageProps) {
               {serviceData.metaDescription}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a href="tel:+18015550123" className="btn-primary text-center">
+              <a href="tel:+18016914065" className="btn-primary text-center">
                 <svg
                   className="w-5 h-5 inline-block mr-2"
                   fill="none"
@@ -320,7 +324,7 @@ export default async function ServicePage({ params }: ServicePageProps) {
                     d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
                   />
                 </svg>
-                Call Now: (801) 555-0123
+                Call Now: (801) 691-4065
               </a>
               <a href="#quote-form" className="btn-secondary text-center">
                 Get Free Quote
@@ -336,12 +340,16 @@ export default async function ServicePage({ params }: ServicePageProps) {
           <div className="max-w-4xl mx-auto">
             <div className="prose prose-lg max-w-none">
               <h2 className="text-3xl font-bold text-text-dark mb-6">
-                Professional {serviceData.keyword} in {cityName}
+                {databaseContent.hero_text || `Professional ${serviceData.keyword} in ${cityName}`}
               </h2>
 
-              {/* Enhanced Service Description */}
-              {enhancedContent && (
-                <div className="mb-8">
+              {/* Service Description from Database or Enhanced Content */}
+              <div className="mb-8">
+                {databaseContent.service_description ? (
+                  <p className="text-gray-700 leading-relaxed text-lg">
+                    {databaseContent.service_description}
+                  </p>
+                ) : enhancedContent ? (
                   <div
                     className="text-gray-700 leading-relaxed"
                     dangerouslySetInnerHTML={{
@@ -352,36 +360,54 @@ export default async function ServicePage({ params }: ServicePageProps) {
                         ((enhancedContent.longDescription?.length || 0) > 800 ? '...' : ''),
                     }}
                   />
+                ) : null}
+              </div>
+
+              {/* Database Content Sections */}
+              {databaseContent.sections && databaseContent.sections.length > 0 && (
+                <div className="space-y-8 mb-8">
+                  {databaseContent.sections.map((section: any, index: number) => (
+                    <div key={index} className="">
+                      <h3 className="text-2xl font-bold text-text-dark mb-4">{section.title}</h3>
+                      <div className="text-gray-700 leading-relaxed whitespace-pre-line">
+                        {section.content}
+                      </div>
+                    </div>
+                  ))}
                 </div>
               )}
 
-              {/* Benefits Section */}
-              {enhancedContent?.benefits && (
+              {/* Features/Benefits Section - Database or Enhanced Content */}
+              {(databaseContent.features || enhancedContent?.benefits) && (
                 <div className="bg-gray-50 p-6 rounded-lg mb-8">
                   <h3 className="text-xl font-semibold text-text-dark mb-4">
-                    Benefits of Our {serviceData.keyword} Services
+                    {databaseContent.features
+                      ? 'Key Features'
+                      : `Benefits of Our ${serviceData.keyword} Services`}
                   </h3>
                   <div className="grid md:grid-cols-2 gap-4">
-                    {enhancedContent.benefits.slice(0, 6).map((benefit, index) => (
-                      <div key={index} className="flex items-start gap-3">
-                        <div className="flex-shrink-0 w-5 h-5 bg-primary/20 rounded-full flex items-center justify-center mt-0.5">
-                          <svg
-                            className="w-3 h-3 text-primary"
-                            fill="currentColor"
-                            viewBox="0 0 20 20"
-                          >
-                            <path
-                              fillRule="evenodd"
-                              d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                              clipRule="evenodd"
-                            />
-                          </svg>
+                    {(databaseContent.features || enhancedContent?.benefits?.slice(0, 6) || []).map(
+                      (item: string, index: number) => (
+                        <div key={index} className="flex items-start gap-3">
+                          <div className="flex-shrink-0 w-5 h-5 bg-primary/20 rounded-full flex items-center justify-center mt-0.5">
+                            <svg
+                              className="w-3 h-3 text-primary"
+                              fill="currentColor"
+                              viewBox="0 0 20 20"
+                            >
+                              <path
+                                fillRule="evenodd"
+                                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                clipRule="evenodd"
+                              />
+                            </svg>
+                          </div>
+                          <p className="text-gray-600 text-sm">
+                            {typeof item === 'string' ? item.replace(/Utah/g, cityName) : item}
+                          </p>
                         </div>
-                        <p className="text-gray-600 text-sm">
-                          {benefit.replace(/Utah/g, cityName)}
-                        </p>
-                      </div>
-                    ))}
+                      )
+                    )}
                   </div>
                 </div>
               )}
@@ -485,6 +511,42 @@ export default async function ServicePage({ params }: ServicePageProps) {
                   ))}
                 </div>
               )}
+
+              {/* Testimonials Section from Database */}
+              {databaseContent.testimonials && databaseContent.testimonials.length > 0 && (
+                <div className="bg-blue-50 p-6 rounded-lg mb-8">
+                  <h3 className="text-xl font-semibold text-text-dark mb-4">Customer Reviews</h3>
+                  <div className="space-y-4">
+                    {databaseContent.testimonials.map((testimonial: any, index: number) => (
+                      <div key={index} className="bg-white p-4 rounded-lg shadow-sm">
+                        <div className="flex items-center mb-2">
+                          <div className="flex text-yellow-400">
+                            {[...Array(testimonial.rating || 5)].map((_, i) => (
+                              <svg key={i} className="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                                <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
+                              </svg>
+                            ))}
+                          </div>
+                          <span className="ml-2 font-semibold text-gray-700">
+                            {testimonial.name}
+                          </span>
+                        </div>
+                        <p className="text-gray-600 italic">"{testimonial.text}"</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* City Description from Database */}
+              {databaseContent.city_description && (
+                <div className="bg-green-50 p-6 rounded-lg mb-8">
+                  <h3 className="text-xl font-semibold text-text-dark mb-4">Serving {cityName}</h3>
+                  <p className="text-gray-700 leading-relaxed">
+                    {databaseContent.city_description}
+                  </p>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -583,50 +645,82 @@ export default async function ServicePage({ params }: ServicePageProps) {
       <section className="py-12 bg-white">
         <div className="container-custom">
           <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-8">
-              <h2 className="text-3xl font-bold text-text-dark mb-4">
-                Frequently Asked Questions - {serviceData.keyword} in {cityName}
-              </h2>
-              <p className="text-gray-600 text-lg">
-                Get answers to common questions about {serviceData.keyword.toLowerCase()} services
-                in {cityName}.
-              </p>
-            </div>
-
-            {enhancedContent?.faqs ? (
-              <div className="space-y-4">
-                {enhancedContent.faqs.map((faq, index) => (
-                  <details key={index} className="bg-gray-50 rounded-lg p-6 group">
-                    <summary className="font-semibold text-text-dark cursor-pointer list-none flex justify-between items-center">
-                      <span>{faq.question.replace(/Utah/g, cityName)}</span>
-                      <svg
-                        className="w-5 h-5 text-gray-500 group-open:rotate-180 transition-transform"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M19 9l-7 7-7-7"
-                        />
-                      </svg>
-                    </summary>
-                    <div className="mt-4 text-gray-600">
-                      <p>{faq.answer.replace(/Utah/g, cityName + ', Utah')}</p>
-                    </div>
-                  </details>
-                ))}
-              </div>
+            {databaseContent.faq && databaseContent.faq.length > 0 ? (
+              <>
+                <div className="text-center mb-8">
+                  <h2 className="text-3xl font-bold text-text-dark mb-4">
+                    Frequently Asked Questions - {serviceData.keyword} in {cityName}
+                  </h2>
+                  <p className="text-gray-600 text-lg">
+                    Get answers to common questions about {serviceData.keyword.toLowerCase()}{' '}
+                    services in {cityName}.
+                  </p>
+                </div>
+                <div className="space-y-4">
+                  {databaseContent.faq.map((faq: any, index: number) => (
+                    <details key={index} className="bg-gray-50 rounded-lg p-6 group">
+                      <summary className="font-semibold text-text-dark cursor-pointer list-none flex justify-between items-center">
+                        <span>{faq.question}</span>
+                        <svg
+                          className="w-5 h-5 text-gray-500 group-open:rotate-180 transition-transform"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M19 9l-7 7-7-7"
+                          />
+                        </svg>
+                      </summary>
+                      <div className="mt-4 text-gray-600">
+                        <p>{faq.answer}</p>
+                      </div>
+                    </details>
+                  ))}
+                </div>
+              </>
+            ) : enhancedContent?.faqs ? (
+              <>
+                <div className="text-center mb-8">
+                  <h2 className="text-3xl font-bold text-text-dark mb-4">
+                    Frequently Asked Questions - {serviceData.keyword} in {cityName}
+                  </h2>
+                  <p className="text-gray-600 text-lg">
+                    Get answers to common questions about {serviceData.keyword.toLowerCase()}{' '}
+                    services in {cityName}.
+                  </p>
+                </div>
+                <div className="space-y-4">
+                  {enhancedContent.faqs.map((faq, index) => (
+                    <details key={index} className="bg-gray-50 rounded-lg p-6 group">
+                      <summary className="font-semibold text-text-dark cursor-pointer list-none flex justify-between items-center">
+                        <span>{faq.question.replace(/Utah/g, cityName)}</span>
+                        <svg
+                          className="w-5 h-5 text-gray-500 group-open:rotate-180 transition-transform"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M19 9l-7 7-7-7"
+                          />
+                        </svg>
+                      </summary>
+                      <div className="mt-4 text-gray-600">
+                        <p>{faq.answer.replace(/Utah/g, cityName + ', Utah')}</p>
+                      </div>
+                    </details>
+                  ))}
+                </div>
+              </>
             ) : (
-              <FAQSection
-                title={`Frequently Asked Questions - ${serviceData.keyword} in ${cityName}`}
-                subtitle={`Get answers to common questions about ${serviceData.keyword.toLowerCase()} services in ${cityName}.`}
-                variant="accordion"
-                searchable={false}
-                categorized={false}
-              />
+              <FAQSection variant="accordion" searchable={false} categorized={false} />
             )}
           </div>
         </div>
@@ -639,9 +733,8 @@ export default async function ServicePage({ params }: ServicePageProps) {
             <div className="text-center mb-8">
               <h2 className="text-3xl font-bold text-text-dark mb-4">Ready to Get Started?</h2>
               <p className="text-gray-600 text-lg">
-                Contact us today for your free {serviceData.keyword.toLowerCase()} estimate in{' '}
-                {cityName}. We'll provide a detailed quote and answer any questions you have about
-                your project.
+                {databaseContent.cta_text ||
+                  `Contact us today for your free ${serviceData.keyword.toLowerCase()} estimate in ${cityName}. We'll provide a detailed quote and answer any questions you have about your project.`}
               </p>
 
               {/* Enhanced Service Info */}
@@ -701,7 +794,7 @@ export default async function ServicePage({ params }: ServicePageProps) {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a
-                href="tel:+18015550123"
+                href="tel:+18016914065"
                 className="bg-white text-primary px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
               >
                 <svg
@@ -717,7 +810,7 @@ export default async function ServicePage({ params }: ServicePageProps) {
                     d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
                   />
                 </svg>
-                Call (801) 555-0123
+                Call (801) 691-4065
               </a>
               <a
                 href="#quote-form"

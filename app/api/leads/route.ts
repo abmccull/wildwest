@@ -37,46 +37,6 @@ export const POST = withApiMiddleware(
 
       const validatedData = validationResult.data;
 
-      // Verify Turnstile token if provided
-      if (validatedData.turnstile_token) {
-        try {
-          const turnstileResponse = await fetch(
-            'https://challenges.cloudflare.com/turnstile/v0/siteverify',
-            {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-              },
-              body: new URLSearchParams({
-                secret: process.env.TURNSTILE_SECRET_KEY || '',
-                response: validatedData.turnstile_token,
-                remoteip: getClientIP(req),
-              }),
-            }
-          );
-
-          const turnstileResult = await turnstileResponse.json();
-
-          if (!turnstileResult.success) {
-            console.error('Turnstile verification failed:', turnstileResult['error-codes']);
-            throw new ValidationError('Security verification failed. Please try again.');
-          }
-
-          // Log successful verification
-          console.log('Turnstile verification successful for IP:', getClientIP(req));
-        } catch (error) {
-          console.error('Turnstile verification error:', error);
-          if (error instanceof ValidationError) {
-            throw error;
-          }
-          // If Turnstile service is down, allow submission but log the issue
-          console.warn('Turnstile service unavailable, allowing submission');
-        }
-      } else if (process.env.TURNSTILE_SECRET_KEY) {
-        // If Turnstile is configured but no token provided, require it
-        throw new ValidationError('Security verification is required');
-      }
-
       // Get client information
       const ip = getClientIP(req);
       const userAgent = getUserAgent(req);
