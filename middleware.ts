@@ -1,5 +1,7 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
+import { findLegacyServiceMapping } from './lib/legacy-url-redirects';
+import { REDIRECT_MAP } from './lib/generated-redirects';
 
 // Service name redirects map - only include actual redirects needed for old URLs
 const SERVICE_REDIRECTS: Record<string, string> = {
@@ -56,6 +58,14 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(httpsUrl, { status: 301 });
   }
 
+  // Check for generated redirects first (handles old Google-indexed URLs)
+  const generatedRedirect = REDIRECT_MAP.get(pathname);
+  if (generatedRedirect) {
+    const newUrl = new URL(request.url);
+    newUrl.pathname = generatedRedirect;
+    return NextResponse.redirect(newUrl, { status: 301 });
+  }
+
   // Handle old /locations/ URLs
   const locationsMatch = pathname.match(/^\/locations\/([a-z-]+)\/([a-z-]+)\/?$/);
   if (locationsMatch) {
@@ -89,11 +99,20 @@ export function middleware(request: NextRequest) {
         const servicePart = fullSlug.substring(servicePartStart);
 
         if (servicePart) {
-          // Redirect to the correct format: /city-ut/service
-          const newUrl = new URL(request.url);
-          // Don't add trailing slash - let Next.js handle it
-          newUrl.pathname = `/${city}-ut/${servicePart}`;
-          return NextResponse.redirect(newUrl, { status: 301 });
+          // Try to find a mapping for this legacy service URL
+          const mappedService = findLegacyServiceMapping(servicePart);
+          
+          if (mappedService) {
+            // We found a valid mapping, redirect to the mapped service
+            const newUrl = new URL(request.url);
+            newUrl.pathname = `/${city}-ut/${mappedService}`;
+            return NextResponse.redirect(newUrl, { status: 301 });
+          } else {
+            // No mapping found, redirect to the city page instead
+            const newUrl = new URL(request.url);
+            newUrl.pathname = `/${city}-ut`;
+            return NextResponse.redirect(newUrl, { status: 301 });
+          }
         }
       }
     }
