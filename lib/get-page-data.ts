@@ -4,7 +4,9 @@ import { createClient } from '@supabase/supabase-js';
 function getSupabaseClient() {
   return createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_SECRET_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    process.env.SUPABASE_SERVICE_ROLE_KEY ||
+      process.env.SUPABASE_SECRET_KEY ||
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
   );
 }
 
@@ -27,19 +29,22 @@ export interface PageData {
 /**
  * Fetches page data from Supabase by city and service slug
  */
-export async function getPageBySlug(citySlug: string, serviceSlug: string): Promise<PageData | null> {
+export async function getPageBySlug(
+  citySlug: string,
+  serviceSlug: string
+): Promise<PageData | null> {
   const supabase = getSupabaseClient();
-  
+
   // Remove -ut suffix from city slug
   const cityName = citySlug
     .replace('-ut', '')
     .split('-')
-    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(' ');
-  
+
   // Build the expected slug format: city-service
   const expectedSlug = `${citySlug.replace('-ut', '')}-${serviceSlug}`;
-  
+
   try {
     // First try exact slug match
     let { data, error } = await supabase
@@ -48,30 +53,33 @@ export async function getPageBySlug(citySlug: string, serviceSlug: string): Prom
       .eq('slug', expectedSlug)
       .eq('published', true)
       .single();
-    
+
     if (!error && data) {
       return data as PageData;
     }
-    
+
     // If not found, try by city and keyword match
     const { data: pagesByCity, error: cityError } = await supabase
       .from('pages')
       .select('*')
       .eq('city', cityName)
       .eq('published', true);
-    
+
     if (!cityError && pagesByCity && pagesByCity.length > 0) {
       // Try to find a match by service slug
-      const match = pagesByCity.find(page => {
-        const pageServiceSlug = page.slug.replace(new RegExp(`^${citySlug.replace('-ut', '')}-`), '');
+      const match = pagesByCity.find((page) => {
+        const pageServiceSlug = page.slug.replace(
+          new RegExp(`^${citySlug.replace('-ut', '')}-`),
+          ''
+        );
         return pageServiceSlug === serviceSlug;
       });
-      
+
       if (match) {
         return match as PageData;
       }
     }
-    
+
     return null;
   } catch (error) {
     console.error('Error fetching page data:', error);
@@ -84,13 +92,13 @@ export async function getPageBySlug(citySlug: string, serviceSlug: string): Prom
  */
 export async function getPagesByCity(citySlug: string): Promise<PageData[]> {
   const supabase = getSupabaseClient();
-  
+
   const cityName = citySlug
     .replace('-ut', '')
     .split('-')
-    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(' ');
-  
+
   try {
     const { data, error } = await supabase
       .from('pages')
@@ -98,12 +106,12 @@ export async function getPagesByCity(citySlug: string): Promise<PageData[]> {
       .eq('city', cityName)
       .eq('published', true)
       .order('keyword', { ascending: true });
-    
+
     if (error) {
       console.error('Error fetching pages by city:', error);
       return [];
     }
-    
+
     return (data || []) as PageData[];
   } catch (error) {
     console.error('Error fetching pages by city:', error);
@@ -114,9 +122,13 @@ export async function getPagesByCity(citySlug: string): Promise<PageData[]> {
 /**
  * Get related pages in the same category
  */
-export async function getRelatedPages(city: string, service: string, limit: number = 5): Promise<PageData[]> {
+export async function getRelatedPages(
+  city: string,
+  service: string,
+  limit: number = 5
+): Promise<PageData[]> {
   const supabase = getSupabaseClient();
-  
+
   try {
     const { data, error } = await supabase
       .from('pages')
@@ -125,12 +137,12 @@ export async function getRelatedPages(city: string, service: string, limit: numb
       .eq('service', service)
       .eq('published', true)
       .limit(limit);
-    
+
     if (error) {
       console.error('Error fetching related pages:', error);
       return [];
     }
-    
+
     return (data || []) as PageData[];
   } catch (error) {
     console.error('Error fetching related pages:', error);
@@ -144,7 +156,7 @@ export async function getRelatedPages(city: string, service: string, limit: numb
 export function transformPageToServiceData(page: PageData) {
   const citySlug = page.city.toLowerCase().replace(/\s+/g, '-');
   const serviceSlug = page.slug.replace(new RegExp(`^${citySlug}-`), '');
-  
+
   return {
     category: mapServiceToCategory(page.service),
     city: page.city,
@@ -164,9 +176,9 @@ export function transformPageToServiceData(page: PageData) {
 
 function mapServiceToCategory(service: string): string {
   const serviceMap: Record<string, string> = {
-    'flooring': 'Flooring',
-    'demolition': 'Demolition',
-    'junk_removal': 'Junk Removal',
+    flooring: 'Flooring',
+    demolition: 'Demolition',
+    junk_removal: 'Junk Removal',
   };
   return serviceMap[service] || service;
 }

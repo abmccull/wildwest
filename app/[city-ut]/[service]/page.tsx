@@ -112,9 +112,9 @@ export async function generateMetadata({ params }: ServicePageProps): Promise<Me
 
   // First try to get the page from the database
   const pageData = await getPageBySlug(citySlug, serviceSlug);
-  
+
   let serviceData: ParsedServiceData | null = null;
-  
+
   if (pageData) {
     // Transform database page to service data format
     serviceData = transformPageToServiceData(pageData);
@@ -177,9 +177,9 @@ export default async function ServicePage({ params }: ServicePageProps) {
 
   // First try to get the page from the database
   const pageData = await getPageBySlug(citySlug, serviceSlug);
-  
+
   let serviceData: ParsedServiceData | null = null;
-  
+
   if (pageData) {
     // Transform database page to service data format
     serviceData = transformPageToServiceData(pageData);
