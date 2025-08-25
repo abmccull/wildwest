@@ -138,11 +138,11 @@ export const leadFormSchema = z.object({
   serviceType: z.enum(SERVICE_TYPES).refine((val) => val !== undefined, {
     message: 'Please select a service type',
   }),
-  preferredDate: z.string().min(1, 'Please select a preferred date'),
-  preferredTime: z.string().min(1, 'Please select a preferred time'),
+  preferredDate: z.string().optional(),
+  preferredTime: z.string().optional(),
   details: z.string().optional(),
   files: z.array(z.any()).optional(),
-  smsConsent: z.boolean().refine((val) => val === true, 'SMS consent is required'),
+  smsConsent: z.boolean().optional(),
   whatsappConsent: z.boolean(),
 });
 

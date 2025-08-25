@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
   leadFormSchema,
@@ -12,8 +12,6 @@ import {
   extractUTMParams,
 } from '@/lib/form-utils';
 import { FormField } from './FormField';
-import { FileUpload, FileWithPreview } from './FileUpload';
-import { DateTimePicker } from './DateTimePicker';
 
 export interface LeadFormProps {
   onSubmit: (data: LeadFormData & { utmParams: Record<string, string> }) => Promise<void>;
@@ -24,13 +22,10 @@ export const LeadForm: React.FC<LeadFormProps> = ({ onSubmit, className = '' }) 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [submitError, setSubmitError] = useState('');
-  const [files, setFiles] = useState<FileWithPreview[]>([]);
-  // const [turnstileToken, setTurnstileToken] = useState<string>(''); // Turnstile not implemented yet
 
   const {
     register,
     handleSubmit,
-    control,
     setValue,
     watch,
     formState: { errors, isValid },
@@ -43,14 +38,8 @@ export const LeadForm: React.FC<LeadFormProps> = ({ onSubmit, className = '' }) 
       mobile: '',
       email: '',
       city: undefined,
-      address: '',
       serviceType: undefined,
-      preferredDate: '',
-      preferredTime: '',
       details: '',
-      files: [],
-      smsConsent: false,
-      whatsappConsent: false,
     },
   });
 
@@ -67,10 +56,6 @@ export const LeadForm: React.FC<LeadFormProps> = ({ onSubmit, className = '' }) 
     }
   }, [mobileValue, setValue]);
 
-  // Update files in form data
-  useEffect(() => {
-    setValue('files', files, { shouldValidate: true });
-  }, [files, setValue]);
 
   const handleFormSubmit = async (data: LeadFormData) => {
     // Turnstile verification temporarily disabled
@@ -88,8 +73,6 @@ export const LeadForm: React.FC<LeadFormProps> = ({ onSubmit, className = '' }) 
 
       setSubmitSuccess(true);
       reset();
-      setFiles([]);
-      // setTurnstileToken('');
 
       // Hide success message after 5 seconds
       setTimeout(() => setSubmitSuccess(false), 5000);
@@ -162,12 +145,12 @@ export const LeadForm: React.FC<LeadFormProps> = ({ onSubmit, className = '' }) 
           )}
 
           {/* Contact Information */}
-          <div className="mb-8">
-            <h3 className="text-lg font-semibold text-text-dark mb-4 border-b border-gray-200 pb-2">
+          <div className="mb-6">
+            <h3 className="text-lg font-semibold text-text-dark mb-4">
               Contact Information
             </h3>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <FormField label="Full Name" error={errors.name?.message} required>
                 <input
                   {...register('name')}
@@ -181,7 +164,6 @@ export const LeadForm: React.FC<LeadFormProps> = ({ onSubmit, className = '' }) 
                 label="Mobile Number"
                 error={errors.mobile?.message}
                 required
-                helpText="We'll send SMS updates about your project"
               >
                 <input
                   {...register('mobile')}
@@ -191,28 +173,26 @@ export const LeadForm: React.FC<LeadFormProps> = ({ onSubmit, className = '' }) 
                 />
               </FormField>
             </div>
-
-            <FormField
-              label="Email Address"
-              error={errors.email?.message}
-              helpText="Optional - for email updates and receipts"
-            >
-              <input
-                {...register('email')}
-                type="email"
-                placeholder="your.email@example.com"
-                autoComplete="email"
-              />
-            </FormField>
           </div>
 
-          {/* Location Information */}
-          <div className="mb-8">
-            <h3 className="text-lg font-semibold text-text-dark mb-4 border-b border-gray-200 pb-2">
-              Project Location
+          {/* Service & Location */}
+          <div className="mb-6">
+            <h3 className="text-lg font-semibold text-text-dark mb-4">
+              Project Details
             </h3>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <FormField label="Service Type" error={errors.serviceType?.message} required>
+                <select {...register('serviceType')}>
+                  <option value="">Select a service</option>
+                  {SERVICE_TYPES.map((service) => (
+                    <option key={service} value={service}>
+                      {service}
+                    </option>
+                  ))}
+                </select>
+              </FormField>
+
               <FormField label="City" error={errors.city?.message} required>
                 <select {...register('city')}>
                   <option value="">Select your city</option>
@@ -223,135 +203,35 @@ export const LeadForm: React.FC<LeadFormProps> = ({ onSubmit, className = '' }) 
                   ))}
                 </select>
               </FormField>
-
-              <FormField
-                label="Street Address"
-                error={errors.address?.message}
-                helpText="Optional - helps us prepare for the visit"
-              >
-                <input
-                  {...register('address')}
-                  type="text"
-                  placeholder="123 Main Street"
-                  autoComplete="street-address"
-                />
-              </FormField>
             </div>
-          </div>
-
-          {/* Service Information */}
-          <div className="mb-8">
-            <h3 className="text-lg font-semibold text-text-dark mb-4 border-b border-gray-200 pb-2">
-              Service Details
-            </h3>
-
-            <FormField label="Service Type" error={errors.serviceType?.message} required>
-              <select {...register('serviceType')}>
-                <option value="">Select a service</option>
-                {SERVICE_TYPES.map((service) => (
-                  <option key={service} value={service}>
-                    {service}
-                  </option>
-                ))}
-              </select>
-            </FormField>
 
             <FormField
-              label="Project Details"
+              label="Tell us about your project (optional)"
               error={errors.details?.message}
-              helpText="Describe your project, room dimensions, materials, timeline, etc."
             >
               <textarea
                 {...register('details')}
-                rows={4}
-                placeholder="Tell us about your project..."
+                rows={3}
+                placeholder="Describe what you need help with..."
                 className="resize-vertical"
+              />
+            </FormField>
+
+            <FormField
+              label="Email (optional)"
+              error={errors.email?.message}
+              helpText="We'll send a copy of your quote to your email"
+            >
+              <input
+                {...register('email')}
+                type="email"
+                placeholder="your.email@example.com"
+                autoComplete="email"
               />
             </FormField>
           </div>
 
-          {/* Scheduling */}
-          <div className="mb-8">
-            <h3 className="text-lg font-semibold text-text-dark mb-4 border-b border-gray-200 pb-2">
-              Preferred Schedule
-            </h3>
 
-            <Controller
-              name="preferredDate"
-              control={control}
-              render={({ field }) => (
-                <Controller
-                  name="preferredTime"
-                  control={control}
-                  render={({ field: timeField }) => (
-                    <DateTimePicker
-                      dateValue={field.value}
-                      timeValue={timeField.value}
-                      onDateChange={field.onChange}
-                      onTimeChange={timeField.onChange}
-                      dateError={errors.preferredDate?.message}
-                      timeError={errors.preferredTime?.message}
-                    />
-                  )}
-                />
-              )}
-            />
-          </div>
-
-          {/* File Upload */}
-          <div className="mb-8">
-            <h3 className="text-lg font-semibold text-text-dark mb-4 border-b border-gray-200 pb-2">
-              Photos & Videos
-            </h3>
-
-            <FormField
-              label=""
-              error={errors.files?.message}
-              helpText="Share photos or videos of your space to help us provide a more accurate estimate"
-            >
-              <FileUpload files={files} onFilesChange={setFiles} maxFiles={5} />
-            </FormField>
-          </div>
-
-          {/* Consent Checkboxes */}
-          <div className="mb-8">
-            <h3 className="text-lg font-semibold text-text-dark mb-4 border-b border-gray-200 pb-2">
-              Communication Preferences
-            </h3>
-
-            <div className="space-y-4">
-              <FormField label="" error={errors.smsConsent?.message}>
-                <label className="flex items-start space-x-3 cursor-pointer min-h-[44px]">
-                  <input
-                    {...register('smsConsent')}
-                    type="checkbox"
-                    className="mt-1 w-5 h-5 text-primary border-gray-300 rounded focus:ring-2 focus:ring-primary"
-                  />
-                  <span className="text-sm text-text-dark leading-5">
-                    <strong className="font-medium">SMS Updates (Required)</strong>
-                    <br />I consent to receive text messages about my project status, scheduling,
-                    and updates. Standard message rates may apply. Reply STOP to opt out.
-                  </span>
-                </label>
-              </FormField>
-
-              <FormField label="" error={errors.whatsappConsent?.message}>
-                <label className="flex items-start space-x-3 cursor-pointer min-h-[44px]">
-                  <input
-                    {...register('whatsappConsent')}
-                    type="checkbox"
-                    className="mt-1 w-5 h-5 text-primary border-gray-300 rounded focus:ring-2 focus:ring-primary"
-                  />
-                  <span className="text-sm text-text-dark leading-5">
-                    <strong className="font-medium">WhatsApp Updates (Optional)</strong>
-                    <br />
-                    I'd like to receive project updates via WhatsApp for faster communication and
-                    photo sharing.
-                  </span>
-                </label>
-              </FormField>
-            </div>
-          </div>
 
           {/* Submit Button */}
           <button
