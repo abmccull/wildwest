@@ -11,6 +11,7 @@ import {
   getServicesByCategory,
 } from '@/lib/data-parser';
 import { findServiceByUrl, findClosestServiceMatch } from '@/lib/service-url-mapper';
+import { getPageBySlug, transformPageToServiceData, getRelatedPages } from '@/lib/get-page-data';
 import {
   getServiceContent,
   getLocationSpecificContent,
@@ -109,8 +110,18 @@ export async function generateMetadata({ params }: ServicePageProps): Promise<Me
   const citySlug = params['city-ut'];
   const serviceSlug = params.service;
 
-  // Use the new mapper to find the service
-  const serviceData = findServiceByUrl(citySlug, serviceSlug);
+  // First try to get the page from the database
+  const pageData = await getPageBySlug(citySlug, serviceSlug);
+  
+  let serviceData: ParsedServiceData | null = null;
+  
+  if (pageData) {
+    // Transform database page to service data format
+    serviceData = transformPageToServiceData(pageData);
+  } else {
+    // Fallback to CSV data if not in database
+    serviceData = findServiceByUrl(citySlug, serviceSlug);
+  }
 
   if (!serviceData) {
     return {
@@ -160,12 +171,22 @@ export async function generateMetadata({ params }: ServicePageProps): Promise<Me
 
 // Lead form submission handler
 
-export default function ServicePage({ params }: ServicePageProps) {
+export default async function ServicePage({ params }: ServicePageProps) {
   const citySlug = params['city-ut'];
   const serviceSlug = params.service;
 
-  // Use the new mapper to find the service
-  const serviceData = findServiceByUrl(citySlug, serviceSlug);
+  // First try to get the page from the database
+  const pageData = await getPageBySlug(citySlug, serviceSlug);
+  
+  let serviceData: ParsedServiceData | null = null;
+  
+  if (pageData) {
+    // Transform database page to service data format
+    serviceData = transformPageToServiceData(pageData);
+  } else {
+    // Fallback to CSV data if not in database
+    serviceData = findServiceByUrl(citySlug, serviceSlug);
+  }
 
   if (!serviceData) {
     // Try to find similar services to suggest
