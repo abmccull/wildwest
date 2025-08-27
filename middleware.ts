@@ -2,6 +2,14 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { findLegacyServiceMapping } from './lib/legacy-url-redirects';
 import { REDIRECT_MAP } from './lib/generated-redirects';
+// Import the new indexing redirects if they exist
+let INDEXING_REDIRECT_MAP: Map<string, string> | undefined;
+try {
+  const indexingModule = require('./lib/google-indexing-redirects');
+  INDEXING_REDIRECT_MAP = indexingModule.INDEXING_REDIRECT_MAP;
+} catch (e) {
+  // File doesn't exist yet, that's okay
+}
 
 // Service name redirects map - only include actual redirects needed for old URLs
 const SERVICE_REDIRECTS: Record<string, string> = {
@@ -58,7 +66,17 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(httpsUrl, { status: 301 });
   }
 
-  // Check for generated redirects first (handles old Google-indexed URLs)
+  // Check for Google indexing redirects first (highest priority)
+  if (INDEXING_REDIRECT_MAP) {
+    const indexingRedirect = INDEXING_REDIRECT_MAP.get(pathname);
+    if (indexingRedirect) {
+      const newUrl = new URL(request.url);
+      newUrl.pathname = indexingRedirect;
+      return NextResponse.redirect(newUrl, { status: 301 });
+    }
+  }
+
+  // Check for generated redirects (handles old Google-indexed URLs)
   const generatedRedirect = REDIRECT_MAP.get(pathname);
   if (generatedRedirect) {
     const newUrl = new URL(request.url);

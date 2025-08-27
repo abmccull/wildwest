@@ -5,6 +5,17 @@ import * as path from 'path';
 import { readFileSync } from 'fs';
 import { parse } from 'csv-parse/sync';
 import { getAllCities, CityData } from '../lib/data-parser';
+import { createClient } from '@supabase/supabase-js';
+import * as dotenv from 'dotenv';
+
+// Load environment variables
+dotenv.config({ path: '.env.local' });
+
+// Initialize Supabase client
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.SUPABASE_SECRET_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY!
+);
 
 interface SitemapEntry {
   url: string;
@@ -189,31 +200,69 @@ class SitemapGenerator {
   }
 
   /**
-   * Get service page entries from CSV data
+   * Get service page entries from database
    */
   private async getServicePageEntries(): Promise<SitemapEntry[]> {
     const entries: SitemapEntry[] = [];
-    const csvData = this.loadCsvData();
+    
+    try {
+      const { data: pages, error } = await supabase
+        .from('pages')
+        .select('slug, city, service, keyword, updated_at')
+        .eq('published', true)
+        .order('city', { ascending: true });
 
-    // Process each service page from CSV
-    csvData.forEach((serviceData: ServicePageData) => {
-      if (serviceData.urlSlug && serviceData.urlSlug.trim() !== '') {
-        // Clean the URL slug to ensure it starts with the base URL
-        let cleanUrl = serviceData.urlSlug.trim();
+      if (error) {
+        console.error('Error fetching pages from database:', error);
+        return entries;
+      }
 
-        // Remove leading slash if present
-        if (cleanUrl.startsWith('/')) {
-          cleanUrl = cleanUrl.substring(1);
-        }
+      if (!pages || pages.length === 0) {
+        console.log('No published pages found in database');
+        return entries;
+      }
 
+      // Process each service page from database
+      pages.forEach((page: any) => {
+        const citySlug = page.city.toLowerCase().replace(/\s+/g, '-');
+        
+        // Extract service slug by removing city prefix from the database slug
+        const serviceSlug = page.slug.replace(new RegExp(`^${citySlug}-`), '');
+        
+        // Build the correct URL matching the routing pattern: /[city]-ut/[service]/
+        const url = `${this.baseUrl}/${citySlug}-ut/${serviceSlug}/`;
+        
         entries.push({
-          url: `${this.baseUrl}/${cleanUrl}`,
-          lastmod: this.lastmod,
+          url: url,
+          lastmod: page.updated_at ? new Date(page.updated_at).toISOString().split('T')[0] : this.lastmod,
           changefreq: 'monthly' as const,
           priority: 0.7, // Service pages get priority 0.7 as per requirements
         });
-      }
-    });
+      });
+
+      console.log(`Loaded ${entries.length} service pages from database`);
+    } catch (error) {
+      console.error('Failed to fetch service pages from database:', error);
+      console.warn('Falling back to CSV data...');
+      
+      // Fallback to CSV if database fails
+      const csvData = this.loadCsvData();
+      csvData.forEach((serviceData: ServicePageData) => {
+        if (serviceData.urlSlug && serviceData.urlSlug.trim() !== '') {
+          let cleanUrl = serviceData.urlSlug.trim();
+          if (cleanUrl.startsWith('/')) {
+            cleanUrl = cleanUrl.substring(1);
+          }
+
+          entries.push({
+            url: `${this.baseUrl}/${cleanUrl}`,
+            lastmod: this.lastmod,
+            changefreq: 'monthly' as const,
+            priority: 0.7,
+          });
+        }
+      });
+    }
 
     return entries;
   }

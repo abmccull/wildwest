@@ -17,7 +17,7 @@ async function createSitemap() {
   
   const { data: pages, error } = await supabase
     .from('pages')
-    .select('slug, city, keyword, updated_at')
+    .select('slug, city, service, keyword, updated_at')
     .eq('published', true)
     .order('city', { ascending: true });
 
@@ -39,34 +39,46 @@ async function createSitemap() {
     '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
   ];
 
-  // Add homepage
-  sitemapEntries.push(`
-  <url>
-    <loc>https://wildwestslc.com/</loc>
-    <lastmod>${new Date().toISOString()}</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-  </url>`);
+  // Add static pages
+  const staticPages = [
+    { url: '/', priority: 1.0, changefreq: 'weekly' },
+    { url: '/about', priority: 0.8, changefreq: 'monthly' },
+    { url: '/contact', priority: 0.8, changefreq: 'monthly' },
+    { url: '/services', priority: 0.9, changefreq: 'weekly' },
+    { url: '/blog', priority: 0.7, changefreq: 'weekly' },
+    { url: '/privacy', priority: 0.3, changefreq: 'yearly' },
+    { url: '/terms', priority: 0.3, changefreq: 'yearly' },
+  ];
 
-  // Add service pages
+  staticPages.forEach(page => {
+    sitemapEntries.push(`
+  <url>
+    <loc>https://wildwestslc.com${page.url}</loc>
+    <lastmod>${new Date().toISOString().split('T')[0]}</lastmod>
+    <changefreq>${page.changefreq}</changefreq>
+    <priority>${page.priority}</priority>
+  </url>`);
+  });
+
+  // Add service pages with correct URL structure
   const cities = new Set<string>();
   
   pages.forEach(page => {
     const citySlug = page.city.toLowerCase().replace(/\s+/g, '-');
     cities.add(citySlug);
     
-    // Extract service slug from the database slug
+    // Extract service slug by removing city prefix from the database slug
     const serviceSlug = page.slug.replace(new RegExp(`^${citySlug}-`), '');
     
-    // Build the correct URL
+    // Build the correct URL matching the routing pattern: /[city]-ut/[service]/
     const url = `https://wildwestslc.com/${citySlug}-ut/${serviceSlug}/`;
     
     sitemapEntries.push(`
   <url>
     <loc>${url}</loc>
-    <lastmod>${page.updated_at || new Date().toISOString()}</lastmod>
+    <lastmod>${page.updated_at ? new Date(page.updated_at).toISOString().split('T')[0] : new Date().toISOString().split('T')[0]}</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>`);
   });
 
@@ -75,9 +87,9 @@ async function createSitemap() {
     sitemapEntries.push(`
   <url>
     <loc>https://wildwestslc.com/${citySlug}-ut/</loc>
-    <lastmod>${new Date().toISOString()}</lastmod>
+    <lastmod>${new Date().toISOString().split('T')[0]}</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <priority>0.8</priority>
   </url>`);
   });
 
@@ -87,7 +99,7 @@ async function createSitemap() {
     sitemapEntries.push(`
   <url>
     <loc>https://wildwestslc.com/${category}/</loc>
-    <lastmod>${new Date().toISOString()}</lastmod>
+    <lastmod>${new Date().toISOString().split('T')[0]}</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>`);
@@ -99,7 +111,8 @@ async function createSitemap() {
   const sitemapPath = path.join(process.cwd(), 'public', 'sitemap.xml');
   fs.writeFileSync(sitemapPath, sitemapEntries.join(''));
   
-  console.log(`Sitemap generated with ${pages.length} pages`);
+  console.log(`Sitemap generated with ${pages.length} service pages`);
+  console.log(`Total URLs: ${staticPages.length + pages.length + cities.size + serviceCategories.length}`);
   console.log(`Sitemap saved to ${sitemapPath}`);
 
   // Also generate a robots.txt if it doesn't exist
