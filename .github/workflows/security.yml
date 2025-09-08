@@ -140,7 +140,7 @@ jobs:
     if: always()
     steps:
       - name: Security scan summary
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             const jobs = ${{ toJson(needs) }};
